@@ -1,10 +1,10 @@
 // ./nextjs-app/app/[slug]/page.tsx
 
 import { SanityDocument } from "@sanity/client";
-import Post from "../Post";
-import { postPathsQuery, postQuery } from "../../../sanity/lib/sanity.queries";
-import { sanityFetch } from "../../../sanity/lib/sanity.fetch";
-import { client } from "../../../sanity/lib/sanity.client";
+import Post from "@/app/_components/Post";
+import { postPathsQuery, postQuery } from "@/sanity/lib/sanity.queries";
+import { sanityFetch } from "@/sanity/lib/sanity.fetch";
+import { client } from "@/sanity/lib/sanity.client";
 
 // Prepare Next.js to know which routes already exist
 export async function generateStaticParams() {

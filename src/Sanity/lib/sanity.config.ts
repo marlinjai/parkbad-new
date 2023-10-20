@@ -1,14 +1,25 @@
-import { defineConfig } from "sanity";
 import { deskTool } from "sanity/desk";
+import { visionTool } from "@sanity/vision";
+import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
+
+import { defineConfig } from "sanity";
 import schemas from "../schemas";
+import { dataset, projectId, title, apiVersion } from "../env";
 
 const config = defineConfig({
-  projectId: "qyrn8cjm",
-  dataset: "production",
-  title: "Parkbad-GT new",
-  apiVersion: "2023-15-10",
+  projectId,
+  dataset,
+  title,
+  apiVersion,
   basePath: "/admin",
-  plugins: [deskTool()],
+  plugins: [
+    deskTool(),
+    // Add an image asset source for Unsplash
+    unsplashImageAsset(),
+    // Vision lets you query your content with GROQ in the studio
+    // https://www.sanity.io/docs/the-vision-plugin
+    visionTool({ defaultApiVersion: apiVersion }),
+  ],
   schema: { types: schemas },
 });
 

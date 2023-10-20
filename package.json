@@ -12,6 +12,8 @@
     "@portabletext/react": "^3.0.11",
     "@sanity/color-input": "^3.1.0",
     "@sanity/image-url": "^1.0.2",
+    "@sanity/vision": "3.14.1",
+    "sanity-plugin-asset-source-unsplash": "1.1.0",
     "next": "13.5.4",
     "next-sanity": "^5.5.8",
     "react": "^18",
