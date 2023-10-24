@@ -1,8 +1,8 @@
-import { BookIcon } from "@sanity/icons";
 import { format, parseISO } from "date-fns";
 import { defineField, defineType } from "sanity";
 
 import authorType from "./author";
+import { BsFillSunFill } from "react-icons/bs";
 
 /**
  * This file is the schema definition for a post.
@@ -17,14 +17,14 @@ import authorType from "./author";
  */
 
 export default defineType({
-  name: "post",
-  title: "Beitrag",
-  icon: BookIcon,
+  name: "customevent",
+  title: "Veranstaltung",
+  icon: BsFillSunFill,
   type: "document",
   fields: [
     defineField({
-      name: "title",
-      title: "Beitragstitel",
+      name: "eventTitle",
+      title: "Veranstaltungstitel",
       type: "string",
       validation: (rule) => rule.required(),
     }),
@@ -33,85 +33,56 @@ export default defineType({
       title: "Slug",
       type: "slug",
       options: {
-        source: "title",
+        source: "eventTitle",
         maxLength: 96,
         isUnique: (value, context) => context.defaultIsUnique(value, context),
       },
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "content",
-      title: "Beitragsinhalt",
+      name: "eventContent",
+      title: "Event Beschreibung",
       type: "array",
-      of: [
-        { type: "block" },
-        {
-          type: "image",
-          options: {
-            hotspot: true,
-          },
-          fields: [
-            {
-              name: "caption",
-              type: "string",
-              title: "Image caption",
-              description: "Caption displayed below the image.",
-            },
-            {
-              name: "alt",
-              type: "string",
-              title: "Alternative text",
-              description: "Important for SEO and accessiblity.",
-            },
-          ],
-        },
-      ],
+      of: [{ type: "block" }],
     }),
     defineField({
       name: "excerpt",
-      title: "Vorschautext",
+      title: "Kurzbeschreibung",
       type: "text",
     }),
     defineField({
-      name: "coverImage",
-      title: "Beitragsbild",
+      name: "eventImage",
+      title: "Eventbild",
       type: "image",
       options: {
         hotspot: true,
       },
-      fields: [
-        {
-          name: "alt",
-          type: "string",
-          title: "Alternative Text",
-        },
-      ],
     }),
     defineField({
-      name: "date",
-      title: "Veröffentlichungsdatum",
+      name: "eventStart",
+      title: "Event-Start",
       type: "datetime",
       initialValue: () => new Date().toISOString(),
     }),
     defineField({
-      name: "showUntilDate",
-      title: "Ende der Anzeige auf der Homepage",
+      name: "eventEnd",
+      title: "Event-Ende",
       type: "datetime",
       initialValue: () => new Date().toISOString(),
     }),
     defineField({
       name: "author",
-      title: "Autor",
+      title: "Author",
       type: "reference",
       to: [{ type: authorType.name }],
     }),
   ],
   preview: {
     select: {
-      title: "title",
+      title: "eventTitle",
       author: "author.name",
-      date: "date",
-      media: "coverImage",
+      date: "eventDate",
+      media: "eventImage",
     },
     prepare({ title, media, author, date }) {
       const subtitles = [

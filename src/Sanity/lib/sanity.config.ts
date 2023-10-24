@@ -5,6 +5,9 @@ import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
 import { defineConfig } from "sanity";
 import schemas from "../schemas";
 import { dataset, projectId, title, apiVersion } from "../env";
+import { myTheme } from "../theme";
+import StudioLogo from "@/app/_components/Sanity_Components/StudioLogo";
+import StudioNavbar from "@/app/_components/Sanity_Components/StudioNavbar";
 
 const config = defineConfig({
   projectId,
@@ -12,6 +15,7 @@ const config = defineConfig({
   title,
   apiVersion,
   basePath: "/admin",
+  schema: { types: schemas },
   plugins: [
     deskTool(),
     // Add an image asset source for Unsplash
@@ -20,7 +24,13 @@ const config = defineConfig({
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
   ],
-  schema: { types: schemas },
+  studio: {
+    components: {
+      logo: StudioLogo,
+      navbar: StudioNavbar,
+    },
+  },
+  theme: myTheme,
 });
 
 export default config;
