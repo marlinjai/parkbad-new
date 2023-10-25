@@ -17,7 +17,7 @@ export async function sanityFetch<QueryResponse>({
 }: {
   query: string;
   params?: QueryParams;
-  tags: string[];
+  tags?: string[];
 }): Promise<QueryResponse> {
   const isDraftMode = draftMode().isEnabled;
   if (isDraftMode && !token) {

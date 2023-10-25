@@ -17,6 +17,8 @@ export const perspective = "published";
 
 export const title = "Parkbad-GT";
 
+export const previewSecretId: `${string}.${string}` = "preview.secret";
+
 function assertValue<T>(v: T | undefined, errorMessage: string): T {
   if (v === undefined) {
     throw new Error(errorMessage);

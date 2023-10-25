@@ -18,7 +18,7 @@ export interface PostType {
   _updatedAt?: string;
   excerpt?: string;
   author?: Author;
-  slug?: string;
+  slug: string;
   content?: any;
 }
 

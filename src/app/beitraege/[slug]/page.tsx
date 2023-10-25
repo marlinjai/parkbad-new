@@ -5,8 +5,8 @@ import Post from "@/app/_components/Post";
 import { postPathsQuery, postQuery } from "@/sanity/lib/sanity.queries";
 import { sanityFetch, token } from "@/sanity/lib/sanity.fetch";
 import { client } from "@/sanity/lib/sanity.client";
-import PreviewProvider from "../_components/PreviewProvider";
-import PreviewPost from "../_components/PreviewPost";
+import PreviewProvider from "../../_components/PreviewProvider";
+import PreviewPost from "../../_components/PreviewPost";
 import { draftMode } from "next/headers";
 
 // Prepare Next.js to know which routes already exist
