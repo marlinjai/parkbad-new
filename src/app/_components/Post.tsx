@@ -4,16 +4,15 @@
 
 import Image from "next/image";
 import imageUrlBuilder from "@sanity/image-url";
-
+import { SanityDocument } from "@sanity/client";
 import { PortableText } from "@portabletext/react";
 import { client } from "@/sanity/lib/sanity.client";
-import { PostType } from "@/types/sanityTypes";
 
 const builder = imageUrlBuilder(client);
 
-export default function Post({ post }: { post: PostType }) {
+export default function Post({ post }: { post: SanityDocument }) {
   return (
-    <main className="container prose prose-lg p-4">
+    <main className="container mx-auto prose prose-lg p-4">
       <h1>{post.title}</h1>
       {post?.coverImage ? (
         <Image
