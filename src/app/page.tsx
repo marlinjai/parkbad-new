@@ -1,11 +1,11 @@
 // ./nextjs-app/app/page.tsx
 
 import { SanityDocument } from "next-sanity";
-import Posts from "./_components/Posts";
+import HomePage from "./_components/HomePage";
 import { postsQuery } from "@/sanity/lib/sanity.queries";
 import { sanityFetch, token } from "@/sanity/lib/sanity.fetch";
 import { draftMode } from "next/headers";
-import PreviewPosts from "@/app/_components/PreviewPosts";
+import PreviewHomePage from "@/app/_components/PreviewHomePage";
 import PreviewProvider from "@/app/_components/PreviewProvider";
 
 export default async function Home() {
@@ -15,10 +15,10 @@ export default async function Home() {
   if (isDraftMode && token) {
     return (
       <PreviewProvider token={token}>
-        <PreviewPosts posts={posts} />
+        <PreviewHomePage posts={posts} preview={isDraftMode} />
       </PreviewProvider>
     );
   }
 
-  return <Posts posts={posts} />;
+  return <HomePage posts={posts} preview={isDraftMode} />;
 }

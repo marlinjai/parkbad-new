@@ -23,7 +23,9 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {draftMode().isEnabled ? (
-          <PreviewProvider token={token}>{children}</PreviewProvider>
+          <>
+            <PreviewProvider token={token}>{children}</PreviewProvider>
+          </>
         ) : (
           children
         )}

@@ -2,12 +2,19 @@
 
 import Link from "next/link";
 import type { SanityDocument } from "@sanity/client";
+import SiteLayout from "./SiteLayout";
 
-export default function Posts({ posts = [] }: { posts: SanityDocument[] }) {
+export default function HomePage({
+  posts = [],
+  preview,
+}: {
+  posts: SanityDocument[];
+  preview: boolean;
+}) {
   const title = posts.length === 1 ? `1 Post` : `${posts.length} Posts`;
 
   return (
-    <main className="container grid grid-cols-1 divide-y divide-blue-100">
+    <SiteLayout preview={preview}>
       <h1 className="text-2xl p-4 font-bold">{title}</h1>
       {posts.map((post) => (
         <Link
@@ -18,6 +25,6 @@ export default function Posts({ posts = [] }: { posts: SanityDocument[] }) {
           <h2>{post.title}</h2>
         </Link>
       ))}
-    </main>
+    </SiteLayout>
   );
 }
