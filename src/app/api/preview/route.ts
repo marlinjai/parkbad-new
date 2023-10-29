@@ -1,9 +1,20 @@
-// ./nextjs-app/app/api/preview/route.ts
-
 import { draftMode } from "next/headers";
-import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: {
+  nextUrl: { searchParams: URLSearchParams };
+  url: string | URL | undefined;
+}) {
   draftMode().enable();
-  redirect(`/`);
+  const slug = request.nextUrl.searchParams.get("slug");
+  console.log(slug);
+
+  if (slug) {
+    const redirectUrl = new URL(`/${slug}`, request.url as string);
+    return NextResponse.redirect(redirectUrl.toString());
+  } else {
+    return NextResponse.redirect(
+      new URL("/", request.url as string).toString()
+    );
+  }
 }

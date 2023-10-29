@@ -12,7 +12,7 @@ export default function Posts({ posts = [] }: { posts: SanityDocument[] }) {
       {posts.map((post) => (
         <Link
           key={post._id}
-          href={`beitraege/${post.slug.current}`}
+          href={`${post.slug.current}`}
           className="p-4 hover:bg-blue-50"
         >
           <h2>{post.title}</h2>

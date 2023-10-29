@@ -1,9 +1,8 @@
-import { defineField, defineType } from 'sanity'
+import { defineField, defineType } from "sanity";
 
-import subBusinessType from './subBusiness'
+import subBusinessType from "./subBusiness";
 
-import { BiSolidDrink } from 'react-icons/bi'
-import { title } from 'lib/demo.data'
+import { BiSolidDrink } from "react-icons/bi";
 
 /**
  * This file is the schema definition for a post.
@@ -18,81 +17,81 @@ import { title } from 'lib/demo.data'
  */
 
 export default defineType({
-  name: 'drinks',
-  title: 'Getränke',
+  name: "drinks",
+  title: "Getränke",
   icon: BiSolidDrink,
-  type: 'document',
+  type: "document",
   fields: [
     defineField({
-      name: 'drinkTitleIntern',
-      title: 'Name des Getränks',
-      type: 'string',
+      name: "drinkTitleIntern",
+      title: "Name des Getränks",
+      type: "string",
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'drinkTitle',
-      title: 'Name des Getränks auf der Karte',
-      type: 'string',
+      name: "drinkTitle",
+      title: "Name des Getränks auf der Karte",
+      type: "string",
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
+      name: "slug",
+      title: "Slug",
+      type: "slug",
       options: {
-        source: 'drinkTitle',
+        source: "drinkTitle",
         maxLength: 96,
         isUnique: (value, context) => context.defaultIsUnique(value, context),
       },
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'category',
-      title: 'Kategorie',
-      type: 'string',
+      name: "category",
+      title: "Kategorie",
+      type: "string",
       options: {
         list: [
-          { title: 'hotDrinks', value: 'Heiße Getränke' },
-          { title: 'water', value: 'Wasser' },
-          { title: 'juices', value: 'Saft & Co' },
-          { title: 'softDrinks', value: 'Limo & Co' },
-          { title: 'alcoholFreeBeers', value: 'Alkoholfreie Biere' },
-          { title: 'beers', value: 'Biere & Co' },
-          { title: 'wines', value: 'Weine & Co' },
-          { title: 'prosecco', value: 'Prosecco & Sekt' },
-          { title: 'shots', value: 'Schnäpse' },
-          { title: 'longdrinksCocktails', value: 'Longdrinks & Cocktails' },
+          { title: "hotDrinks", value: "Heiße Getränke" },
+          { title: "water", value: "Wasser" },
+          { title: "juices", value: "Saft & Co" },
+          { title: "softDrinks", value: "Limo & Co" },
+          { title: "alcoholFreeBeers", value: "Alkoholfreie Biere" },
+          { title: "beers", value: "Biere & Co" },
+          { title: "wines", value: "Weine & Co" },
+          { title: "prosecco", value: "Prosecco & Sekt" },
+          { title: "shots", value: "Schnäpse" },
+          { title: "longdrinksCocktails", value: "Longdrinks & Cocktails" },
         ],
       },
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'alcoholic',
-      title: 'alkoholisch',
-      type: 'boolean',
+      name: "alcoholic",
+      title: "alkoholisch",
+      type: "boolean",
     }),
     defineField({
-      name: 'size',
-      title: 'Gebindegröße',
-      type: 'number',
+      name: "size",
+      title: "Gebindegröße",
+      type: "number",
     }),
     defineField({
-      name: 'regularPrice',
-      title: 'Preis',
-      type: 'number',
+      name: "regularPrice",
+      title: "Preis",
+      type: "number",
       initialValue: 0,
     }),
     defineField({
-      name: 'discount',
-      title: 'Rabatt in %',
-      type: 'number',
+      name: "discount",
+      title: "Rabatt in %",
+      type: "number",
       initialValue: 0,
     }),
     defineField({
-      name: 'seller',
-      title: 'Verkäufer',
-      type: 'reference',
+      name: "seller",
+      title: "Verkäufer",
+      type: "reference",
       to: [{ type: subBusinessType.name }],
     }),
   ],
-})
+});
