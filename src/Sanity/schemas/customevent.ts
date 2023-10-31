@@ -43,7 +43,29 @@ export default defineType({
       name: "eventContent",
       title: "Event Beschreibung",
       type: "array",
-      of: [{ type: "block" }],
+      of: [
+        { type: "block" },
+        {
+          type: "image",
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: "caption",
+              type: "string",
+              title: "Image caption",
+              description: "Caption displayed below the image.",
+            },
+            {
+              name: "alt",
+              type: "string",
+              title: "Alternative text",
+              description: "Important for SEO and accessiblity.",
+            },
+          ],
+        },
+      ],
     }),
     defineField({
       name: "excerpt",
@@ -57,6 +79,13 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      fields: [
+        {
+          name: "alt",
+          type: "string",
+          title: "Alternative Text",
+        },
+      ],
     }),
     defineField({
       name: "eventStart",

@@ -1,17 +1,17 @@
-export interface Author {
+export type Author = {
   name?: string;
   picture?: any;
-}
+};
 
-export interface subBusiness {
+export type subBusiness = {
   title: any;
   name?: string;
   pictur?: any;
-}
+};
 
-export interface PostType {
+export type PostType = {
   _id: string;
-  title?: string;
+  title: string;
   coverImage?: any;
   date?: string;
   showUntilDate?: string;
@@ -20,9 +20,9 @@ export interface PostType {
   author?: Author;
   slug: string;
   content?: any;
-}
+};
 
-export interface CustomEvent {
+export type CustomEvent = {
   _id: string;
   eventTitle?: string;
   excerpt?: string;
@@ -32,9 +32,9 @@ export interface CustomEvent {
   author?: Author;
   slug?: string;
   eventContent?: any;
-}
+};
 
-export interface food {
+export type food = {
   _id: string;
   foodTitle?: string;
   regularPrice?: number;
@@ -42,9 +42,9 @@ export interface food {
   category?: string;
   slug?: string;
   seller?: subBusiness;
-}
+};
 
-export interface drink {
+export type drink = {
   _id: string;
   drinkTitle?: string;
   drinkTitleIntern?: string;
@@ -55,9 +55,9 @@ export interface drink {
   discount?: number;
   slug?: string;
   seller?: subBusiness;
-}
+};
 
-export interface GalleryImage {
+export type GalleryImage = {
   url: any;
   _type: "image";
   asset: {
@@ -65,17 +65,17 @@ export interface GalleryImage {
     url: string;
   };
   hotspot?: any;
-}
+};
 
-export interface Gallery {
+export type Gallery = {
   _id: string;
   imageTitle: string;
   slug?: {
     current: string;
   };
   images: GalleryImage[];
-}
+};
 
-export interface GalleryPageProps {
+export type GalleryPageProps = {
   galleryData: Gallery;
-}
+};

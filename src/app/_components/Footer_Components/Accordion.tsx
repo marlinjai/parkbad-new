@@ -1,20 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-const Accordion = ({ data, openModal, requiresModal }) => {
-  const [openIndices, setOpenIndices] = useState([])
+const Accordion: React.FC<AccordionProps> = ({
+  data,
+  openModal,
+  requiresModal,
+}) => {
+  const [openIndices, setOpenIndices] = useState<number[]>([]);
 
-  const handleClick = (index) => {
-    setOpenIndices(
-      openIndices.includes(index)
-        ? openIndices.filter((ind) => ind !== index)
-        : [...openIndices, index]
-    )
-  }
+  const handleClick = (index: number) => {
+    setOpenIndices((prevOpenIndices) =>
+      prevOpenIndices.includes(index)
+        ? prevOpenIndices.filter((ind) => ind !== index)
+        : [...prevOpenIndices, index]
+    );
+  };
 
   return data.map((item, index) => (
     <div
       className={`flex flex-col sm:w-full md:w-1/3 lg:w-1/4 ${
-        openIndices.includes(index) ? 'open' : ''
+        openIndices.includes(index) ? "open" : ""
       }`}
       key={index}
     >
@@ -23,7 +27,7 @@ const Accordion = ({ data, openModal, requiresModal }) => {
           className="accordion-button text-uppercase flex w-full justify-between bg-transparent p-4 text-xl"
           onClick={() => handleClick(index)}
         >
-          <span className=" hover:text-brand-accent-4">{item.title}</span>
+          <span className="hover:text-brand-accent-4">{item.title}</span>
           {openIndices.includes(index) ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +59,7 @@ const Accordion = ({ data, openModal, requiresModal }) => {
       </p>
       <div
         className="accordion-body overflow-hidden transition-all duration-300 ease-in-out"
-        style={{ maxHeight: openIndices.includes(index) ? '1000px' : '0' }}
+        style={{ maxHeight: openIndices.includes(index) ? "1000px" : "0" }}
       >
         <ul className="px-2">
           {item.links.map((link, linkIndex) => (
@@ -64,10 +68,10 @@ const Accordion = ({ data, openModal, requiresModal }) => {
                 <a
                   href="#"
                   onClick={(e) => {
-                    e.preventDefault()
-                    openModal(`modal-${index}-${linkIndex}`) // use index from data.map here
+                    e.preventDefault();
+                    openModal(`modal-${index}-${linkIndex}`); // use index from data.map here
                   }}
-                  className="text-md  hover:text-brand-colour-dark"
+                  className="text-md hover:text-brand-colour-dark"
                 >
                   {link.name}
                 </a>
@@ -85,7 +89,7 @@ const Accordion = ({ data, openModal, requiresModal }) => {
       </div>
       <hr />
     </div>
-  ))
-}
+  ));
+};
 
-export default Accordion
+export default Accordion;

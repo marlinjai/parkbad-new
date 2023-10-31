@@ -1,7 +1,7 @@
-interface Query {
+type Query = {
   slug?: string;
-}
+};
 
-interface GetParams {
+type GetParams = {
   query: Query;
-}
+};

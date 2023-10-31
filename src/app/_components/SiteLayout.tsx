@@ -11,12 +11,10 @@ export default function SiteLayout({
 }) {
   return (
     <>
-      <div className="min-h-screen">
-        <Header></Header>
-        <AlertBanner preview={preview} />
-        <main>{children}</main>
-        <Footer></Footer>
-      </div>
+      <Header></Header>
+      <AlertBanner preview={preview} />
+      <main className=" min-h-vh40">{children}</main>
+      <Footer></Footer>
     </>
   );
 }

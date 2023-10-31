@@ -2,15 +2,23 @@
 
 import { SanityDocument } from "next-sanity";
 import HomePage from "./_components/HomePage";
-import { postsQuery } from "@/sanity/lib/sanity.queries";
+import {
+  eventsQuery,
+  postPathsQuery,
+  postsQuery,
+} from "@/sanity/lib/sanity.queries";
 import { sanityFetch, token } from "@/sanity/lib/sanity.fetch";
 import { draftMode } from "next/headers";
 import PreviewHomePage from "@/app/_components/PreviewHomePage";
 import PreviewProvider from "@/app/_components/PreviewProvider";
+import { CustomEvent } from "@/types/sanityTypes";
 
 export default async function Home() {
   const posts = await sanityFetch<SanityDocument[]>({ query: postsQuery });
+  const customevents = await sanityFetch<CustomEvent[]>({ query: eventsQuery });
   const isDraftMode = draftMode().isEnabled;
+
+  console.log(customevents);
 
   if (isDraftMode && token) {
     return (
@@ -20,5 +28,7 @@ export default async function Home() {
     );
   }
 
-  return <HomePage posts={posts} preview={isDraftMode} />;
+  return (
+    <HomePage posts={posts} customevents={customevents} preview={isDraftMode} />
+  );
 }

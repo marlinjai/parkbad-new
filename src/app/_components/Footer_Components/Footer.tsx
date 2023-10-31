@@ -28,13 +28,13 @@ export default function Footer() {
 
   return (
     <footer
-      className=" z-50 mt-pz25 bg-brand-accent-3"
+      className=" z-50 bg-brand-accent-3"
       aria-labelledby="footer-heading"
     >
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
-      <div className="mx-auto flex w-vw100 flex-col justify-center px-12 pb-8 pt-16 sm:pt-20 md:px-20 lg:px-20">
+      <div className="mx-auto flex flex-col justify-center px-12 pb-8 pt-16 sm:pt-20 md:px-20 lg:px-20">
         <div className="grid-cols-3 gap-12   py-4 md:grid  xl:gap-8">
           {/* Modals */}
           {footerNavigationLinks.map((section, sectionIndex) => (

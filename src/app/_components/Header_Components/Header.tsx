@@ -5,14 +5,9 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { NavLink } from "./NavLink";
 import { ParkbadBuilding } from "./ParkbadBuilding";
-
-interface OverlayNavigationProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+import { OverlayNavigationProps } from "@/types/componentTypes";
 
 export function OverlayNavigation({ isOpen, onClose }: OverlayNavigationProps) {
-  // Handle clicks inside the overlay to toggle the menu
   const handleOverlayClick = () => {
     onClose();
   };
@@ -22,23 +17,22 @@ export function OverlayNavigation({ isOpen, onClose }: OverlayNavigationProps) {
       className={`fixed inset-0 flex flex-col items-center justify-center bg-neutral-950/90 p-4 text-center text-3sc tracking-tight text-neutral-100 ${
         isOpen ? "" : "hidden"
       }`}
-      // Handle clicks inside the overlay
       onClick={handleOverlayClick}
     >
       <div className="flex flex-col justify-center gap-8 ">
-        <Link className="hover:text-brand-accent-2" href="/">
+        <Link href="/" className="hover:text-brand-accent-2">
           Home
         </Link>
-        <Link className="hover:text-brand-accent-2" href="/#News">
+        <Link href="/#News" className="hover:text-brand-accent-2">
           Neuigkeiten
         </Link>
-        <Link className="hover:text-brand-accent-2" href="/Essen&Trinken">
+        <Link href="/Essen&Trinken" className="hover:text-brand-accent-2">
           Essen & Trinken
         </Link>
-        <Link className="hover:text-brand-accent-2" href="/Bildgalerie">
+        <Link href="/Bildgalerie" className="hover:text-brand-accent-2">
           Bildgalerie
         </Link>
-        <Link className="hover:text-brand-accent-2" href="/Historie&Kontakt">
+        <Link href="/Historie&Kontakt" className="hover:text-brand-accent-2">
           Historie & Kontakt
         </Link>
       </div>
@@ -52,20 +46,18 @@ export function Header() {
   const toggleMenu = () => {
     setOpen(!open);
     if (!open) {
-      // When opening the overlay, add a class to disable scrolling
       document.body.classList.add("disable-scrolling");
       document.documentElement.classList.add("disable-scrolling");
     } else {
-      // When closing the overlay, remove the class to enable scrolling
       document.body.classList.remove("disable-scrolling");
       document.documentElement.classList.remove("disable-scrolling");
     }
   };
 
   return (
-    <header className="relative z-50 flex w-vw100 justify-center bg-brand-accent-4">
+    <header className="relative z-50 flex w-full justify-center bg-brand-accent-4">
       <div className="flex w-vw25 items-center md:w-vw10">
-        <Link href="/" aria-label="Home" className="">
+        <Link href="/" aria-label="Home">
           <Logo />
         </Link>
         <div className="hidden text-4xl">
@@ -107,20 +99,6 @@ export function Header() {
             >
               <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2 s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2 S29.104,22,28,22z" />
             </svg>
-            // <svg
-            //   aria-hidden="true"
-            //   className="z-20 h-3.5 w-3.5 rounded-none stroke-neutral-900 lg:h-6 lg:w-6 xl:h-8 xl:w-8 2xl:h-10 2xl:w-10"
-            //   fill="none"
-            //   strokeWidth={2}
-            //   strokeLinecap="round"
-            //   viewBox="0 0 14 14"
-            // >
-            //   <path
-            //     d="M0 1H14M0 7H14M0 13H14"
-            //     className="origin-center stroke-neutral-900 opacity-100"
-            //   />
-
-            // </svg>
           )}
         </button>
         <nav>

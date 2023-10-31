@@ -1,42 +1,44 @@
+import { JSX, SVGProps } from "react";
+
 export const footerNavigationLinks = [
   // ... your navigation link data
   {
-    title: 'Parkbad GT',
+    title: "Parkbad GT",
     links: [
-      { name: 'Neuigkeiten & Events', href: '/#News' },
-      { name: 'Essen & Trinken', href: '/Essen&Trinken' },
-      { name: 'Bildgalerie', href: '/Bildgalerie' },
-      { name: 'Feiern & Tagen', href: '/Feiern&Tagen' },
+      { name: "Neuigkeiten & Events", href: "/#News" },
+      { name: "Essen & Trinken", href: "/Essen&Trinken" },
+      { name: "Bildgalerie", href: "/Bildgalerie" },
+      { name: "Feiern & Tagen", href: "/Feiern&Tagen" },
       // more links...
     ],
   },
   {
-    title: 'Über uns',
+    title: "Über uns",
     links: [
-      { name: 'Historie & Kontakt', href: '/Historie&Kontakt' },
-      { name: 'Jobs', href: '/Jobs' },
-      { name: 'Partner', href: '/#Partner' },
+      { name: "Historie & Kontakt", href: "/Historie&Kontakt" },
+      { name: "Jobs", href: "/Jobs" },
+      { name: "Partner", href: "/#Partner" },
       // more links...
     ],
   },
   {
-    title: 'Rechtliches',
+    title: "Rechtliches",
     links: [
-      { name: 'Impressum', href: '#' },
-      { name: 'Datenschutz', href: '#' },
-      { name: 'Hausordnung', href: '#' },
+      { name: "Impressum", href: "#" },
+      { name: "Datenschutz", href: "#" },
+      { name: "Hausordnung", href: "#" },
       // more links...
     ],
   },
   // more sections...
-]
+];
 
 export const socialNavigationLinks = {
   social: [
     {
-      name: 'Facebook',
-      href: 'https://www.facebook.com/parkbad.gt',
-      icon: (props) => (
+      name: "Facebook",
+      href: "https://www.facebook.com/parkbad.gt",
+      icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path
             fillRule="evenodd"
@@ -47,9 +49,9 @@ export const socialNavigationLinks = {
       ),
     },
     {
-      name: 'Instagram',
-      href: '#',
-      icon: (props) => (
+      name: "Instagram",
+      href: "#",
+      icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path
             fillRule="evenodd"
@@ -95,4 +97,4 @@ export const socialNavigationLinks = {
     //   ),
     // },
   ],
-}
+};
