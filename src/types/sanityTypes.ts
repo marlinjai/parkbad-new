@@ -24,14 +24,14 @@ export type PostType = {
 
 export type CustomEvent = {
   _id: string;
-  eventTitle?: string;
+  title: string;
   excerpt?: string;
-  eventImage?: any;
+  coverImage?: any;
   eventStart?: string;
   eventEnd?: string;
   author?: Author;
   slug?: string;
-  eventContent?: any;
+  content?: any;
 };
 
 export type food = {

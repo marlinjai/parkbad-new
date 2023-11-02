@@ -34,3 +34,11 @@ export type PostImageProps = {
   height?: number;
   fit?: "contain" | "cover"; // New fit prop to control objectFit value
 };
+
+// Define a type alias for the item
+export type PostorEventItem = {
+  title?: string;
+  coverImage?: any;
+  content?: any;
+  eventImage?: any;
+};
