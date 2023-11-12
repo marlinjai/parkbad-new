@@ -1,3 +1,4 @@
+import { AccordionProps } from "@/types/componentTypes";
 import React, { useState } from "react";
 
 const Accordion: React.FC<AccordionProps> = ({
@@ -27,14 +28,16 @@ const Accordion: React.FC<AccordionProps> = ({
           className="accordion-button text-uppercase flex w-full justify-between bg-transparent p-4 text-xl"
           onClick={() => handleClick(index)}
         >
-          <span className="hover:text-brand-accent-4">{item.title}</span>
+          <span className="hover:text-brand-accent-4 text-brand-colour-light">
+            {item.title}
+          </span>
           {openIndices.includes(index) ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
-              stroke="currentColor"
+              stroke="white"
               className="h-6 w-6"
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
@@ -45,7 +48,7 @@ const Accordion: React.FC<AccordionProps> = ({
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
-              stroke="currentColor"
+              stroke="white"
               className="h-6 w-6"
             >
               <path
@@ -58,7 +61,7 @@ const Accordion: React.FC<AccordionProps> = ({
         </button>
       </p>
       <div
-        className="accordion-body overflow-hidden transition-all duration-300 ease-in-out"
+        className=" text-brand-colour-light accordion-body overflow-hidden transition-all duration-300 ease-in-out"
         style={{ maxHeight: openIndices.includes(index) ? "1000px" : "0" }}
       >
         <ul className="px-2">

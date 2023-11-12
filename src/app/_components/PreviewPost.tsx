@@ -5,7 +5,7 @@
 import { useParams } from "next/navigation";
 import { useLiveQuery } from "@sanity/preview-kit";
 import { postQuery } from "@/sanity/lib/sanity.queries";
-import Post from "@/app/_components/Post";
+import Post from "@/app/_components/Posts&Events_Components/Post";
 import { PostType } from "@/types/sanityTypes";
 
 export default function PreviewPost({

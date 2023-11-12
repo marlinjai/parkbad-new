@@ -1,10 +1,10 @@
 import type { SanityDocument } from "@sanity/client";
-import { CustomEvent, PostType } from "@/types/sanityTypes";
+import { Author, CustomEvent, PostType } from "@/types/sanityTypes";
 
 export type HomePageProps = {
-  posts: SanityDocument[];
+  posts: PostType[];
   customevents: CustomEvent[];
-  preview: boolean;
+  preview?: boolean;
 };
 
 export type PostPageProps = {
@@ -37,8 +37,15 @@ export type PostImageProps = {
 
 // Define a type alias for the item
 export type PostorEventItem = {
+  _id: string;
+  slug?: string;
   title?: string;
+  eventTitle?: string;
   coverImage?: any;
   content?: any;
   eventImage?: any;
+  author?: Author;
+  date?: string;
+  eventStart?: string;
+  eventEnd?: string;
 };

@@ -1,6 +1,6 @@
 // ./nextjs-app/app/[slug]/page.tsx
 
-import Post from "@/app/_components/Post";
+import Post from "@/app/_components/Posts&Events_Components/Post";
 import { postPathsQuery, postQuery } from "@/sanity/lib/sanity.queries";
 import { sanityFetch, token } from "@/sanity/lib/sanity.fetch";
 import { client } from "@/sanity/lib/sanity.client";
@@ -13,7 +13,7 @@ import { PostType } from "@/types/sanityTypes";
 export async function generateStaticParams() {
   // Important, use the plain Sanity Client here
   const posts = await client.fetch(postPathsQuery);
-  console.log(posts);
+
   return posts;
 }
 

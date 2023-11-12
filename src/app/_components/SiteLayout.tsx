@@ -7,13 +7,15 @@ export default function SiteLayout({
   preview,
 }: {
   children: React.ReactNode;
-  preview: boolean;
+  preview?: boolean;
 }) {
   return (
     <>
       <Header></Header>
       <AlertBanner preview={preview} />
-      <main className=" min-h-vh40">{children}</main>
+      <main className="flex justify-center flex-col min-h-vh40">
+        {children}
+      </main>
       <Footer></Footer>
     </>
   );

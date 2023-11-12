@@ -1,19 +1,40 @@
 "use client";
 
-import React, { useState } from "react";
+import { gsap } from "gsap";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+
 import { Logo } from "./Logo";
 import { NavLink } from "./NavLink";
 import { ParkbadBuilding } from "./ParkbadBuilding";
 import { OverlayNavigationProps } from "@/types/componentTypes";
 
 export function OverlayNavigation({ isOpen, onClose }: OverlayNavigationProps) {
+  const overlayRef = useRef(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      gsap.to(overlayRef.current, {
+        autoAlpha: 1,
+        duration: 0.5,
+        ease: "power2.inOut",
+      });
+    } else {
+      gsap.to(overlayRef.current, {
+        autoAlpha: 0,
+        duration: 0.5,
+        ease: "power2.inOut",
+      });
+    }
+  }, [isOpen]);
+
   const handleOverlayClick = () => {
     onClose();
   };
 
   return (
     <div
+      ref={overlayRef}
       className={`fixed inset-0 flex flex-col items-center justify-center bg-neutral-950/90 p-4 text-center text-3sc tracking-tight text-neutral-100 ${
         isOpen ? "" : "hidden"
       }`}

@@ -6,6 +6,7 @@ const postFields = groq`
   date,
   showUntilDate,
   _updatedAt,
+  content,
   excerpt,
   coverImage,
   "slug": slug.current,
@@ -57,12 +58,12 @@ images,
 
 // Get all posts
 export const postsQuery = groq`*[_type == "post" && defined(slug.current)]{
-  _id, title, slug
+${postFields}
 }`;
 
 // Get a single post by its slug
 export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{ 
-  title, coverImage, content, slug
+${postFields}
 }`;
 
 // Get all post slugs

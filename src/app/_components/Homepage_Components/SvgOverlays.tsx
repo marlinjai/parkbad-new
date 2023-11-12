@@ -1,4 +1,21 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+
 export default function SvgOverlay({ level }: { level: 1 | 2 | 3 }) {
+  const arrowRef = useRef(null);
+
+  useEffect(() => {
+    gsap.to(arrowRef.current, {
+      y: 15,
+      repeat: -1,
+      yoyo: true,
+      duration: 1.8,
+      ease: "power1.inOut",
+    });
+  }, []);
+
   switch (level) {
     case 1:
       return (
@@ -12,19 +29,19 @@ export default function SvgOverlay({ level }: { level: 1 | 2 | 3 }) {
           <defs></defs>
           <path d="m0,79.5S124.18,29.99,217,34.03c66,2.88,76.92,7.99,134,21.29,138,32.15,240.8-61.55,388-36.83,100.66,16.9,118.01,48.14,188,39.71,60.93-7.33,114-54.1,230-58.13,86.19-2.99,208,79.42,208,79.42H0Z" />
         </svg>
-      )
+      );
 
     case 2:
       return (
         <>
-          <div className="videoCommentBG absolute bottom-pz10 h-44 w-pz20"></div>
+          <div className="bg-videoBG  brightness-75 contrast-more: blur-2xl absolute bottom-pz7 h-80 w-pz35"></div>
           <div className="absolute bottom-pz15 flex flex-col content-center items-center justify-center gap-8">
             <svg
               id="Layer_1"
               data-name="Layer 1"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 129.98 46.9"
-              className=" VideoOverlayWriting "
+              className=" w-VideoOverlayWriting"
               fill="white"
             >
               <path d="m76.72,11.79c0-2.98,0-5.96,0-8.95,0-.24-.01-.49.01-.73.12-1.29.54-1.69,1.81-1.79,3.07-.24,6.13-.3,9.2,0,1.82.18,3.4.75,4.4,2.43,1.05,1.77,1.32,4.7-.44,6.32-.43.4-.8.86-1.22,1.27-.96.94-.98,1.38-.13,2.44,2.01,2.51,2.51,5.34,1.71,8.41-.63,2.45-1.7,2.87-3.78,3-3.11.2-6.25.07-9.38.04-1.23-.01-1.72-.48-1.98-1.66-.19-.85-.22-1.71-.21-2.58.01-2.74,0-5.48,0-8.21Zm2.93-3.35c0,1.3-.03,2.38,0,3.47.04,1.14.3,1.32,1.33.89,1.24-.52,2.31-1.33,3.42-2.07,1.54-1.02,3.28-1.75,4.63-3.06.61-.59,1.08-1.32.86-2.2-.23-.92-.95-1.39-1.87-1.57-1.05-.2-2.11-.17-3.17-.18-1.33,0-2.66.02-3.99.17-.59.07-1.04.15-1.14.94-.16,1.28,0,2.54-.08,3.6Zm4.48,12.73c.46,0,.92,0,1.38,0,.49,0,.98.01,1.47,0,1.4-.05,2.32-.73,2.44-1.95.15-1.5-.07-2.95-.92-4.25-1.02-1.57-2.14-1.88-3.79-1.03-.89.46-1.84.86-2.64,1.44-1.06.78-2.49,1.28-2.38,3.07.12,1.8,0,2.79,2.24,2.72.73-.02,1.47,0,2.2,0Z" />
@@ -47,7 +64,8 @@ export default function SvgOverlay({ level }: { level: 1 | 2 | 3 }) {
               <path d="m31.52,30.66c0,.86-.47,1.49-1.12,1.5-.63,0-1-.51-1-1.39,0-.98.25-1.28,1.1-1.3.76-.02,1.02.28,1.02,1.19Z" />
             </svg>
             <svg
-              className="SVGDownAnimationSize"
+              className=" w-SVGDownAnimationSize"
+              ref={arrowRef}
               strokeLinejoin="round"
               strokeMiterlimit="2"
               viewBox="0 0 16 16"
@@ -66,7 +84,7 @@ export default function SvgOverlay({ level }: { level: 1 | 2 | 3 }) {
             </svg>
           </div>
         </>
-      )
+      );
 
     case 3:
       return (
@@ -81,6 +99,6 @@ export default function SvgOverlay({ level }: { level: 1 | 2 | 3 }) {
             className="  fill-brand-colour-dark"
           />
         </svg>
-      )
+      );
   }
 }

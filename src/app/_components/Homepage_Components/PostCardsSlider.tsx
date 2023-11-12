@@ -1,145 +1,95 @@
-// import React, { useEffect, useState } from "react";
-// import type { CustomEvent, PostType } from "@/types/sanityTypes";
-// import { CardSwiper, SwiperSlide } from "../Swiper_Components/MyCardsSwiper";
-// import "swiper/css";
-// import "swiper/css/pagination";
-// import "swiper/css/navigation";
-// import "swiper/css/autoplay";
-// import PostSliderImage from "../Posts&Events_Components/PostImage";
-// import { format, isSameDay } from "date-fns";
-// import { HomePageProps } from "@/types/componentTypes";
+"use client";
 
-// export default function PostCardsSlider({
-//   preview,
-//   posts,
-//   customevents,
-// }: HomePageProps) {
-//   return (
-//     <>
-//       <h2 id="News" className="mt-pz10 text-3sc">
-//         Neuigkeiten & Veranstaltungen
-//       </h2>
-//       {posts.length == 0 && customevents.length == 0 ? (
-//         "aktuell gitb es keine Beiträge und Events"
-//       ) : (
-//         <CardSwiper
-//           key={swiperKey} // Swiper key for reinitialization
-//           navigation={{
-//             nextEl: ".my-swiper-button-next",
-//             prevEl: ".my-swiper-button-prev",
-//           }}
-//           className="mySwiper"
-//         >
-//           {customevents.map((event) => {
-//             const start = new Date(event.eventStart);
-//             const end = new Date(event.eventEnd);
+// Import Swiper React components
+import { CardSwiper, SwiperSlide } from "./MyCardsSwiper";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css/autoplay";
+import { PostType, CustomEvent } from "@/types/sanityTypes";
+import { urlForImage } from "@/sanity/lib/sanity.image";
+import { client } from "@/sanity/lib/sanity.client";
+import Image from "next/image";
+import { PostorEventItem } from "@/types/componentTypes";
+import renderDate from "./RenderDate";
+import { useEffect, useState } from "react";
 
-//             // Determine if the start and end dates are the same day
-//             const isSameStartDateAndEndDate = isSameDay(start, end);
+const builder = urlForImage(client);
 
-//             let formattedStartDay = format(start, "dd.MM.yyyy");
-//             let formattedEndDay = format(end, "dd.MM.yyyy");
-//             let formattedEndTime = format(end, "HH.mm");
-//             let formattedStartTime = format(start, "HH.mm");
+export default function PostCardSlider({
+  posts,
+  customevents,
+}: {
+  posts: PostType[];
+  customevents: CustomEvent[];
+}) {
+  const items: PostorEventItem[] | null = [...posts, ...customevents];
 
-//             return (
-//               // ... Your existing JSX for custom events
-//               <SwiperSlide key={event._id}>
-//                 <PostSliderImage
-//                   slug={event.slug}
-//                   title={event.eventTitle}
-//                   image={event.eventImage}
-//                   priority={false}
-//                   fit="cover"
-//                   width={1200}
-//                   height={800}
-//                 />
-//                 <div className="absolute bottom-10 z-50 w-full">
-//                   <div className="overlay flex flex-col items-center justify-center">
-//                     <svg
-//                       id="Layer_1"
-//                       xmlns="http://www.w3.org/2000/svg"
-//                       viewBox="0 0 92 5"
-//                       className=" mb-2 h-1 w-12  stroke-brand-colour-light"
-//                     >
-//                       <line
-//                         x1="2.5"
-//                         y1="2.5"
-//                         x2="89.5"
-//                         y2="2.5"
-//                         strokeLinecap="round"
-//                         strokeMiterlimit="10"
-//                         strokeWidth="5"
-//                       />
-//                     </svg>
+  const [isReady, setIsReady] = useState(false);
 
-//                     <h2 className="my-2 text-3sc md:text-4sc">
-//                       {event.eventTitle}
-//                     </h2>
-//                     <p className=" my-2 px-40 text-sm md:text-lg">
-//                       {event.excerpt}
-//                     </p>
-//                     <p className=" text-md">
-//                       {isSameStartDateAndEndDate
-//                         ? formattedStartDay
-//                         : formattedStartDay +
-//                           " " +
-//                           formattedStartTime +
-//                           " - " +
-//                           formattedEndDay +
-//                           " " +
-//                           formattedEndTime}
-//                     </p>
-//                     <p className="text-sm">
-//                       {isSameStartDateAndEndDate
-//                         ? formattedStartTime + " - " + formattedEndTime
-//                         : ""}
-//                     </p>
-//                   </div>
-//                 </div>
-//               </SwiperSlide>
-//             );
-//           })}
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 200); // Wait for 300ms
 
-//           {posts.map((post) => (
-//             // ... Your existing JSX for posts
+    return () => clearTimeout(timer); // Cleanup the timer
+  }, []); // Empty dependency array to run only once on mount
 
-//             <SwiperSlide key={post._id}>
-//               <PostSliderImage
-//                 slug={post.slug}
-//                 title={post.title}
-//                 image={post.coverImage}
-//                 priority={false}
-//                 fit="cover"
-//                 width={1200}
-//                 height={800}
-//               />
-//               <div className="absolute bottom-10 z-50 w-full">
-//                 <div className="overlay flex flex-col items-center justify-center">
-//                   <svg
-//                     id="Layer_1"
-//                     xmlns="http://www.w3.org/2000/svg"
-//                     viewBox="0 0 92 5"
-//                     className=" mb-2 h-1 w-12  stroke-brand-colour-light"
-//                   >
-//                     <line
-//                       x1="2.5"
-//                       y1="2.5"
-//                       x2="89.5"
-//                       y2="2.5"
-//                       strokeLinecap="round"
-//                       strokeMiterlimit="10"
-//                       strokeWidth="5"
-//                     />
-//                   </svg>
-//                   <h2 className="text-3sc ">{post.title}</h2>
-//                   <p>{post.excerpt}</p>
-//                 </div>
-//               </div>
-//             </SwiperSlide>
-//           ))}
-//         </CardSwiper>
-//       )}
-//     </>
-//   );
-// }
+  return (
+    <>
+      <div className={isReady ? "opacity-100 mb-pz5" : " opacity-0"}>
+        <h2 className="text-center text-brand-colour-light my-pz5 text-2sc">
+          Neuigkeiten & Veranstaltungen
+        </h2>
+        <CardSwiper className=" text-center h-vw60 w-vw75 md:w-vw60 md:h-vw40 ">
+          {items.map((item) => (
+            <SwiperSlide key={item._id}>
+              <div className="flex flex-col justify-center items-center w-vw60 h-vw40">
+                <a href={`/${item.slug}`} className="text-center h-full w-full">
+                  <Image
+                    src={
+                      item.coverImage
+                        ? builder.image(item.coverImage).url()
+                        : builder.image(item.eventImage).url()
+                    }
+                    loading="lazy"
+                    alt={
+                      item.coverImage
+                        ? item.coverImage.alt
+                        : item.eventImage.alt
+                    }
+                    className="object-cover"
+                    fill={true}
+                  />
+                  <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                  <div className="absolute bottom-4 md:bottom-10 z-50 w-full">
+                    <div className="flex flex-col items-center justify-center  text-brand-colour-light">
+                      <svg
+                        id="Layer_1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 92 5"
+                        className=" mb-2 h-1 w-12  stroke-brand-colour-light"
+                      >
+                        <line
+                          x1="2.5"
+                          y1="2.5"
+                          x2="89.5"
+                          y2="2.5"
+                          strokeLinecap="round"
+                          strokeMiterlimit="10"
+                          strokeWidth="5"
+                        />
+                      </svg>
+                      {renderDate(item)}
+                      <h3>{item.title ? item.title : item.eventTitle}</h3>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </SwiperSlide>
+          ))}
+        </CardSwiper>
+      </div>
+    </>
+  );
+}

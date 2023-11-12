@@ -3,6 +3,11 @@
 import Link from "next/link";
 import SiteLayout from "./SiteLayout";
 import { HomePageProps } from "@/types/componentTypes";
+import VideoSection from "./Homepage_Components/videoSection";
+import TrippleIcon from "./Homepage_Components/TrippleLogo";
+import PostCardsSlider from "./Homepage_Components/PostCardsSlider";
+import LogoCloud from "./Homepage_Components/LogoCloud";
+import { useState } from "react";
 
 export default function HomePage({
   posts,
@@ -13,12 +18,10 @@ export default function HomePage({
 
   return (
     <SiteLayout preview={preview}>
-      <h1 className="text-2xl p-4 font-bold">{title}</h1>
-      {posts.map((post) => (
-        <Link key={post._id} href={`${post.slug.current}`} className="m-4 p-4">
-          <h2 className="hover:bg-white hover:text-black">{post.title}</h2>
-        </Link>
-      ))}
+      <VideoSection></VideoSection>
+      <TrippleIcon></TrippleIcon>
+      <PostCardsSlider posts={posts} customevents={customevents} />
+      <LogoCloud></LogoCloud>
     </SiteLayout>
   );
 }

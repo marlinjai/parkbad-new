@@ -3,10 +3,10 @@ export type Author = {
   picture?: any;
 };
 
-export type subBusiness = {
+export type SubBusiness = {
   title: any;
-  name?: string;
-  pictur?: any;
+  name: string;
+  picture: any;
 };
 
 export type PostType = {
@@ -15,7 +15,7 @@ export type PostType = {
   coverImage?: any;
   date?: string;
   showUntilDate?: string;
-  _updatedAt?: string;
+  _updatedAt: string;
   excerpt?: string;
   author?: Author;
   slug: string;
@@ -24,27 +24,27 @@ export type PostType = {
 
 export type CustomEvent = {
   _id: string;
-  title: string;
+  eventTitle: string;
   excerpt?: string;
-  coverImage?: any;
-  eventStart?: string;
-  eventEnd?: string;
+  eventImage?: any;
+  eventStart: string;
+  eventEnd: string;
   author?: Author;
   slug?: string;
   content?: any;
 };
 
-export type food = {
+export type Food = {
   _id: string;
   foodTitle?: string;
   regularPrice?: number;
   discount?: number;
   category?: string;
   slug?: string;
-  seller?: subBusiness;
+  seller: SubBusiness;
 };
 
-export type drink = {
+export type Drink = {
   _id: string;
   drinkTitle?: string;
   drinkTitleIntern?: string;
@@ -54,7 +54,7 @@ export type drink = {
   regularPrice?: number;
   discount?: number;
   slug?: string;
-  seller?: subBusiness;
+  seller?: SubBusiness;
 };
 
 export type GalleryImage = {

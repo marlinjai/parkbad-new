@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      width: {
+        VideoOverlayWriting: "max(20vw, 200px)",
+        SVGDownAnimationSize: "max(3vw, 50px)",
+      },
       minHeight: {
         vidbg: "60vh",
         "1/2": "50%", // 48px
@@ -151,6 +155,7 @@ const config: Config = {
         "3sc": "min(4vw,1.5rem)",
         "4sc": "min(6vw,1.8rem)",
         "5sc": "min(4vw,2.1rem)",
+        date: "min(2vw, 1.2rem)",
         "5xl": "2.5rem",
         "6xl": "2.75rem",
         "7xl": "4.5rem",
@@ -168,6 +173,7 @@ const config: Config = {
       },
       backgroundColor: {
         shadowdrop: "rgba(0, 0, 0, 0.62)",
+        videoBG: "#00000075",
       },
       letterSpacing: {
         tighter: "-.04em",
@@ -176,6 +182,10 @@ const config: Config = {
         m: "1rem",
         l: "1.5rem",
         xl: "2rem",
+      },
+      filter: {
+        blurBG:
+          "brightness(71%) contrast(135%) saturate(60%) blur(86.5px) hue-rotate(0deg)",
       },
     },
   },

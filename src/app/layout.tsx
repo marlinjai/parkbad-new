@@ -21,7 +21,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="no-scrollbar bg-brand-accent-2 ${inter.className}">
         {draftMode().isEnabled ? (
           <>
             <PreviewProvider token={token}>{children}</PreviewProvider>

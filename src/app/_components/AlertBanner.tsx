@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 
-export default function AlertBanner({ preview }: { preview: boolean }) {
+export default function AlertBanner({ preview }: { preview?: boolean }) {
   if (!preview) return null;
 
   return (

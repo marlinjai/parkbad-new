@@ -2,19 +2,24 @@
 
 "use client";
 
-import type { SanityDocument } from "@sanity/client";
 import { useLiveQuery } from "@sanity/preview-kit";
 import HomePage from "@/app/_components/HomePage";
-import { postsQuery } from "@/sanity/lib/sanity.queries";
+import { eventsQuery, postsQuery } from "@/sanity/lib/sanity.queries";
+import { CustomEvent, PostType } from "@/types/sanityTypes";
 
 export default function PreviewHomePage({
   posts = [],
+  customevents = [],
   preview,
 }: {
-  posts: SanityDocument[];
+  posts: PostType[];
+  customevents: CustomEvent[];
   preview: boolean;
 }) {
-  const [data] = useLiveQuery(posts, postsQuery);
+  const [postData] = useLiveQuery(posts, postsQuery);
+  const [eventsData] = useLiveQuery(customevents, eventsQuery);
 
-  return <HomePage posts={data} preview={preview} />;
+  return (
+    <HomePage posts={postData} preview={preview} customevents={eventsData} />
+  );
 }
