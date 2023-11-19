@@ -39,7 +39,7 @@ export type Food = {
   foodTitle?: string;
   regularPrice?: number;
   discount?: number;
-  category?: string;
+  category: string;
   slug?: string;
   seller: SubBusiness;
 };
@@ -48,7 +48,7 @@ export type Drink = {
   _id: string;
   drinkTitle?: string;
   drinkTitleIntern?: string;
-  category?: string;
+  category: string;
   alcoholic?: boolean;
   size?: number;
   regularPrice?: number;
@@ -65,6 +65,7 @@ export type GalleryImage = {
     url: string;
   };
   hotspot?: any;
+  alt: string;
 };
 
 export type Gallery = {

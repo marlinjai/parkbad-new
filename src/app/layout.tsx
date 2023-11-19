@@ -12,7 +12,9 @@ export const metadata: Metadata = {
   description: "Die ofizielle Seite des Parkbads Gütersloh",
 };
 
-const PreviewProvider = dynamic(() => import("./_components/PreviewProvider"));
+const PreviewProvider = dynamic(
+  () => import("./_components/UtilityComponents/PreviewProvider")
+);
 
 export default async function RootLayout({
   children,

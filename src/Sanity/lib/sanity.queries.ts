@@ -47,9 +47,9 @@ discount,
 "seller": seller->{name, picture},
 `;
 
-const zoomgalleryFields = groq`
+const galleryFields = groq`
 _id,
-imageTitle,
+galleryTitle,
 images,
 "slug": slug.current,
 `;
@@ -130,7 +130,12 @@ export const postBySlugQuery = groq`
 }
 `;
 
-export const zoomgalleryQuery = groq`
-*[_type == 'gallery'] | order(imageTitle asc){
-  ${zoomgalleryFields}
+export const galleryHeaderQuery = groq`
+*[_type == 'gallery' && galleryTitle == "HistoryHeader" ] | order(imageTitle asc){
+  ${galleryFields}
+}`;
+
+export const historyFaderQuery = groq`
+*[_type == 'gallery' && galleryTitle == "HistoryFader" ] | order(imageTitle asc){
+  ${galleryFields}
 }`;

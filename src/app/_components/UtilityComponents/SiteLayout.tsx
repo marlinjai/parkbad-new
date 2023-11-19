@@ -1,6 +1,6 @@
 import AlertBanner from "./AlertBanner";
-import { Header } from "./Header_Components/Header";
-import Footer from "./Footer_Components/Footer";
+import { Header } from "../Header_Components/Header";
+import Footer from "../Footer_Components/Footer";
 
 export default function SiteLayout({
   children,

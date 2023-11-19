@@ -81,7 +81,8 @@ swiper-container::part(container) {
 }
 
 swiper-container {
-  height: 400px;
+  height: 100%;
+  width: 100%;
 }
 
 .swiper-pagination .swiper-pagination-bullet {

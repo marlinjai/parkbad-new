@@ -2,7 +2,7 @@ import Image from "next/image";
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText } from "@portabletext/react";
 import { client } from "@/sanity/lib/sanity.client";
-import SiteLayout from "../SiteLayout";
+import SiteLayout from "../UtilityComponents/SiteLayout";
 import { PostPageProps, PostorEventItem } from "@/types/componentTypes";
 import AuthorAvatar from "./AuthorAvatar";
 import PostDate from "./PostDate";

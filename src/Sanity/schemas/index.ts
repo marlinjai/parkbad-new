@@ -4,7 +4,7 @@ import drinks from "./drinks";
 import food from "./food";
 import post from "./post";
 import subBusiness from "./subBusiness";
-import zoomgallery from "./zoomgallery";
+import zoomgallery from "./gallery";
 
 const schemas = [
   subBusiness,

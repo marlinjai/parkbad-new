@@ -3,9 +3,10 @@
 import { useLiveQuery } from "@sanity/preview-kit";
 import { drinksQuery, foodQuery } from "@/sanity/lib/sanity.queries";
 import { Drink, Food } from "@/types/sanityTypes";
-import Menu from "./Food&Drinks_Components/Menu";
+import Menu from "./Menu";
+import EssenTrinkenPage from "./EssenUndTrinkenPage";
 
-export default function PreviewHomePage({
+export default function PreviewEssenUndTrinkenPage({
   food = [],
   drinks = [],
 }: {
@@ -15,5 +16,5 @@ export default function PreviewHomePage({
   const [foodData] = useLiveQuery(food, foodQuery);
   const [drinksData] = useLiveQuery(drinks, drinksQuery);
 
-  return <Menu foods={foodData} drinks={drinksData} />;
+  return <EssenTrinkenPage food={foodData} drinks={drinksData} />;
 }

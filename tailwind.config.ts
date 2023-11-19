@@ -27,6 +27,9 @@ const config: Config = {
         vh90: "90vh",
         vh100: "100vh",
       },
+      strokeWidth: {
+        "20": "20px",
+      },
       colors: {
         "brand-colour-main": "#3B3B3B",
         "brand-colour-dark": "#0695a4",

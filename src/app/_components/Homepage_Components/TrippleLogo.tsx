@@ -60,7 +60,7 @@ export default function TrippleIcon() {
             cx="383.5"
             cy="415.07"
             r="46"
-            className=" SVGBoule fill-none stroke-brand-accent-3"
+            className=" stroke-20 fill-none stroke-brand-accent-3"
           />
         </svg>
       </div>
@@ -318,5 +318,5 @@ export default function TrippleIcon() {
         </svg>
       </div>
     </div>
-  )
+  );
 }
