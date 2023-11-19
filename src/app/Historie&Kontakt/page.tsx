@@ -1,5 +1,5 @@
 import ImageFader from "@/app/_components/SwiperComponents/ImageFaderSwiper";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import SiteLayout from "../_components/UtilityComponents/SiteLayout";
 import { sanityFetch } from "@/sanity/lib/sanity.fetch";
 import { Gallery, GalleryImage } from "@/types/sanityTypes";

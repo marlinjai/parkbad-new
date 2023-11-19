@@ -1,5 +1,5 @@
 import brandLogo from "@/assets/Logo_redo_origclolours.png";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const logoSize = 250;
 

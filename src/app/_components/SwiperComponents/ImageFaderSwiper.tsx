@@ -3,7 +3,7 @@
 import { Key, ReactNode, useEffect, useRef } from "react";
 import { register } from "swiper/element/bundle";
 import { Autoplay, EffectFade, Keyboard } from "swiper/modules";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { Swiper } from "swiper/types";
 
 export function ImageFaderSwiper(props: {

@@ -9,7 +9,7 @@ import "swiper/css/autoplay";
 import { PostType, CustomEvent } from "@/types/sanityTypes";
 import { urlForImage } from "@/sanity/lib/sanity.image";
 import { client } from "@/sanity/lib/sanity.client";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { PostorEventItem } from "@/types/componentTypes";
 import renderDate from "./RenderDate";
 import { useEffect, useState } from "react";
