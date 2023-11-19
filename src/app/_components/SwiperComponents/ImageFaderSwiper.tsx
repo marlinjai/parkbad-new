@@ -3,7 +3,7 @@
 import { Key, ReactNode, useEffect, useRef } from "react";
 import { register } from "swiper/element/bundle";
 import { Autoplay, EffectFade, Keyboard } from "swiper/modules";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { Swiper } from "swiper/types";
 
 export function ImageFaderSwiper(props: {
@@ -68,7 +68,14 @@ export function SwiperSlide(props: { [x: string]: any; children: ReactNode }) {
   return (
     <swiper-slide {...rest}>
       <div className="relative h-48 md:h-96 w-auto ">
-        <Image src={src} layout="fill" objectFit="cover" alt={alt} />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: "cover"
+          }} />
       </div>
     </swiper-slide>
   );

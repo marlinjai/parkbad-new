@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import brandLogo from "../../../assets/logo temporary.png";
 
 function StudioLogo(props: any) {
@@ -13,7 +13,10 @@ function StudioLogo(props: any) {
         width={100}
         src={brandLogo}
         alt="logo"
-      />
+        style={{
+          maxWidth: "100%",
+          height: "auto"
+        }} />
       <>{renderDefault(props)}</>
     </div>
   );

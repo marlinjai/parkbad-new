@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText } from "@portabletext/react";
 import { client } from "@/sanity/lib/sanity.client";
@@ -19,10 +19,13 @@ function renderImage(item: PostorEventItem) {
       <Image
         src={builder.image(image).url()}
         alt={image?.alt}
-        objectFit="cover"
         fill={true}
         priority={true}
-      />
+        style={{
+          maxWidth: "100%",
+          height: "auto",
+          objectFit: "cover"
+        }} />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
       <div className="absolute inset-0 flex top-pz45 flex-col justify-center items-center gap-2 text-white text-center">
         <h1 className=" mx-pz15 text-4sc font-bold leading-tight tracking-tighter md:text-6xl md:leading-none ">
