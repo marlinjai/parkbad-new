@@ -1,4 +1,4 @@
-import ImageFader from "@/app/_components/SwiperComponents/ImageFaderSwiper";
+import ImageFader from "@/app/_components/Swiper&GaleryComponents/ImageFaderSwiper";
 import Image from "next/image";
 import SiteLayout from "../_components/UtilityComponents/SiteLayout";
 import { sanityFetch } from "@/sanity/lib/sanity.fetch";

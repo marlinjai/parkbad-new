@@ -5,7 +5,7 @@ import SiteLayout from "../UtilityComponents/SiteLayout";
 import { HomePageProps } from "@/types/componentTypes";
 import VideoSection from "./videoSection";
 import TrippleIcon from "./TrippleLogo";
-import PostCardsSlider from "./PostCardsSlider";
+import PostCardsSlider from "../Swiper&GaleryComponents/PostCardsSlider";
 import LogoCloud from "./LogoCloud";
 import { useState } from "react";
 

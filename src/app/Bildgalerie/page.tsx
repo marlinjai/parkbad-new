@@ -1,6 +1,6 @@
 import { sanityFetch } from "@/sanity/lib/sanity.fetch";
 import SiteLayout from "../_components/UtilityComponents/SiteLayout";
-import Zoomgallery from "../_components/Zoomgallery";
+import Zoomgallery from "../_components/Swiper&GaleryComponents/Zoomgallery";
 import { Gallery } from "@/types/sanityTypes";
 import { zoomGalleryQuery } from "@/sanity/lib/sanity.queries";
 
@@ -13,12 +13,6 @@ export default async function Bildgalerie() {
 
   // Assume the first gallery in the array; you can modify this
   const firstGallery = galleryData[0];
-
-  // // Prepare images for the Zoomgallery component
-  // const images = firstGallery.images.map((image) => ({
-  //   url: image.asset.url,
-  //   alt: firstGallery.imageTitle,
-  // }));
 
   return (
     <SiteLayout>

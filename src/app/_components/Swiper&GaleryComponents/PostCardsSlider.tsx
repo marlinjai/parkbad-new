@@ -11,7 +11,7 @@ import { urlForImage } from "@/sanity/lib/sanity.image";
 import { client } from "@/sanity/lib/sanity.client";
 import Image from "next/image";
 import { PostorEventItem } from "@/types/componentTypes";
-import renderDate from "./RenderDate";
+import renderDate from "../Homepage_Components/RenderDate";
 import { useEffect, useState } from "react";
 
 const builder = urlForImage(client);

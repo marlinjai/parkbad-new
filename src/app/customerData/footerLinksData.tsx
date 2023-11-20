@@ -5,7 +5,7 @@ export const footerNavigationLinks = [
   {
     title: "Parkbad GT",
     links: [
-      { name: "Neuigkeiten & Events", href: "/#News" },
+      { name: "Neuigkeiten & Events", href: "/Neuigkeiten&Events" },
       { name: "Essen & Trinken", href: "/Essen&Trinken" },
       { name: "Bildgalerie", href: "/Bildgalerie" },
       { name: "Feiern & Tagen", href: "/Feiern&Tagen" },
