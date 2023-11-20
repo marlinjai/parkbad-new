@@ -13,8 +13,6 @@ export default async function Home() {
   const customevents = await sanityFetch<CustomEvent[]>({ query: eventsQuery });
   const isDraftMode = draftMode().isEnabled;
 
-  console.log(customevents, posts);
-
   if (isDraftMode && token) {
     return (
       <PreviewProvider token={token}>

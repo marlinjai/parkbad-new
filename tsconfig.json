@@ -24,7 +24,7 @@
   },
   "include": [
     "next-env.d.ts",
-    "swiper.d.ts",
+    "src/types/swiper.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"

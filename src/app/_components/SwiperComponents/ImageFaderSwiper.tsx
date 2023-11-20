@@ -46,7 +46,7 @@ export function ImageFaderSwiper(props: {
       // initialize swiper
       swiperRef.current.initialize();
     }
-  }, []);
+  }, [rest]);
 
   return (
     <div className="my-pz10 px-pz10 md:px-pz20">
@@ -62,7 +62,7 @@ export function ImageFaderSwiper(props: {
   );
 }
 
-export function SwiperSlide(props: { [x: string]: any; children: ReactNode }) {
+export function SwiperSlide(props: { [x: string]: any }) {
   const { src, alt, ...rest } = props;
 
   return (
@@ -74,8 +74,9 @@ export function SwiperSlide(props: { [x: string]: any; children: ReactNode }) {
           fill
           sizes="100vw"
           style={{
-            objectFit: "cover"
-          }} />
+            objectFit: "cover",
+          }}
+        />
       </div>
     </swiper-slide>
   );
@@ -90,12 +91,7 @@ export default function ImageFader(props: { images: any }) {
           image: { src: string; alt: string },
           index: Key | null | undefined
         ) => (
-          <SwiperSlide
-            key={index}
-            src={image.src}
-            alt={image.alt}
-            children={undefined}
-          />
+          <SwiperSlide key={index} src={image.src} alt={image.alt} />
         )
       )}
     </ImageFaderSwiper>

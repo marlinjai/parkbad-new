@@ -60,7 +60,7 @@ export function CardSwiper(props: CardSwiperProps) {
       // initialize swiper
       swiperRef.current.initialize();
     }
-  }, []);
+  }, [rest]);
 
   return (
     <div>
@@ -109,8 +109,8 @@ export function CardSwiper(props: CardSwiperProps) {
   );
 }
 
-export function SwiperSlide(props: { [x: string]: any; children: ReactNode }) {
-  const { children, ...rest } = props;
+export function SwiperSlide(props: { [x: string]: any }) {
+  const { ...rest } = props;
 
-  return <swiper-slide {...rest}>{children}</swiper-slide>;
+  return <swiper-slide {...rest}></swiper-slide>;
 }

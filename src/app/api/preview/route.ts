@@ -1,10 +1,7 @@
 import { draftMode } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: {
-  nextUrl: { searchParams: URLSearchParams };
-  url: string | URL | undefined;
-}) {
+export async function GET(request: NextRequest, response: NextResponse) {
   draftMode().enable();
   const slug = request.nextUrl.searchParams.get("slug");
   console.log(slug);

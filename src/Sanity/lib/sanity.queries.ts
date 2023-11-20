@@ -130,6 +130,11 @@ export const postBySlugQuery = groq`
 }
 `;
 
+export const zoomGalleryQuery = groq`
+*[_type == 'gallery' && galleryTitle == "Zoomgallery" ] | order(imageTitle asc){
+  ${galleryFields}
+}`;
+
 export const galleryHeaderQuery = groq`
 *[_type == 'gallery' && galleryTitle == "HistoryHeader" ] | order(imageTitle asc){
   ${galleryFields}
