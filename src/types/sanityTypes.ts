@@ -30,7 +30,7 @@ export type CustomEvent = {
   eventStart: string;
   eventEnd: string;
   author?: Author;
-  slug?: string;
+  slug: string;
   content?: any;
 };
 

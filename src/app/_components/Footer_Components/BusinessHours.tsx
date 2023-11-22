@@ -1,14 +1,14 @@
-import useSWR from 'swr'
+import useSWR from "swr";
 
 // Define a fetcher function using the built-in Fetch API
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const BusinessHours: React.FC = () => {
   // Using SWR to fetch the opening hours from our API route
   const { data: openingHours, error } = useSWR(
-    '/api/googleMaps?businessName=Parkbad Gütersloh',
+    "/api/googleMaps?businessName=Parkbad Gütersloh",
     fetcher
-  )
+  );
 
   if (error)
     return (
@@ -16,9 +16,9 @@ const BusinessHours: React.FC = () => {
         Unsere Öffnungszeiten: <br />
         <span className="text-sm">Derzeit geschlossen</span>
       </div>
-    )
+    );
   if (!openingHours || !Array.isArray(openingHours)) {
-    return <div>Loading...</div>
+    return <div className="text-white">Loading...</div>;
   }
 
   return (
@@ -30,7 +30,7 @@ const BusinessHours: React.FC = () => {
         ))}
       </span>
     </div>
-  )
-}
+  );
+};
 
-export default BusinessHours
+export default BusinessHours;

@@ -23,8 +23,6 @@ const Zoomgallery: React.FC<ZoomgalleryProps> = ({ images }) => {
     [];
   }); // The empty dependency array ensures that this effect runs once after initial render
 
-  console.log(images);
-
   return (
     <>
       <div id="gallerie" className="zoomwall flex flex-wrap">

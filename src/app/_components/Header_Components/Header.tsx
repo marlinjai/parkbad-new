@@ -44,7 +44,7 @@ export function OverlayNavigation({ isOpen, onClose }: OverlayNavigationProps) {
         <Link href="/" className="hover:text-brand-accent-2">
           Home
         </Link>
-        <Link href="/#News" className="hover:text-brand-accent-2">
+        <Link href="/Neuigkeiten&Events" className="hover:text-brand-accent-2">
           Neuigkeiten
         </Link>
         <Link href="/Essen&Trinken" className="hover:text-brand-accent-2">
@@ -83,7 +83,7 @@ export function Header() {
         </Link>
         <div className="hidden text-4xl">
           <NavLink href="/">Home</NavLink>
-          <NavLink href="/#News">Neuigkeiten</NavLink>
+          <NavLink href="/Neuigkeiten&Events">Neuigkeiten</NavLink>
           <NavLink href="/Essen&Trinken">Essen & Trinken</NavLink>
           <NavLink href="/Bildgalerie">Bildgalerie</NavLink>
           <NavLink href="/Historie&Kontakt">Historie & Kontakt</NavLink>

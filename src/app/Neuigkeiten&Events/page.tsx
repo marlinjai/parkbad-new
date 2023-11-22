@@ -1,22 +1,16 @@
 import { sanityFetch } from "@/sanity/lib/sanity.fetch";
 import SiteLayout from "../_components/UtilityComponents/SiteLayout";
+import { eventsQuery, postsQuery } from "@/sanity/lib/sanity.queries";
+import { CustomEvent, PostType } from "@/types/sanityTypes";
+import Archive from "../_components/Posts&Events_Components/Archive";
 
 export default async function NeuigkeitenUndEvents() {
-  //  const galleryData = await sanityFetch<Gallery[]>({ query: zoomGalleryQuery });
-
-  const posts = await sanityFetch({ query: `*[_type == "post"]` });
-  const events = await sanityFetch({ query: `*[_type == "event"]` });
+  const posts = await sanityFetch<PostType[]>({ query: postsQuery });
+  const events = await sanityFetch<CustomEvent[]>({ query: eventsQuery });
 
   return (
     <SiteLayout>
-      <div className="flex flex-col items-center justify-center">
-        <h1 className="text-4xl mt-10 text-brand-colour-light">
-          Alle Veranstaltungen & Beiträge
-        </h1>
-      </div>
-      <div className=" p-10 flex justify-center">
-        <p>display veranstaltungen</p>
-      </div>
+      <Archive posts={posts} events={events} />
     </SiteLayout>
   );
 }

@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "520px",
+        // => @media (min-width: 520px) { ... }
+      },
       width: {
         VideoOverlayWriting: "max(20vw, 200px)",
         SVGDownAnimationSize: "max(3vw, 50px)",
