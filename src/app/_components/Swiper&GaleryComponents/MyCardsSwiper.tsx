@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { register } from "swiper/element/bundle";
 import {
   Autoplay,
@@ -109,8 +109,7 @@ export function CardSwiper(props: CardSwiperProps) {
   );
 }
 
+// SwiperSlide component
 export function SwiperSlide(props: { [x: string]: any }) {
-  const { ...rest } = props;
-
-  return <swiper-slide {...rest}></swiper-slide>;
+  return <swiper-slide {...props}></swiper-slide>;
 }

@@ -144,3 +144,7 @@ export const historyFaderQuery = groq`
 *[_type == 'gallery' && galleryTitle == "HistoryFader" ] | order(imageTitle asc){
   ${galleryFields}
 }`;
+export const celebrationFaderQuery = groq`
+*[_type == 'gallery' && galleryTitle == "Feiern & Tagen" ] | order(imageTitle asc){
+  ${galleryFields}
+}`;

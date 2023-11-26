@@ -41,9 +41,9 @@ export default function PostCardSlider({
         <h2 className="text-center text-brand-colour-light my-pz5 text-2sc">
           Neuigkeiten & Veranstaltungen
         </h2>
-        <CardSwiper className=" text-center h-vw60 w-vw75 md:w-vw60 md:h-vw40 ">
+        <CardSwiper className="text-center h-vw60 w-vw75 md:w-vw60 md:h-vw40 ">
           {items.map((item) => (
-            <SwiperSlide key={item._id}>
+            <SwiperSlide style={{ borderRadius: "1rem" }} key={item._id}>
               <div className="flex flex-col justify-center items-center w-vw60 h-vw40">
                 <a href={`/${item.slug}`} className="text-center h-full w-full">
                   <Image

@@ -6,7 +6,7 @@ import { Autoplay, EffectFade, Keyboard } from "swiper/modules";
 import Image from "next/image";
 import { Swiper } from "swiper/types";
 
-export function ImageFaderSwiper(props: {
+export function FeiernFaderSwiper(props: {
   [x: string]: any;
   children: ReactNode;
 }) {
@@ -49,7 +49,7 @@ export function ImageFaderSwiper(props: {
   }, [rest]);
 
   return (
-    <div className="my-pz10 px-pz10 md:px-pz20">
+    <div>
       <swiper-container
         className="swiper-container"
         init="false"
@@ -62,26 +62,45 @@ export function ImageFaderSwiper(props: {
   );
 }
 
-// export function SwiperSlide(props: { [x: string]: any }) {
-//   const { src, alt, ...rest } = props;
-
-//   return (
-//     <swiper-slide {...rest}>
-//       <div className="relative h-48 md:h-96 w-auto ">
-//         <Image
-//           src={src}
-//           alt={alt}
-//           fill
-//           sizes="100vw"
-//           style={{
-//             objectFit: "cover",
-//           }}
-//         />
-//       </div>
-//     </swiper-slide>
-//   );
-// }
-// SwiperSlide component
 export function SwiperSlide(props: { [x: string]: any }) {
-  return <swiper-slide {...props}></swiper-slide>;
+  const { src, alt, ...rest } = props;
+
+  return (
+    <swiper-slide {...rest}>
+      <div className="relative h-screen md:h-screen w-screen ">
+        <Image
+          src={src}
+          alt={alt}
+          fill={true}
+          sizes="100vw"
+          style={{
+            objectFit: "cover",
+          }}
+        />
+      </div>
+    </swiper-slide>
+  );
+}
+
+export default function FeiernFader(props: { images: any }) {
+  const { images } = props;
+  return (
+    <FeiernFaderSwiper className="fader">
+      {images
+        ? images.map(
+            (
+              image: { src: string; alt: string },
+              index: Key | null | undefined
+            ) => (
+              <SwiperSlide
+                className=" rounded-none"
+                key={index}
+                src={image.src}
+                alt={image.alt}
+              />
+            )
+          )
+        : null}
+    </FeiernFaderSwiper>
+  );
 }

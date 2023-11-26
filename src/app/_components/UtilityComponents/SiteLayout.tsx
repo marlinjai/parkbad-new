@@ -13,7 +13,7 @@ export default function SiteLayout({
     <>
       <Header></Header>
       <AlertBanner preview={preview} />
-      <main className="flex justify-center flex-col min-h-vh40">
+      <main className="flex justify-center flex-col min-h-vh40 bg-brand-accent-2">
         {children}
       </main>
       <Footer></Footer>
