@@ -6,7 +6,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const BusinessHours: React.FC = () => {
   // Using SWR to fetch the opening hours from our API route
   const { data: openingHours, error } = useSWR(
-    "/api/googleMaps?businessName=Parkbad Gütersloh",
+    `/api/googleMaps?businessName=${encodeURIComponent("Parkbad Gütersloh")}`,
     fetcher
   );
 

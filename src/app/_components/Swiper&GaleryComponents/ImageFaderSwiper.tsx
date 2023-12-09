@@ -3,7 +3,6 @@
 import { Key, ReactNode, useEffect, useRef } from "react";
 import { register } from "swiper/element/bundle";
 import { Autoplay, EffectFade, Keyboard } from "swiper/modules";
-import Image from "next/image";
 import { Swiper } from "swiper/types";
 
 export function ImageFaderSwiper(props: {
@@ -39,6 +38,13 @@ export function ImageFaderSwiper(props: {
           disableOnInteraction: false,
         },
         allowTouchMove: false,
+        injectStyles: [
+          `
+          :host::part(container) {
+            border-radius: 20px;
+          }
+          `,
+        ],
       };
       // Assign it to swiper element
       Object.assign(swiperEl, params);
@@ -83,5 +89,10 @@ export function ImageFaderSwiper(props: {
 // }
 // SwiperSlide component
 export function SwiperSlide(props: { [x: string]: any }) {
-  return <swiper-slide {...props}></swiper-slide>;
+  return (
+    <swiper-slide
+      className="flex flex-col justify-center items-center w-vw60 h-vw40"
+      {...props}
+    ></swiper-slide>
+  );
 }

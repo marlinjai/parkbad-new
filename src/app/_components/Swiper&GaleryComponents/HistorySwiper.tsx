@@ -32,17 +32,16 @@ export default function HistorySwiper(props: {
         <ImageFaderSwiper className="text-center h-vw60 w-vw75 md:w-vw60 md:h-vw40">
           {images.map((image, index) => (
             <SwiperSlide key={index}>
-              <div className="flex flex-col justify-center items-center w-vw60 h-vw40">
-                <Image
-                  src={image.src}
-                  loading="lazy"
-                  alt={image.alt}
-                  fill={true}
-                  style={{
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill={true}
+                sizes="100vw"
+                style={{
+                  objectFit: "cover",
+                }}
+                priority={true}
+              />
             </SwiperSlide>
           ))}
         </ImageFaderSwiper>

@@ -4,7 +4,7 @@ import { Key, ReactNode, useEffect, useRef } from "react";
 import { register } from "swiper/element/bundle";
 import { Autoplay, EffectFade, Keyboard } from "swiper/modules";
 import Image from "next/image";
-import { Swiper } from "swiper/types";
+import Swiper from "swiper";
 
 export function FeiernFaderSwiper(props: {
   [x: string]: any;
