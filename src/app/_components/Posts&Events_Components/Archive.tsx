@@ -3,9 +3,10 @@
 import { urlForImage } from "@/sanity/lib/sanity.image";
 import { client } from "@/sanity/lib/sanity.client";
 import { PostType, CustomEvent } from "@/types/sanityTypes";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { parseISO, compareAsc } from "date-fns";
 import Image from "next/image";
+import Button from "../UtilityComponents/Button";
 
 const builder = urlForImage(client);
 
@@ -16,23 +17,25 @@ export default function Archive({
   posts: PostType[];
   events: CustomEvent[];
 }) {
-  // Map and normalize the data structure
-  const combinedData = [
-    ...posts.map((post) => ({
-      ...post,
-      type: "post",
-      date: post._updatedAt,
-      slug: post.slug,
-    })), // Use _updatedAt if date isn't available
-    ...events.map((event) => ({
-      ...event,
-      type: "event",
-      title: event.eventTitle, // Normalize eventTitle to title
-      date: event.eventStart, // Use eventStart as date for sorting
-      coverImage: event.eventImage, // Normalize eventImage to mainImage
-      slug: event.slug, // Normalize slug
-    })),
-  ];
+  const combinedData = useMemo(
+    () => [
+      ...posts.map((post) => ({
+        ...post,
+        type: "post",
+        date: post._updatedAt,
+        slug: post.slug,
+      })),
+      ...events.map((event) => ({
+        ...event,
+        type: "event",
+        title: event.eventTitle,
+        date: event.eventStart,
+        coverImage: event.eventImage,
+        slug: event.slug,
+      })),
+    ],
+    [posts, events]
+  );
 
   const [data, setData] = useState(combinedData);
   const [filterType, setFilterType] = useState("all"); // default to show all
@@ -68,7 +71,7 @@ export default function Archive({
         <div className="">
           <select
             onChange={(e) => setFilterType(e.target.value)}
-            className="border p-2 mr-4"
+            className="border p-2 mr-4 rounded-sm"
           >
             <option value="all">All</option>
             <option value="post">Posts</option>
@@ -76,7 +79,7 @@ export default function Archive({
           </select>
           <select
             onChange={(e) => setSortKey(e.target.value)}
-            className="border p-2"
+            className="border p-2 rounded-sm"
           >
             <option value="date">Sort by Date</option>
             <option value="title">Sort by Title</option>
@@ -85,7 +88,7 @@ export default function Archive({
         </div>
       </div>
 
-      <div className="grid grid-cols-1  xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-10 p-10">
+      <div className="grid grid-cols-1  xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 p-10">
         {data.map((item) => (
           <div key={item._id} className="  p-4 rounded-lg ">
             <div className="relative h-60 w-full">
@@ -97,16 +100,20 @@ export default function Archive({
               />
             </div>
             <div className="p-4">
-              <h2 className="text-2xl text-white font-semibold">
-                {item.title}
-              </h2>
-              <p className="text-white mt-2">{item.excerpt}</p>
+              <div className=" h-16">
+                <h2 className="text-2xl text-white font-semibold">
+                  {item.title}
+                </h2>
+              </div>
 
-              <a href={`/${item.slug}`}>
-                <div className=" bg-brand-colour-light text-center p-4 rounded-full">
-                  Weiterlesen
-                </div>
-              </a>
+              <p className="text-white mt-2 h-24">{item.excerpt}</p>
+              <div className="flex flex-col items-center">
+                <Button
+                  styles="w-pz80"
+                  href={`/${item.slug}`}
+                  text="weiterlesen"
+                ></Button>
+              </div>
             </div>
           </div>
         ))}

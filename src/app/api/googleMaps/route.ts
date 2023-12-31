@@ -1,13 +1,8 @@
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-  const data = "Im a reachable endpoint";
-
   const url = new URL(request.url);
   const businessName = url.searchParams.get("businessName");
-
-  console.log("Handler started");
-  console.log(businessName);
 
   if (!businessName || typeof businessName !== "string") {
     return NextResponse.json(
@@ -26,7 +21,6 @@ export async function GET(request: Request) {
 
     const searchResponse = await fetch(searchURL);
     const searchResponseText = await searchResponse.text();
-    console.log("Search API Response:", searchResponseText);
     const searchData = JSON.parse(searchResponseText);
 
     const placeId = searchData.candidates?.[0]?.place_id;
@@ -44,10 +38,13 @@ export async function GET(request: Request) {
 
     const detailsResponse = await fetch(detailsURL);
     const detailsResponseText = await detailsResponse.text();
-    console.log("Details API Response:", detailsResponseText);
     const detailsData = JSON.parse(detailsResponseText);
 
-    const openingHours = detailsData.result.opening_hours?.weekday_text;
+    let openingHours = detailsData.result.opening_hours?.weekday_text;
+
+    if (openingHours == undefined) {
+      openingHours = [];
+    }
 
     return NextResponse.json({ openingHours }, { status: 200 });
   } catch (error) {

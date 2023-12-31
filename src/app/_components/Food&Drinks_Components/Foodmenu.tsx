@@ -44,18 +44,17 @@ export default function FoodMenu({ food }: { food: Food[] }) {
   );
 
   return (
-    <div className="text-brand-colour-light w-pz100 h-vh80 overflow-y-auto">
-      <h3 className="mb-pz3 mt-pz5 text-2sc">Essen</h3>
+    <div className="text-brand-colour-light w-pz100 h-vh80">
       {Object.keys(categorizedFoods).map((seller, sellerIndex) => (
         <div key={sellerIndex}>
-          <h2 className="font-carlson text-2sc text-brand-accent-4">
+          <h2 className="font-carlson text-2sc text-brand-accent-4 mt-12">
             {seller}
           </h2>
           {Object.keys(categorizedFoods[seller]).map(
             (category, categoryIndex) => (
               <div key={categoryIndex}>
                 {/* Use category map for display */}
-                <h3 className="font-carlson text-2sc text-brand-colour-dark">
+                <h3 className="font-carlson text-5sc py-5 text-brand-colour-dark">
                   {categoryMap[category as keyof typeof categoryMap] ||
                     category}
                 </h3>

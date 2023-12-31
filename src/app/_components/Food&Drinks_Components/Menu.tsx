@@ -18,21 +18,21 @@ export default function Menu({
   return (
     <>
       <div className="flex flex-col justify-center text-center">
-        <h2 className=" text-brand-colour-light mt-pz10 text-2sc">
+        <h2 className=" text-brand-colour-light mt-pz5 text-5sc">
           Unsere Speisen & Getränke
         </h2>
 
         {/* Toggle button */}
         <div className="">
           <button
-            className="sm:v-vw20 m-pz5 w-vw35  rounded-full bg-brand-accent-4 p-pz3 font-carlson text-5sc text-brand-colour-dark shadow-md"
+            className="sm:w-vw25 md:w-vw20 m-pz2 w-vw35 my-pz5 sm:my-pz2 text-brand-text-button rounded-full bg-primary-buton-color p-pz1 font-carlson sm:text-1sc shadow-md"
             onClick={() => setShowDrinks(!showDrinks)}
           >
             {showDrinks ? "Speisen anzeigen" : "Getränke anzeigen"}
           </button>
         </div>
-        <div className=" flex justify-center h-screen">
-          <div className="relative min-h-vh80 w-vw90 md:w-vw75 lg:w-vw65">
+        <div className=" flex justify-center">
+          <div className="relative min-h-vh90 w-vw90 md:w-vw75 lg:w-vw65">
             {/* Your existing layout here */}
             {/* Sub-container for the two big squares and the middle rectangle */}
             <div
@@ -149,7 +149,7 @@ export default function Menu({
               ></div>
 
               <div className="flex justify-center">
-                <div className=" z-20 -mt-10 h-vh60 w-pz80 overflow-y-auto sm:h-vh80">
+                <div className=" z-20 -mt-5 h-vh60 w-pz80 px-4 overflow-y-auto">
                   {showDrinks ? (
                     <DrinksMenu drinks={drinks} />
                   ) : (

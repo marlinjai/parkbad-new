@@ -1,21 +1,42 @@
 "use client";
 
-import { useFormState } from "react-dom";
+import React, { useState, FormEvent } from "react";
 import { SubmitButton } from "./SubmitButton";
-import { submitMail } from "@/app/actions";
-
-const initialState = {
-  message: null,
-};
 
 export default function Kontakt() {
-  const [state, formAction] = useFormState(submitMail, initialState);
+  const [state, setState] = useState<{ message: string | null }>({
+    message: null,
+  });
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget); // Use currentTarget instead of target
+    const formProps = Object.fromEntries(formData);
+
+    try {
+      const response = await fetch("/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formProps),
+      });
+
+      if (response.ok) {
+        setState({ message: "Email sent successfully!" });
+      } else {
+        throw new Error("Response not OK");
+      }
+    } catch (error) {
+      setState({ message: "Failed to send email." });
+    }
+  };
 
   return (
     <>
       <form
         className="mx-auto mb-16  mt-16 max-w-xl sm:mt-20"
-        action={formAction}
+        onSubmit={handleSubmit}
       >
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           {/* First Name */}
@@ -29,7 +50,7 @@ export default function Kontakt() {
             <div className="mt-2.5">
               <input
                 type="text"
-                name="first-name"
+                name="firstName"
                 id="first-name"
                 autoComplete="given-name"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -48,7 +69,7 @@ export default function Kontakt() {
             <div className="mt-2.5">
               <input
                 type="text"
-                name="last-name"
+                name="lastName"
                 id="last-name"
                 autoComplete="family-name"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

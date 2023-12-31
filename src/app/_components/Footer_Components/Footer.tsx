@@ -7,10 +7,12 @@ import React from "react";
 import { footerNavigationLinks } from "../../customerData/footerLinksData";
 import { socialNavigationLinks } from "../../customerData/footerLinksData";
 
+import { FooterProps } from "@/types/componentTypes";
+
 import Newsletter from "./Newsletter";
 import BusinessHours from "./BusinessHours";
 
-export default function Footer() {
+export default function Footer({ openingHours }: FooterProps) {
   const [activeModal, setActiveModal] = useState<string | null>(null);
 
   const openModal = (id: string) => {
@@ -101,7 +103,7 @@ export default function Footer() {
 
         <div className=" mt-pz5 flex flex-col justify-between gap-vw3 p-4 sm:flex-row  md:p-0">
           {/* <Newsletter></Newsletter> */}
-          <BusinessHours></BusinessHours>
+          <BusinessHours openingHours={openingHours}></BusinessHours>
         </div>
 
         <div className="mt-pz5 border-t border-white/10 px-pz7 pt-8 md:flex md:items-center md:justify-between">

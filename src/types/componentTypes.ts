@@ -7,6 +7,11 @@ export type HomePageProps = {
   preview?: boolean;
 };
 
+export type FooterProps = {
+  openingHours: OpeningHour[];
+  // ... other props if any
+};
+
 export type PostPageProps = {
   post?: PostType;
   customevent?: CustomEvent;
@@ -48,4 +53,14 @@ export type PostorEventItem = {
   date?: string;
   eventStart?: string;
   eventEnd?: string;
+};
+
+export type OpeningHour = {
+  dayName: string;
+  hours: string;
+};
+
+export type GroupedOpeningHour = {
+  days: string[];
+  hours: string;
 };

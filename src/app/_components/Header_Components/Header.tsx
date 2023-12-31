@@ -52,7 +52,7 @@ export function OverlayNavigation({ isOpen, onClose }: OverlayNavigationProps) {
   return (
     <div
       ref={overlayRef}
-      className={`fixed inset-0 flex flex-col items-center justify-center bg-neutral-950/90 p-4 text-center text-3sc tracking-tight text-neutral-100 ${
+      className={`fixed inset-0 flex flex-col items-center justify-center bg-neutral-950/95 p-4 text-center text-3sc tracking-tight text-neutral-100 ${
         isOpen ? "" : "hidden"
       }`}
       onClick={handleOverlayClick}

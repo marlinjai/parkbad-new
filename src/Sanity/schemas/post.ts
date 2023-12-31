@@ -26,7 +26,11 @@ export default defineType({
       name: "title",
       title: "Beitragstitel",
       type: "string",
-      validation: (rule) => rule.required(),
+      validation: (rule) =>
+        rule
+          .max(27)
+          .warning("Ein Titel darf nicht mehr als 27 Zeichen haben.")
+          .required(),
     }),
     defineField({
       name: "slug",

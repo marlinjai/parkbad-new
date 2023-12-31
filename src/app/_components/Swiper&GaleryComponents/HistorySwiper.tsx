@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 import Image from "next/image";
-import { Key, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function HistorySwiper(props: {
   images: {
@@ -32,15 +32,16 @@ export default function HistorySwiper(props: {
         <ImageFaderSwiper className="text-center h-vw60 w-vw75 md:w-vw60 md:h-vw40">
           {images.map((image, index) => (
             <SwiperSlide key={index}>
+              )
               <Image
                 src={image.src}
                 alt={image.alt}
                 fill={true}
-                sizes="100vw"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 style={{
                   objectFit: "cover",
                 }}
-                priority={true}
+                loading="lazy"
               />
             </SwiperSlide>
           ))}

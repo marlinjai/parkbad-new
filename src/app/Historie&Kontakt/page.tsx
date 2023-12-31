@@ -108,7 +108,7 @@ export default async function Historie() {
             />
           </div>
           <div className="overflow-hidden">
-            <div className="mx-auto max-w-7xl px-6 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32">
+            <div className="mx-auto max-w-7xl px-12 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32">
               <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                 <div className="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
                   <h1 className="text-4xl font-bold tracking-tight text-brand-colour-light sm:text-6xl">
@@ -125,7 +125,7 @@ export default async function Historie() {
                   </p>
                 </div>
                 <div className="mt-14 flex justify-end gap-4 sm:-mt-44 sm:justify-start sm:gap-8 sm:pl-20 lg:mt-0 lg:pl-0">
-                  <div className="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
+                  <div className="ml-auto w-vw30 sm:w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
                     <div className="relative">
                       <Image
                         src={
@@ -145,7 +145,7 @@ export default async function Historie() {
                       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                     </div>
                   </div>
-                  <div className="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
+                  <div className="mr-auto w-vw30 sm:w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
                     <div className="relative">
                       <Image
                         src={
@@ -183,7 +183,7 @@ export default async function Historie() {
                       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                     </div>
                   </div>
-                  <div className="w-44 flex-none space-y-8 pt-32 sm:pt-0">
+                  <div className="w-vw30 sm:w-44 flex-none space-y-8 pt-32 sm:pt-0">
                     <div className="relative">
                       <Image
                         src={
@@ -228,7 +228,7 @@ export default async function Historie() {
         </div>
 
         {/* Content section */}
-        <div className="mx-auto -mt-12 max-w-5xl px-6 sm:mt-0 lg:px-8 xl:-mt-8">
+        <div className="mx-auto -mt-12 max-w-5xl px-12 sm:mt-0 lg:px-8 xl:-mt-8">
           <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
             <h2 className="text-3xl font-bold tracking-tight text-brand-colour-light sm:text-4xl">
               Unsere Mission
@@ -275,7 +275,7 @@ export default async function Historie() {
         <HistorySwiper images={Faderformatted}></HistorySwiper>
 
         {/*  Values section */}
-        <div className="mx-auto p-20 max-w-5xl px-10 sm:-mt-4 sm:mb-24 lg:px-8">
+        <div className="mx-auto p-20 max-w-5xl px-12 sm:-mt-28 sm:mb-8 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-3xl font-bold tracking-tight text-brand-colour-light sm:text-4xl">
               Unsere Werte
@@ -284,7 +284,7 @@ export default async function Historie() {
               Das Fundament unserer Kultur: Wofür wir stehen
             </p>
           </div>
-          <dl className="mx-auto mt-16 grid max-w-xl grid-cols-1 gap-x-36 gap-y-16 text-base leading-7 sm:grid-cols-2 lg:mx-0 lg:max-w-none">
+          <dl className="mx-auto mt-16 grid max-w-xl grid-cols-1 gap-12 md:gap-x-36 gap-y-16 text-base leading-7 xs:grid-cols-2 lg:mx-0 lg:max-w-none">
             {values.map((value) => (
               <div key={value.name}>
                 <dt className="font-semibold text-brand-colour-light">

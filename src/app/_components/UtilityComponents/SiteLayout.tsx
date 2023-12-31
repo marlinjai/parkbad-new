@@ -1,14 +1,17 @@
 import AlertBanner from "./AlertBanner";
 import { Header } from "../Header_Components/Header";
 import Footer from "../Footer_Components/Footer";
+import fetchOpeningHours from "@/app/services/googleMaps";
 
-export default function SiteLayout({
+export default async function SiteLayout({
   children,
   preview,
 }: {
   children: React.ReactNode;
   preview?: boolean;
 }) {
+  const openingHours = await fetchOpeningHours("Scheunerei");
+
   return (
     <>
       <Header></Header>
@@ -16,7 +19,7 @@ export default function SiteLayout({
       <main className="flex justify-center flex-col min-h-vh40 bg-brand-accent-2">
         {children}
       </main>
-      <Footer></Footer>
+      <Footer openingHours={openingHours}></Footer>
     </>
   );
 }

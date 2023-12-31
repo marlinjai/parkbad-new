@@ -44,15 +44,17 @@ export default function PostCardSlider({
         <CardSwiper className="text-center h-vw60 w-vw75 md:w-vw60 md:h-vw40 ">
           {items.map((item) => (
             <SwiperSlide style={{ borderRadius: "1rem" }} key={item._id}>
-              <div className="flex flex-col justify-center items-center w-vw60 h-vw40">
-                <a href={`/${item.slug}`} className="text-center h-full w-full">
+              <div className="flex flex-col justify-center items-center ">
+                <a
+                  href={`/${item.slug}`}
+                  className="text-center h-full w-full absolute inset-0 z-0"
+                >
                   <Image
                     src={
                       item.coverImage
                         ? builder.image(item.coverImage).url()
                         : builder.image(item.eventImage).url()
                     }
-                    loading="lazy"
                     alt={
                       item.coverImage
                         ? item.coverImage.alt
@@ -62,9 +64,11 @@ export default function PostCardSlider({
                     style={{
                       objectFit: "cover",
                     }}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority={true}
                   />
                   <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
-                  <div className="absolute bottom-4 md:bottom-10 z-50 w-full">
+                  <div className="absolute bottom-4 xs:bottom-8 md:bottom-10 z-50 w-full">
                     <div className="flex flex-col items-center justify-center  text-brand-colour-light">
                       <svg
                         id="Layer_1"
