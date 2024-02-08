@@ -1,15 +1,28 @@
 import React from "react";
 
 interface ButtonProps {
-  href: string;
+  href?: string;
   text: string;
   styles: string;
+  onClick?: () => void; // Define the type for onClick function
 }
 
-export default function Button({ href, text, styles }: ButtonProps) {
+// Make sure to destructure the onClick prop from the props object
+export default function Button({ href, text, styles, onClick }: ButtonProps) {
+  // Prevent default action if onClick is provided to avoid navigating away when the button is clicked
+  const handleClick = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    if (onClick) {
+      event.preventDefault();
+      onClick();
+    }
+  };
+
   return (
     <div className={styles}>
-      <a href={href}>
+      {/* Add the onClick event handler to the <a> tag */}
+      <a href={href} onClick={handleClick}>
         <div className=" bg-primary-buton-color hover:bg-primary-buton-color-hover hover:text-brand-text-button-hover text-brand-text-button text-center p-4 rounded-full">
           {text}
         </div>

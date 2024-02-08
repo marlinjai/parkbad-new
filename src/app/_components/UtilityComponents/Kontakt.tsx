@@ -23,12 +23,15 @@ export default function Kontakt() {
       });
 
       if (response.ok) {
-        setState({ message: "Email sent successfully!" });
+        setState({ message: "Ihre Anfrage wurde erfolgreich versendet!" });
       } else {
         throw new Error("Response not OK");
       }
     } catch (error) {
-      setState({ message: "Failed to send email." });
+      setState({
+        message:
+          "Leider kann die Anfrage aufgrund technischer Schwierigkeiten nicht abgesendet werden.",
+      });
     }
   };
 
@@ -45,7 +48,7 @@ export default function Kontakt() {
               htmlFor="first-name"
               className="block text-sm font-semibold leading-6 text-brand-colour-light"
             >
-              First name
+              Vorname
             </label>
             <div className="mt-2.5">
               <input
@@ -53,7 +56,7 @@ export default function Kontakt() {
                 name="firstName"
                 id="first-name"
                 autoComplete="given-name"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-border-orange sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -64,7 +67,7 @@ export default function Kontakt() {
               htmlFor="last-name"
               className="block text-sm font-semibold leading-6 text-brand-colour-light"
             >
-              Last name
+              Nachname
             </label>
             <div className="mt-2.5">
               <input
@@ -72,7 +75,7 @@ export default function Kontakt() {
                 name="lastName"
                 id="last-name"
                 autoComplete="family-name"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-border-orange sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -85,7 +88,7 @@ export default function Kontakt() {
               htmlFor="email"
               className="block text-sm font-semibold leading-6 text-brand-colour-light"
             >
-              Email
+              E-Mail
             </label>
             <div className="mt-2.5">
               <input
@@ -93,7 +96,7 @@ export default function Kontakt() {
                 name="email"
                 id="email"
                 autoComplete="email"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm placeholder:text-gray-400 focus:ring-brand-border-orange sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -104,14 +107,14 @@ export default function Kontakt() {
               htmlFor="message"
               className="block text-sm font-semibold leading-6 text-brand-colour-light"
             >
-              Message
+              Ihre Nachrricht
             </label>
             <div className="mt-2.5">
               <textarea
                 name="message"
                 id="message"
                 rows={4}
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-border-orange sm:text-sm sm:leading-6"
                 defaultValue={""}
               />
             </div>
@@ -121,7 +124,7 @@ export default function Kontakt() {
           <div className="mt-10 sm:col-span-2">
             <SubmitButton></SubmitButton>
           </div>
-          <p aria-live="polite" role="status">
+          <p className=" text-brand-accent-1" aria-live="polite" role="status">
             {state?.message}
           </p>
         </div>

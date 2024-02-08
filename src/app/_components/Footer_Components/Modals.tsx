@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Datenschutzerklaerung from "../../customerData/Datenschutzerklaerung";
 import Impressum from "../../customerData/Impressum";
 import Hausordnung from "../../customerData/Hausordnung";
+import Button from "../UtilityComponents/Button";
 
 interface ModalProps {
   id: string;
@@ -31,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({ id, onClose }) => {
     >
       <div className="fixed inset-0 bg-black opacity-70"></div>
       <div
-        className="hide-scrollbar relative mx-4 -mb-pz15 w-vw80 overflow-y-auto rounded-3xl bg-brand-accent-2 p-pz5 shadow-lg md:w-vw60"
+        className="hide-scrollbar flex items-center flex-col relative mx-4 -mb-pz15 w-vw80 overflow-y-auto rounded-3xl bg-brand-accent-2 p-pz5 shadow-lg md:w-vw60"
         style={{ maxHeight: "80vh" }} // limit height to 80% of the view height
         onClick={stopPropagation}
       >
@@ -41,7 +42,7 @@ const Modal: React.FC<ModalProps> = ({ id, onClose }) => {
             ? `Impressum`
             : id === "modal-2-1"
             ? `datenschutzerklärung`
-            : `Hausordnung`}
+            : ``}
         </h3>
         <div className="text-brand-colour-light">
           {id === "modal-2-0" ? (
@@ -52,12 +53,11 @@ const Modal: React.FC<ModalProps> = ({ id, onClose }) => {
             <Hausordnung></Hausordnung>
           )}
         </div>
-        <button
-          className="hover:bg-brand-ccent-2 mt-4 rounded-lg bg-brand-colour-dark px-4 py-2 text-white"
+        <Button
+          styles="mt-8 w-pz40"
           onClick={onClose}
-        >
-          Close
-        </button>
+          text="Schließen"
+        ></Button>
       </div>
     </div>
   );

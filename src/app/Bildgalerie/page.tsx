@@ -19,7 +19,7 @@ export default async function Bildgalerie() {
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-4xl mt-10 text-brand-colour-light">Bildgalerie</h1>
       </div>
-      <div className=" p-10 flex justify-center">
+      <div className=" p-20 flex justify-center">
         <Zoomgallery images={firstGallery.images}></Zoomgallery>
       </div>
     </SiteLayout>

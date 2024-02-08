@@ -1,22 +1,44 @@
 import { OpeningHour, GroupedOpeningHour } from "@/types/componentTypes";
 
+// Mapping English days to German
+const dayTranslation: { [key: string]: string } = {
+  Monday: "Montag",
+  Tuesday: "Dienstag",
+  Wednesday: "Mittwoch",
+  Thursday: "Donnerstag",
+  Friday: "Freitag",
+  Saturday: "Samstag",
+  Sunday: "Sonntag",
+};
+
 export default function BusinessHours({
-  openingHours: openingHours,
+  openingHours,
 }: {
   openingHours: OpeningHour[];
 }) {
+  function translateDay(day: string): string {
+    return dayTranslation[day] || day;
+  }
+
+  function translateHours(hours: string): string {
+    return hours === "Closed" ? "geschlossen" : hours; // Adjust the string 'Closed' as per your actual data
+  }
+
   function groupOpeningHours(openingHours: OpeningHour[]): string[] {
     const groupedHours: GroupedOpeningHour[] = [];
     let currentGroup: GroupedOpeningHour | null = null;
 
     openingHours.forEach((hour, index) => {
-      if (!currentGroup || hour.hours !== currentGroup.hours) {
+      const translatedDay = translateDay(hour.dayName);
+      const translatedHours = translateHours(hour.hours);
+
+      if (!currentGroup || translatedHours !== currentGroup.hours) {
         if (currentGroup) {
           groupedHours.push(currentGroup);
         }
-        currentGroup = { days: [hour.dayName], hours: hour.hours };
+        currentGroup = { days: [translatedDay], hours: translatedHours };
       } else {
-        currentGroup.days.push(hour.dayName);
+        currentGroup.days.push(translatedDay);
       }
 
       if (index === openingHours.length - 1 && currentGroup) {
@@ -27,12 +49,10 @@ export default function BusinessHours({
     return groupedHours.map((group) => {
       let daysFormatted = "";
       if (group.days.length > 2) {
-        // For more than two days, use "Monday - Friday" format
         daysFormatted = `${group.days[0]} - ${
           group.days[group.days.length - 1]
         }`;
       } else {
-        // For two or less, use "Monday & Tuesday" format
         daysFormatted = group.days.join(" & ");
       }
       return `${daysFormatted}: ${group.hours}`;
@@ -59,7 +79,7 @@ export default function BusinessHours({
       Unsere Öffnungszeiten: <br />
       <div className="text-sm mt-pz2">
         {formattedOpeningHours.map((hours, index) => (
-          <p className=" p-1" key={index}>
+          <p className="p-1" key={index}>
             {hours}
           </p>
         ))}
