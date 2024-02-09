@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-import StadtGT from "../../../assets/LogoCloud/stadtgt.svg";
+import StadtGT from "../../../assets/LogoCloud/stadtGt.svg";
 import Joliente from "../../../assets/LogoCloud/joliente_logo_mobile-dark.svg";
 import FFGT from "../../../assets/LogoCloud/ffgt.svg";
 import StadtwerkeGT from "../../../assets/LogoCloud/logostadtwerke.svg";
