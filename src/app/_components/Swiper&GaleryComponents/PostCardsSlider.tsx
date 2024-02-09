@@ -38,7 +38,10 @@ export default function PostCardSlider({
   return (
     <>
       <div className={isReady ? "opacity-100 mb-pz5" : " opacity-0"}>
-        <h2 className="text-center text-brand-colour-light my-pz5 text-2sc">
+        <h2
+          id="news"
+          className="text-center text-brand-colour-light my-pz5 text-2sc"
+        >
           Neuigkeiten & Veranstaltungen
         </h2>
         <CardSwiper className="text-center h-vw60 w-vw75 md:w-vw60 md:h-vw40 ">
