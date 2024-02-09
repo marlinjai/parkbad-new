@@ -15,8 +15,11 @@ export const footerNavigationLinks = [
   {
     title: "Über uns",
     links: [
-      { name: "Historie & Kontakt", href: "/Historie&Kontakt" },
-      { name: "Jobs", href: "/Jobs" },
+      {
+        name: "Historie & Kontakt",
+        href: "/Historie&Kontakt",
+        secondaryHref: "/Historie&Kontakt#Kontakt",
+      },
       { name: "Partner", href: "/#Partner" },
       // more links...
     ],

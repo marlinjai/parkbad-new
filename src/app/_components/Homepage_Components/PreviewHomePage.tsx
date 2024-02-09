@@ -4,7 +4,7 @@
 
 import { useLiveQuery } from "@sanity/preview-kit";
 import HomePage from "@/app/_components/Homepage_Components/HomePage";
-import { eventsQuery, postsQuery } from "@/sanity/lib/sanity.queries";
+import { eventsQuery, postsQuery } from "../../../sanity/lib/sanity.queries";
 import { CustomEvent, PostType } from "@/types/sanityTypes";
 
 export default function PreviewHomePage({

@@ -68,12 +68,29 @@ export default function Footer({ openingHours }: FooterProps) {
                           {link.name}
                         </a>
                       ) : (
-                        <a
-                          href={link.href}
-                          className="text-sm leading-6 text-gray-300 hover:text-brand-colour-dark"
-                        >
-                          {link.name}
-                        </a>
+                        <>
+                          <div className=" text-gray-300">
+                            <a
+                              href={link.href}
+                              className="text-sm leading-6 text-gray-300 hover:text-brand-colour-dark"
+                            >
+                              {link.secondaryHref
+                                ? link.name.split(" & ")[0]
+                                : link.name}
+                            </a>
+                            {link.secondaryHref && (
+                              <>
+                                {" & "}
+                                <a
+                                  href={link.secondaryHref}
+                                  className="text-sm leading-6 text-gray-300 hover:text-brand-colour-dark"
+                                >
+                                  {link.name.split(" & ")[1]}
+                                </a>
+                              </>
+                            )}
+                          </div>
+                        </>
                       )}
                     </li>
                   ))}

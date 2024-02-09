@@ -1,7 +1,7 @@
 "use client";
 
-import { urlForImage } from "@/sanity/lib/sanity.image";
-import { client } from "@/sanity/lib/sanity.client";
+import { urlForImage } from "../../../sanity/lib/sanity.image";
+import { client } from "../../../sanity/lib/sanity.client";
 import { PostType, CustomEvent } from "@/types/sanityTypes";
 import { useEffect, useState, useMemo } from "react";
 import { parseISO, compareAsc } from "date-fns";

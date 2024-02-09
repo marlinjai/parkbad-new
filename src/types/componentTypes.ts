@@ -20,7 +20,14 @@ export type PostPageProps = {
 
 // Define a type alias for AccordionProps
 export type AccordionProps = {
-  data: { title: string; links: { name: string; href: string }[] }[];
+  data: {
+    title: string;
+    links: {
+      secondaryHref?: any;
+      name: string;
+      href: string;
+    }[];
+  }[];
   openModal: (id: string) => void;
   requiresModal: (title: string) => boolean;
 };

@@ -15,10 +15,9 @@ const Accordion: React.FC<AccordionProps> = ({
         : [...prevOpenIndices, index]
     );
   };
-
   return data.map((item, index) => (
     <div
-      className={`flex flex-col sm:w-full md:w-1/3 lg:w-1/4 ${
+      className={`flex flex-col w-full md:w-1/3 lg:w-1/4 ${
         openIndices.includes(index) ? "open" : ""
       }`}
       key={index}
@@ -79,12 +78,25 @@ const Accordion: React.FC<AccordionProps> = ({
                   {link.name}
                 </a>
               ) : (
-                <a
-                  href={link.href}
-                  className="text-md hover:text-brand-colour-dark"
-                >
-                  {link.name}
-                </a>
+                <>
+                  <a
+                    href={link.href}
+                    className="text-md hover:text-brand-colour-dark"
+                  >
+                    {link.secondaryHref ? link.name.split(" & ")[0] : link.name}
+                  </a>
+                  {link.secondaryHref && (
+                    <>
+                      {" & "}
+                      <a
+                        href={link.secondaryHref}
+                        className="text-md hover:text-brand-colour-dark"
+                      >
+                        {link.name.split(" & ")[1]}
+                      </a>
+                    </>
+                  )}
+                </>
               )}
             </li>
           ))}

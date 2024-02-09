@@ -1,9 +1,9 @@
 "use client";
 
 import { useLiveQuery } from "@sanity/preview-kit";
-import { drinksQuery, foodQuery } from "@/sanity/lib/sanity.queries";
+import { drinksQuery, foodQuery } from "../../../sanity/lib/sanity.queries";
 import { Drink, Food } from "@/types/sanityTypes";
-import Menu from "./Menu";
+
 import EssenTrinkenPage from "./EssenUndTrinkenPage";
 
 export default function PreviewEssenUndTrinkenPage({

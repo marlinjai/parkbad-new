@@ -37,7 +37,12 @@ export default function Kontakt() {
 
   return (
     <>
+      <div className=" flex justify-end items-center text-brand-colour-light text-xl flex-col gap-4">
+        <h2>Hast du noch Fragen?</h2>
+        <h3>Dann sende uns einfach eine Nachrricht</h3>
+      </div>
       <form
+        id="Kontakt"
         className="mx-auto mb-16  mt-16 max-w-xl sm:mt-20"
         onSubmit={handleSubmit}
       >
@@ -56,6 +61,7 @@ export default function Kontakt() {
                 name="firstName"
                 id="first-name"
                 autoComplete="given-name"
+                required
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-border-orange sm:text-sm sm:leading-6"
               />
             </div>
@@ -75,6 +81,7 @@ export default function Kontakt() {
                 name="lastName"
                 id="last-name"
                 autoComplete="family-name"
+                required
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-border-orange sm:text-sm sm:leading-6"
               />
             </div>
@@ -96,6 +103,7 @@ export default function Kontakt() {
                 name="email"
                 id="email"
                 autoComplete="email"
+                required
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm placeholder:text-gray-400 focus:ring-brand-border-orange sm:text-sm sm:leading-6"
               />
             </div>
@@ -114,6 +122,7 @@ export default function Kontakt() {
                 name="message"
                 id="message"
                 rows={4}
+                required
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-border-orange sm:text-sm sm:leading-6"
                 defaultValue={""}
               />

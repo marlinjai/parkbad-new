@@ -69,7 +69,9 @@ export default function Post({ post, customevent, preview }: PostPageProps) {
     <SiteLayout preview={preview}>
       <article className="flex items-center flex-col">
         {renderImage(item)}
-        <div className="m-10 w-pz80 md:w-pz60">{renderContent(item)}</div>
+        <div className="m-10 text-brand-colour-light w-pz80 md:w-pz60">
+          {renderContent(item)}
+        </div>
       </article>
     </SiteLayout>
   );

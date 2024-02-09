@@ -4,7 +4,7 @@ export default function AlertBanner({ preview }: { preview?: boolean }) {
   if (!preview) return null;
 
   return (
-    <div className={`border-accent-7 bg-accent-7 border-b text-white`}>
+    <div className={`border-accent-7 bg-brand-accent-2 border-b text-white`}>
       <div className=" w-screen flex flex-col items-center justify-center">
         <div className="py-2 text-center text-sm">
           {"Previewing draft content. "}

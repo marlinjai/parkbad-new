@@ -3,10 +3,11 @@ import React from "react";
 const Hausordnung = () => {
   return (
     <>
-      <div className=" bg-brand-colour-darker p-16 border-brand-border-orange border-2">
-        <h2 className=" m-4 text-center text-brand-accent-4 text-3sc font-carlson font-extrabold">
-          Liebe Besucher
+      <div className=" bg-brand-colour-darker p-8 md:p-16 border-brand-border-orange border-2">
+        <h2 className=" m-4 text-center text-brand-accent-4 text-4sc md:text-3sc font-carlson font-extrabold">
+          Hausordnung
         </h2>
+        <h3 className="mb-4 mt-6 text-xl font-semibold">Liebe Besucher</h3>
         <ol className="list-decimal ">
           <li className="m-3">
             Mitgebrachte Speisen & Getränke dürfen gern auf der Wiese verzehrt
