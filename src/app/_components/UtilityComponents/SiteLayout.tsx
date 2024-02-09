@@ -10,7 +10,7 @@ export default async function SiteLayout({
   children: React.ReactNode;
   preview?: boolean;
 }) {
-  const openingHours = await fetchOpeningHours("Scheunerei");
+  const openingHours = await fetchOpeningHours("Parkbad");
 
   return (
     <>

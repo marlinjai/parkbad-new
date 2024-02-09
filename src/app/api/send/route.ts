@@ -17,7 +17,7 @@ export async function POST(request: Request) {
 
     const data = await resend.emails.send({
       from: "sending@whiz-art.com",
-      to: ["marlinjp@icloud.com"],
+      to: ["verwaltung@parkbad-gt.de"],
       subject:
         "Neue Nachricht von " +
         requestBody.firstName +
