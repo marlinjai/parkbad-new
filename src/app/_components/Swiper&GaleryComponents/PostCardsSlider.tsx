@@ -67,7 +67,7 @@ export default function PostCardSlider({
                     style={{
                       objectFit: "cover",
                     }}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    sizes="(max-width: 768px) 50, (max-width: 1200px) 70vw, 100vw"
                     priority={true}
                   />
                   <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>

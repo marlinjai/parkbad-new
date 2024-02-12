@@ -67,8 +67,8 @@ export default function BusinessHours({
 
   if (openingHours.length === 0) {
     return (
-      <div className="text-md mt-pz5 mb-pz2 font-semibold leading-6 text-white sm:mt-0 sm:w-full sm:text-start">
-        Unsere Öffnungszeiten: <br />
+      <div className="text-md mt-pz5 mb-pz2  font-semibold leading-6 text-white sm:mt-0 sm:w-full sm:text-start">
+        <p className="my-2">Unsere Öffnungszeiten:</p>
         <span className="text-sm">Derzeit geschlossen</span>
       </div>
     );

@@ -55,6 +55,7 @@ export type PostorEventItem = {
   eventTitle?: string;
   coverImage?: any;
   content?: any;
+  eventContent?: any;
   eventImage?: any;
   author?: Author;
   date?: string;

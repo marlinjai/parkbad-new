@@ -6,7 +6,8 @@ import Modal from "./Modals";
 import React from "react";
 import { footerNavigationLinks } from "../../customerData/footerLinksData";
 import { socialNavigationLinks } from "../../customerData/footerLinksData";
-
+import { MdOutlineMail } from "react-icons/md";
+import { FiPhone } from "react-icons/fi";
 import { FooterProps } from "@/types/componentTypes";
 
 import Newsletter from "./Newsletter";
@@ -121,6 +122,22 @@ export default function Footer({ openingHours }: FooterProps) {
         <div className=" mt-pz5 flex flex-col justify-between gap-vw3 p-4 sm:flex-row  md:p-0">
           {/* <Newsletter></Newsletter> */}
           <BusinessHours openingHours={openingHours}></BusinessHours>
+          <div className=" text-md  w-full text-brand-colour-light">
+            <a
+              href="tel:+49 5241 235858"
+              className="text-white flex justify-start sm:justify-end items-center gap-3 my-2"
+            >
+              <FiPhone className="inline" />
+              <span>+49 5241 235858</span>
+            </a>
+            <a
+              href="mailto:verwaltung@parkbad-gt.de"
+              className="text-white flex justify-start sm:justify-end items-center gap-3 my-2"
+            >
+              <MdOutlineMail className="inline" />
+              <span>verwaltung@parkbad-gt.de</span>
+            </a>
+          </div>
         </div>
 
         <div className="mt-pz5 border-t border-white/10 px-pz7 pt-8 md:flex md:items-center md:justify-between">

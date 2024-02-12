@@ -14,7 +14,7 @@ export default function VideoSection() {
         muted
       />
       <div className="  flex justify-center">
-        <SvgOverlays level={2}></SvgOverlays>
+        <SvgOverlays></SvgOverlays>
       </div>
     </div>
   );

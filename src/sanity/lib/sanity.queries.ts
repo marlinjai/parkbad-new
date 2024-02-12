@@ -71,6 +71,11 @@ export const postPathsQuery = groq`*[_type == "post"]{
   ${postFields}
 }`;
 
+//get all event slugs
+export const eventPathsQuery = groq`*[_type == "customevent"]{
+  ${eventFields}
+}`;
+
 //old queries
 
 export const settingsQuery = groq`*[_type == "settings"][0]`;
@@ -90,6 +95,11 @@ export const eventsQuery = groq`
       ${eventFields}
     }
   `;
+
+// Get a single event by its slug
+export const eventQuery = groq`*[_type == "customevent" && slug.current == $slug][0]{ 
+  ${eventFields}
+  }`;
 
 export const homepageEventsQuery = groq`
   *[_type == "customevent" && (eventEnd > now() || !defined(eventEnd))] | order(_updatedAt desc) {

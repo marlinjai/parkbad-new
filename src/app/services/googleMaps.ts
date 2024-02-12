@@ -15,7 +15,7 @@ async function fetchOpeningHours(businessName: string): Promise<OpeningHour[]> {
     const searchResponseText = await searchResponse.text();
     const searchData = JSON.parse(searchResponseText);
 
-    console.log("Search Data:", searchData); // Debugging
+    //console.log("Search Data:", searchData); // Debugging
 
     const placeId = searchData.candidates?.[0]?.place_id;
     if (!placeId) {
@@ -28,7 +28,7 @@ async function fetchOpeningHours(businessName: string): Promise<OpeningHour[]> {
     const detailsResponseText = await detailsResponse.text();
     const detailsData = JSON.parse(detailsResponseText);
 
-    console.log("Details Data:", detailsData); // Debugging
+    //console.log("Details Data:", detailsData); // Debugging
 
     let weekday_text = detailsData.result.opening_hours?.weekday_text;
     let openingHours = weekday_text
