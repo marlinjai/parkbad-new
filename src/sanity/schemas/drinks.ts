@@ -39,7 +39,7 @@ export default defineType({
       title: "Slug",
       type: "slug",
       options: {
-        source: "drinkTitle",
+        source: "drinkTitleIntern",
         maxLength: 96,
         isUnique: (value, context) => context.defaultIsUnique(value, context),
       },
@@ -56,7 +56,8 @@ export default defineType({
           { title: "juices", value: "Saft & Co" },
           { title: "softDrinks", value: "Limo & Co" },
           { title: "alcoholFreeBeers", value: "Alkoholfreie Biere" },
-          { title: "beers", value: "Biere & Co" },
+          { title: "bottledBeers", value: "Flaschen Bier" },
+          { title: "fassBeers", value: "Fass Bier" },
           { title: "wines", value: "Weine & Co" },
           { title: "prosecco", value: "Prosecco & Sekt" },
           { title: "shots", value: "Schnäpse" },

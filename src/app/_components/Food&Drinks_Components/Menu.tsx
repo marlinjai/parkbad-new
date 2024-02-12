@@ -18,21 +18,21 @@ export default function Menu({
   return (
     <>
       <div className="flex flex-col justify-center text-center">
-        <h2 className=" text-brand-colour-light mt-pz5 text-5sc">
+        {/* <h2 className=" text-brand-colour-light mt-pz5 text-5sc">
           Unsere Speisen & Getränke
-        </h2>
+        </h2> */}
 
         {/* Toggle button */}
         <div className="">
           <button
-            className="sm:w-vw25 md:w-vw20 m-pz2 w-vw35 my-pz5 sm:my-pz2 text-brand-text-button rounded-full bg-primary-buton-color p-pz1 font-carlson sm:text-1sc shadow-md"
+            className="sm:w-vw25 md:w-vw20 m-pz2 w-vw35 my-pz5 sm:my-pz5 text-brand-text-button rounded-full bg-primary-buton-color p-pz1 font-carlson sm:text-1sc shadow-md"
             onClick={() => setShowDrinks(!showDrinks)}
           >
             {showDrinks ? "Speisen anzeigen" : "Getränke anzeigen"}
           </button>
         </div>
         <div className=" flex justify-center">
-          <div className="relative min-h-vh90 w-vw90 md:w-vw75 lg:w-vw65">
+          <div className="relative min-h-vh90 w-vw90 md:w-vw75 lg:w-vw55">
             {/* Your existing layout here */}
             {/* Sub-container for the two big squares and the middle rectangle */}
             <div

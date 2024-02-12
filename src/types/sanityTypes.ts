@@ -54,7 +54,7 @@ export type Drink = {
   regularPrice?: number;
   discount?: number;
   slug?: string;
-  seller?: SubBusiness;
+  seller: SubBusiness;
 };
 
 export type GalleryImage = {

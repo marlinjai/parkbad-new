@@ -46,8 +46,8 @@ export default function FoodMenu({ food }: { food: Food[] }) {
   return (
     <div className="text-brand-colour-light w-pz100 h-vh80">
       {Object.keys(categorizedFoods).map((seller, sellerIndex) => (
-        <div key={sellerIndex}>
-          <h2 className="font-carlson text-2sc text-brand-accent-4 mt-12">
+        <div key={sellerIndex} className=" mb-pz10">
+          <h2 className="font-carlson text-2sc text-brand-accent-4 ">
             {seller}
           </h2>
           {Object.keys(categorizedFoods[seller]).map(
@@ -61,11 +61,11 @@ export default function FoodMenu({ food }: { food: Food[] }) {
                 {categorizedFoods[seller][category].map((food, foodIndex) => (
                   <div
                     key={foodIndex}
-                    className="my-2 flex items-center justify-between border-b border-brand-colour-dark pb-2 text-1sc md:text-4sc"
+                    className="my-2 flex items-center justify-between border-b border-brand-colour-dark pb-2 text-1sc 2xl:text-4sc"
                   >
                     <span className="w-4/12 text-left">{food.foodTitle}</span>
                     <span className="w-2/12 text-right">
-                      {food.regularPrice}{" "}
+                      {food.regularPrice ? food.regularPrice.toFixed(2) : " "}
                       <span className="text-brand-colour-dark">€</span>
                     </span>
                   </div>
