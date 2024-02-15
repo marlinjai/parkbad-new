@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
 import * as zoomwall from "zoomwall.js";
-import "zoomwall.js/lib/zoomwall.css";
 import Image from "next/image";
 import { GalleryImage } from "@/types/sanityTypes";
 import { urlForImage } from "@/sanity/lib/sanity.image";
@@ -13,7 +12,7 @@ interface ZoomgalleryProps {
 
 const Zoomgallery: React.FC<ZoomgalleryProps> = ({ images }) => {
   useEffect(() => {
-    const galleryElement = document.getElementById("gallerie");
+    const galleryElement = document.getElementById("gallery");
     if (galleryElement) {
       zoomwall.create(galleryElement, true);
     }
@@ -22,7 +21,7 @@ const Zoomgallery: React.FC<ZoomgalleryProps> = ({ images }) => {
   const builder = urlForImage(client);
 
   return (
-    <div id="gallerie" className="zoomwall flex flex-wrap">
+    <div id="gallery" className="zoomwall">
       {images.map((image, index) => (
         <Image
           key={index}
