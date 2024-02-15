@@ -24,8 +24,8 @@ export default async function CelebratingHero() {
       <div className=" w-screen h-vh70 md:h-screen relative ">
         {/* <FeiernFader images={heroImages} /> */}
         <Image
-          src={heroImages[2].src}
-          alt={heroImages[2].alt}
+          src={heroImages[0].src}
+          alt={heroImages[0].alt}
           fill={true}
           priority={true}
           style={{
