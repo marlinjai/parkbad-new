@@ -21,8 +21,6 @@ interface ZoomgalleryProps {
   images: GalleryImage[];
 }
 export default function Gallery(props: ZoomgalleryProps) {
-  console.log(props);
-
   const onInit = () => {
     console.log("lightGallery has been initialized");
   };
