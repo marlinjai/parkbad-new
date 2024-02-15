@@ -1,4 +1,4 @@
-import { Drink, Food } from "@/types/sanityTypes";
+import { DrinkCategory, Food } from "@/types/sanityTypes";
 import SiteLayout from "../UtilityComponents/SiteLayout";
 import Menu from "./Menu";
 
@@ -6,16 +6,16 @@ export interface FoodAndDrinksPageProps {
   preview?: boolean;
   loading?: boolean;
   food: Food[];
-  drinks: Drink[];
+  drinksCategories: DrinkCategory[];
 }
 
 export default function EssenTrinkenPage(props: FoodAndDrinksPageProps) {
-  const { preview, food, drinks } = props;
+  const { preview, food, drinksCategories } = props;
 
   return (
     <>
       <SiteLayout preview={preview}>
-        <Menu food={food} drinks={drinks}></Menu>
+        <Menu food={food} drinksCategories={drinksCategories}></Menu>
       </SiteLayout>
     </>
   );

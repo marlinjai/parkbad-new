@@ -1,7 +1,7 @@
 // ./nextjs-app/sanity/desk/defaultDocumentNode.ts
 
-import { DefaultDocumentNodeResolver } from "sanity/desk";
 import Iframe from "sanity-plugin-iframe-pane";
+import { StructureBuilder } from "sanity/structure";
 
 // Create a function to generate the URL based on the document slug
 const generatePreviewURL = (doc: { slug: { current: any } }) => {
@@ -14,9 +14,9 @@ const generatePreviewURL = (doc: { slug: { current: any } }) => {
   return url;
 };
 
-export const defaultDocumentNode: DefaultDocumentNodeResolver = (
-  S,
-  { schemaType }
+export const defaultDocumentNode = (
+  S: StructureBuilder,
+  { schemaType: schemaType }: { schemaType: string }
 ) => {
   switch (schemaType) {
     case `post`:

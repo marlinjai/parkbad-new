@@ -1,20 +1,28 @@
 "use client";
 
 import { useLiveQuery } from "@sanity/preview-kit";
-import { drinksQuery, foodQuery } from "../../../sanity/lib/sanity.queries";
-import { Drink, Food } from "@/types/sanityTypes";
+import {
+  drinkCategoriesQuery,
+  foodQuery,
+} from "../../../sanity/lib/sanity.queries";
+import { DrinkCategory, Food } from "@/types/sanityTypes";
 
 import EssenTrinkenPage from "./EssenUndTrinkenPage";
 
 export default function PreviewEssenUndTrinkenPage({
   food = [],
-  drinks = [],
+  drinksCategories = [],
 }: {
   food: Food[];
-  drinks: Drink[];
+  drinksCategories: DrinkCategory[];
 }) {
   const [foodData] = useLiveQuery(food, foodQuery);
-  const [drinksData] = useLiveQuery(drinks, drinksQuery);
+  const [drinksCategoriesData] = useLiveQuery(
+    drinksCategories,
+    drinkCategoriesQuery
+  );
 
-  return <EssenTrinkenPage food={foodData} drinks={drinksData} />;
+  return (
+    <EssenTrinkenPage food={foodData} drinksCategories={drinksCategoriesData} />
+  );
 }

@@ -11,8 +11,8 @@ const LogoCloud = () => {
     <>
       {/* Logo cloud */}
       <section id="Partner">
-        <div className="relative isolate mt-pz15">
-          <div className="absolute inset-x-0 top-1/2 -z-10 mt-pz15 flex -translate-y-1/2 scale-75 justify-center overflow-hidden [mask-image:radial-gradient(50%_45%_at_50%_55%,white,transparent)] sm:mt-pz10 md:scale-100 ">
+        <div className="relative isolate mt-pz25">
+          <div className="absolute inset-x-0 top-1/4 -z-10 mt-pz15 flex -translate-y-1/2 scale-75 justify-center overflow-hidden [mask-image:radial-gradient(50%_45%_at_50%_55%,white,transparent)] sm:mt-pz10 md:scale-100 ">
             <svg
               className="h-[40rem] w-[80rem] flex-none stroke-brand-accent-4"
               aria-hidden="true"

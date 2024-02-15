@@ -19,7 +19,7 @@ export default function HomePage({
       <VideoSection></VideoSection>
       <TrippleIcon></TrippleIcon>
       <PostCardsSlider posts={posts} customevents={customevents} />
-      <LogoCloud></LogoCloud>
+      {/* <LogoCloud></LogoCloud> */}
     </SiteLayout>
   );
 }

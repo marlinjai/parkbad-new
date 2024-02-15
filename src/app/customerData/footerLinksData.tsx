@@ -20,7 +20,7 @@ export const footerNavigationLinks = [
         href: "/Historie&Kontakt",
         secondaryHref: "/Historie&Kontakt#Kontakt",
       },
-      { name: "Partner", href: "/#Partner" },
+      { name: "Partner", href: "/partner" },
       // more links...
     ],
   },

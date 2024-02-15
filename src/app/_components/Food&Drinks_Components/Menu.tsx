@@ -4,14 +4,14 @@ import React, { useState } from "react";
 
 import FoodMenu from "./Foodmenu";
 import DrinksMenu from "./Drinksmenu";
-import { Drink, Food } from "@/types/sanityTypes";
+import { DrinkCategory, Food } from "@/types/sanityTypes";
 
 export default function Menu({
   food,
-  drinks,
+  drinksCategories,
 }: {
   food: Food[];
-  drinks: Drink[];
+  drinksCategories: DrinkCategory[];
 }) {
   const [showDrinks, setShowDrinks] = useState(true);
 
@@ -151,7 +151,7 @@ export default function Menu({
               <div className="flex justify-center">
                 <div className=" z-20 -mt-5 h-vh60 w-pz80 px-4 overflow-y-auto">
                   {showDrinks ? (
-                    <DrinksMenu drinks={drinks} />
+                    <DrinksMenu drinkcategories={drinksCategories} />
                   ) : (
                     <FoodMenu food={food} />
                   )}

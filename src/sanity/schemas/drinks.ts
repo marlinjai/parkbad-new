@@ -3,6 +3,10 @@ import { defineField, defineType } from "sanity";
 import subBusinessType from "./subBusiness";
 
 import { BiSolidDrink } from "react-icons/bi";
+import {
+  orderRankField,
+  orderRankOrdering,
+} from "@sanity/orderable-document-list";
 
 /**
  * This file is the schema definition for a post.
@@ -21,6 +25,8 @@ export default defineType({
   title: "Getränke",
   icon: BiSolidDrink,
   type: "document",
+  orderings: [orderRankOrdering],
+
   fields: [
     defineField({
       name: "drinkTitleIntern",
@@ -64,8 +70,17 @@ export default defineType({
           { title: "longdrinksCocktails", value: "Longdrinks & Cocktails" },
         ],
       },
+    }),
+
+    defineField({
+      name: "drinkCategory",
+      title: "Getränke Kategorie",
+      type: "reference",
+      to: [{ type: "drinkCategories" }],
+
       validation: (rule) => rule.required(),
     }),
+
     defineField({
       name: "alcoholic",
       title: "alkoholisch",
@@ -94,5 +109,6 @@ export default defineType({
       type: "reference",
       to: [{ type: subBusinessType.name }],
     }),
+    orderRankField({ type: "drinks", newItemPosition: "before" }),
   ],
 });

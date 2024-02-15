@@ -2,24 +2,22 @@ import React from "react";
 import Image from "next/image";
 import brandLogo from "../../../assets/logo temporary.png";
 
-function StudioLogo(props: any) {
-  const { renderDefault, title } = props;
-
+function StudioIcon() {
   return (
     <div className="flex items-center space-x-2">
       <Image
         className="rounden-full object-cover"
-        height={100}
-        width={100}
+        height={300}
+        width={300}
         src={brandLogo}
         alt="logo"
         style={{
           maxWidth: "100%",
-          height: "auto"
-        }} />
-      <>{renderDefault(props)}</>
+          height: "auto",
+        }}
+      />
     </div>
   );
 }
 
-export default StudioLogo;
+export default StudioIcon;

@@ -57,6 +57,13 @@ export type Drink = {
   seller: SubBusiness;
 };
 
+export type DrinkCategory = {
+  _id: string;
+  name: string;
+  picture?: any;
+  drinks: Drink[];
+};
+
 export type GalleryImage = {
   url: any;
   _type: "image";

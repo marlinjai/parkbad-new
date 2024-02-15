@@ -47,6 +47,13 @@ discount,
 "seller": seller->{name, picture},
 `;
 
+const drinkCategoryFields = groq`
+_id,
+name,
+picture,
+drinks[]->{drinkTitle, drinkTitleIntern, category, alcoholic, regularPrice, size, discount, "slug": slug.current, "seller": seller->{name, picture}},
+`;
+
 const galleryFields = groq`
 _id,
 galleryTitle,
@@ -107,10 +114,15 @@ export const homepageEventsQuery = groq`
   }
 `;
 export const foodQuery = groq`
-  *[_type == 'food'] |order(price asc) {${foodFields}}`;
+  *[_type == 'food'] |order(foodTitle asc) {${foodFields}}`;
 
 export const drinksQuery = groq`
-*[_type == 'drinks'] | order(price asc) {${drinkFields}}`;
+*[_type == 'drinks'] | order(drinkTitle asc, size asc) {${drinkFields}}`;
+
+export const drinkCategoriesQuery = groq`
+*[_type == 'drinkCategories'] | order(orderRank) {
+ ${drinkCategoryFields}
+}`;
 
 export const alcoholicDrinksQuery = groq`
   *[_type =='drink' && alcoholic == true]| order (price asc){${drinkFields}}`;

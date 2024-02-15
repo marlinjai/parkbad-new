@@ -5,6 +5,7 @@ import food from "./food";
 import post from "./post";
 import subBusiness from "./subBusiness";
 import zoomgallery from "./gallery";
+import drinkCategories from "./drinkCategories";
 
 const schemas = [
   subBusiness,
@@ -13,6 +14,7 @@ const schemas = [
   customevent,
   food,
   drinks,
+  drinkCategories,
   zoomgallery,
 ];
 
