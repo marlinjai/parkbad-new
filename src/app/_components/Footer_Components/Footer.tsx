@@ -4,8 +4,8 @@ import { useState } from "react";
 import Accordion from "./Accordion";
 import Modal from "./Modals";
 import React from "react";
-import { footerNavigationLinks } from "../../customerData/footerLinksData";
-import { socialNavigationLinks } from "../../customerData/footerLinksData";
+import { footerNavigationLinks } from "../../_customerData/footerLinksData";
+import { socialNavigationLinks } from "../../_customerData/footerLinksData";
 import { MdOutlineMail } from "react-icons/md";
 import { FiPhone } from "react-icons/fi";
 import { FooterProps } from "@/types/componentTypes";
@@ -37,7 +37,7 @@ export default function Footer({ openingHours }: FooterProps) {
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
-      <div className="mx-auto flex flex-col justify-center px-12 pb-8 pt-16 sm:pt-20 md:px-20 lg:px-20">
+      <div className="mx-auto flex flex-col justify-center px-8 pb-8 pt-16 sm:pt-20 md:px-20 lg:px-20">
         <div className="grid-cols-3 gap-12   py-4 md:grid  xl:gap-8">
           {/* Modals */}
           {footerNavigationLinks.map((section, sectionIndex) => (
@@ -51,7 +51,7 @@ export default function Footer({ openingHours }: FooterProps) {
                     : "justify-self-start"
                 } hidden md:block`}
               >
-                <h3 className="text-lg font-semibold leading-6 text-white">
+                <h3 className="text-2xl font-semibold leading-6 text-white">
                   {section.title}
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
@@ -64,7 +64,7 @@ export default function Footer({ openingHours }: FooterProps) {
                             e.preventDefault();
                             openModal(`modal-${sectionIndex}-${linkIndex}`);
                           }}
-                          className="text-sm leading-6 text-gray-300 hover:text-brand-colour-dark"
+                          className="text-md leading-6 text-gray-300 hover:text-brand-colour-dark"
                         >
                           {link.name}
                         </a>
@@ -73,7 +73,7 @@ export default function Footer({ openingHours }: FooterProps) {
                           <div className=" text-gray-300">
                             <a
                               href={link.href}
-                              className="text-sm leading-6 text-gray-300 hover:text-brand-colour-dark"
+                              className="text-md leading-6 text-gray-300 hover:text-brand-colour-dark"
                             >
                               {link.secondaryHref
                                 ? link.name.split(" & ")[0]
@@ -84,7 +84,7 @@ export default function Footer({ openingHours }: FooterProps) {
                                 {" & "}
                                 <a
                                   href={link.secondaryHref}
-                                  className="text-sm leading-6 text-gray-300 hover:text-brand-colour-dark"
+                                  className="text-md leading-6 text-gray-300 hover:text-brand-colour-dark"
                                 >
                                   {link.name.split(" & ")[1]}
                                 </a>
@@ -119,10 +119,10 @@ export default function Footer({ openingHours }: FooterProps) {
           </div>
         </div>
 
-        <div className=" mt-pz5 flex flex-col justify-between gap-vw3 p-4 sm:flex-row  md:p-0">
+        <div className=" mt-pz5 flex flex-col justify-between gap-vw1 p-4 sm:flex-row  md:p-0">
           {/* <Newsletter></Newsletter> */}
           <BusinessHours openingHours={openingHours}></BusinessHours>
-          <div className=" text-md  w-full text-brand-colour-light">
+          <div className=" text-xl  w-full sm:w-pz65 text-brand-colour-light">
             <a
               href="tel:+49 5241 235858"
               className="text-white flex justify-start sm:justify-end items-center gap-3 my-2"
@@ -153,7 +153,7 @@ export default function Footer({ openingHours }: FooterProps) {
               </a>
             ))}
           </div>
-          <p className="mt-8 text-xs leading-5 text-gray-400 md:order-1 md:mt-0">
+          <p className="mt-8 text-xs sm:text-sm leading-5 text-gray-400 md:order-1 md:mt-0">
             &copy; 2023 Parkbad Gütersloh All rights reserved.
           </p>
         </div>

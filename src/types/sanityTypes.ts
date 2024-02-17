@@ -64,6 +64,13 @@ export type DrinkCategory = {
   drinks: Drink[];
 };
 
+export type FoodCategory = {
+  _id: string;
+  name: string;
+  picture?: any;
+  foods: Food[];
+};
+
 export type GalleryImage = {
   url: any;
   _type: "image";

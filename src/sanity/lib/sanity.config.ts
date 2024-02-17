@@ -11,9 +11,8 @@ import StudioIcon from "@/app/_components/Sanity_Components/StudioIcon";
 import CustomToolMenu from "@/app/_components/Sanity_Components/CustomToolMenu";
 import { media } from "sanity-plugin-media";
 import { BiSolidDrink } from "react-icons/bi";
+import { PiPizzaDuotone } from "react-icons/pi";
 
-import { defaultDocumentNode } from "../desk/defaultDocumentNode";
-import { structure } from "../desk/structure";
 import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 
 const config = defineConfig({
@@ -37,22 +36,15 @@ const config = defineConfig({
             ),
             S.documentTypeListItem("post").title("Beiträge"),
             S.documentTypeListItem("customevent").title("Events"),
-            S.documentTypeListItem("food").title("Speisen"),
-            // S.listItem()
-            //   .title("Getränke nach Kategorie")
-            //   .icon(BiSolidDrink)
-            //   .child(
-            //     S.documentTypeList("drinkCategories")
-            //       .title("Kategorien")
-            //       .child((categoryId) =>
-            //         S.documentList()
-            //           .title("Getränke")
-            //           .filter(
-            //             '_type == "drinks" && $categoryId == drinkCategory._ref'
-            //           )
-            //           .params({ categoryId })
-            //       )
-            //   ),
+            orderableDocumentListDeskItem({
+              type: "foodCategories",
+              title: "Speise Kategorien",
+              icon: PiPizzaDuotone,
+
+              S,
+              context,
+            }),
+            S.documentTypeListItem("food").title("alle Speisen"),
             orderableDocumentListDeskItem({
               type: "drinkCategories",
               title: "Getränke Kategorien",
@@ -61,9 +53,10 @@ const config = defineConfig({
               S,
               context,
             }),
+
             S.documentTypeListItem("drinks").title("alle Getränke"),
             S.documentTypeListItem("gallery").title("Gallerien"),
-            S.documentTypeListItem("media.tag").title("Media Tags"),
+            // S.documentTypeListItem("media.tag").title("Media Tags"),
           ]);
       },
     }),

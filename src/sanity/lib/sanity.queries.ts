@@ -54,6 +54,13 @@ picture,
 drinks[]->{drinkTitle, drinkTitleIntern, category, alcoholic, regularPrice, size, discount, "slug": slug.current, "seller": seller->{name, picture}},
 `;
 
+const foodCategoryFields = groq`
+_id,
+name,
+picture,
+foods[]->{foodTitle, regularPrice, discount, category, "slug": slug.current, "seller": seller->{name, picture}},
+`;
+
 const galleryFields = groq`
 _id,
 galleryTitle,
@@ -122,6 +129,11 @@ export const drinksQuery = groq`
 export const drinkCategoriesQuery = groq`
 *[_type == 'drinkCategories'] | order(orderRank) {
  ${drinkCategoryFields}
+}`;
+
+export const foodCategoriesQuery = groq`
+*[_type == 'foodCategories'] | order(orderRank) {
+  ${foodCategoryFields}
 }`;
 
 export const alcoholicDrinksQuery = groq`

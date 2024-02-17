@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import Datenschutzerklaerung from "../../customerData/Datenschutzerklaerung";
-import Impressum from "../../customerData/Impressum";
-import Hausordnung from "../../customerData/Hausordnung";
+import Datenschutzerklaerung from "../../_customerData/Datenschutzerklaerung";
+import Impressum from "../../_customerData/Impressum";
+import Hausordnung from "../../_customerData/Hausordnung";
 import Button from "../UtilityComponents/Button";
 
 interface ModalProps {

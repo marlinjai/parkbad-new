@@ -4,14 +4,16 @@ import React, { useState } from "react";
 
 import FoodMenu from "./Foodmenu";
 import DrinksMenu from "./Drinksmenu";
-import { DrinkCategory, Food } from "@/types/sanityTypes";
+import { DrinkCategory, Food, FoodCategory } from "@/types/sanityTypes";
 
 export default function Menu({
   food,
   drinksCategories,
+  foodCategories,
 }: {
   food: Food[];
   drinksCategories: DrinkCategory[];
+  foodCategories: FoodCategory[];
 }) {
   const [showDrinks, setShowDrinks] = useState(true);
 
@@ -153,7 +155,7 @@ export default function Menu({
                   {showDrinks ? (
                     <DrinksMenu drinkcategories={drinksCategories} />
                   ) : (
-                    <FoodMenu food={food} />
+                    <FoodMenu foodCategories={foodCategories} />
                   )}
                 </div>
               </div>

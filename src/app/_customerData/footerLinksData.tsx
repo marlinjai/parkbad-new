@@ -7,7 +7,6 @@ export const footerNavigationLinks = [
     links: [
       { name: "Neuigkeiten & Events", href: "/Neuigkeiten&Events" },
       { name: "Essen & Trinken", href: "/Essen&Trinken" },
-      { name: "Bildgalerie", href: "/Bildgalerie" },
       { name: "Feiern & Tagen", href: "/Feiern&Tagen" },
       // more links...
     ],
@@ -20,6 +19,7 @@ export const footerNavigationLinks = [
         href: "/Historie&Kontakt",
         secondaryHref: "/Historie&Kontakt#Kontakt",
       },
+      { name: "Bildgalerie", href: "/Bildgalerie" },
       { name: "Partner", href: "/partner" },
       // more links...
     ],

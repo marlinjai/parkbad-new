@@ -191,3 +191,8 @@ swiper-container {
     position: relative;
   }
 }
+
+.lg-thumb-item.active,
+.lg-thumb-item:hover {
+  border-color: #fcd539 !important;
+}

@@ -25,7 +25,7 @@ export default function Gallery(props: ZoomgalleryProps) {
     console.log("lightGallery has been initialized");
   };
   return (
-    <div className="App columns-2 gap-0 lg:columns-3 xl:columns-4 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-8">
+    <div className="App  gap-4 columns-2 lg:columns-3 xl:columns-4 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-8">
       <LightGallery
         onInit={onInit}
         speed={500}
@@ -42,7 +42,7 @@ export default function Gallery(props: ZoomgalleryProps) {
                 width={800}
                 height={600}
                 key={index}
-                className="object-cover"
+                className={`${index !== 0 ? "mt-4 lg:mt-4" : ""} object-cover`}
               />
             </a>
           );

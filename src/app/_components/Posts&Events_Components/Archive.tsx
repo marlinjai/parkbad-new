@@ -91,14 +91,17 @@ export default function Archive({
       <div className="grid grid-cols-1  xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 p-10">
         {data.map((item) => (
           <div key={item._id} className="  p-4 rounded-lg ">
-            <div className="relative h-60 w-full">
-              <Image
-                src={builder.image(item.coverImage).url()}
-                alt={item.title}
-                fill={true}
-                className="object-cover rounded-lg"
-              />
-            </div>
+            <a href={`/${item.slug}`}>
+              <div className="relative h-60 w-full">
+                <Image
+                  src={builder.image(item.coverImage).url()}
+                  alt={item.title}
+                  fill={true}
+                  sizes={"(min-width: 640px) 50vw, 100vw"}
+                  className="object-cover rounded-lg"
+                />
+              </div>
+            </a>
             <div className="p-4">
               <div className=" h-16">
                 <h2 className="text-2xl text-white font-semibold">

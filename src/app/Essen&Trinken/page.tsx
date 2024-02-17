@@ -1,7 +1,11 @@
 import { draftMode } from "next/headers";
-import { drinkCategoriesQuery, foodQuery } from "@/sanity/lib/sanity.queries";
+import {
+  drinkCategoriesQuery,
+  foodCategoriesQuery,
+  foodQuery,
+} from "@/sanity/lib/sanity.queries";
 import { sanityFetch } from "@/sanity/lib/sanity.fetch";
-import { DrinkCategory, Food } from "@/types/sanityTypes";
+import { DrinkCategory, Food, FoodCategory } from "@/types/sanityTypes";
 import PreviewEssenUndTrinkenPage from "../_components/Food&Drinks_Components/PreviewEssenUndTrinkenPage";
 import EssenUndTrinkenPage from "../_components/Food&Drinks_Components/EssenUndTrinkenPage";
 
@@ -10,6 +14,9 @@ export default async function EssenUndTrinken() {
   const drinkcategories = await sanityFetch<DrinkCategory[]>({
     query: drinkCategoriesQuery,
   });
+  const foodCategories = await sanityFetch<FoodCategory[]>({
+    query: foodCategoriesQuery,
+  });
 
   const isDraftMode = draftMode().isEnabled;
 
@@ -17,12 +24,17 @@ export default async function EssenUndTrinken() {
     return (
       <PreviewEssenUndTrinkenPage
         food={foods}
+        foodCategories={foodCategories}
         drinksCategories={drinkcategories}
       />
     );
   }
 
   return (
-    <EssenUndTrinkenPage food={foods} drinksCategories={drinkcategories} />
+    <EssenUndTrinkenPage
+      food={foods}
+      foodCategories={foodCategories}
+      drinksCategories={drinkcategories}
+    />
   );
 }

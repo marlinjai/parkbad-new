@@ -1,4 +1,5 @@
 import { OpeningHour, GroupedOpeningHour } from "@/types/componentTypes";
+import internal from "stream";
 
 // Mapping English days to German
 const dayTranslation: { [key: string]: string } = {
@@ -20,8 +21,44 @@ export default function BusinessHours({
     return dayTranslation[day] || day;
   }
 
-  function translateHours(hours: string): string {
-    return hours === "Closed" ? "geschlossen" : hours; // Adjust the string 'Closed' as per your actual data
+  function convertTo24Hour(time: any, modifier = "") {
+    let [hours, minutes] = time.split(":");
+
+    hours = parseInt(hours, 10); // Ensure 'hours' is treated as a number initially for logic checks
+
+    if (!modifier && hours < 12) {
+      modifier = "AM"; // Default to PM if no modifier is provided and hours < 12
+    }
+
+    if (hours === 12 && modifier === "AM") {
+      hours = 0; // Midnight is 00 in 24-hour time
+    } else if (modifier === "PM" && hours < 12) {
+      hours += 12; // Convert PM hours to 24-hour format
+    }
+
+    // Ensure 'hours' is converted back to a string with 'padStart' applied
+    return `${hours.toString().padStart(2, "0")}:${minutes}`;
+  }
+
+  function translateHours(hoursString: string) {
+    if (hoursString.toLowerCase() === "closed") {
+      return "geschlossen";
+    } else {
+      // Detect if the string includes AM or PM and capture the period for conversion
+      const periodMatch = hoursString.match(/\b(AM|PM)\b/i);
+      const period = periodMatch ? periodMatch[0] : "";
+
+      let [start, end] = hoursString
+        .split(" – ")
+        .map((s) => s.replace(/\b(AM|PM)\b/i, "").trim());
+
+      // Convert start and end times to 24-hour format
+      const startTime = convertTo24Hour(start, period);
+      const endTime = convertTo24Hour(end, period);
+
+      // Directly return the converted times without appending AM/PM
+      return `${startTime} – ${endTime}`;
+    }
   }
 
   function groupOpeningHours(openingHours: OpeningHour[]): string[] {
@@ -68,18 +105,20 @@ export default function BusinessHours({
   if (openingHours.length === 0) {
     return (
       <div className="text-md mt-pz5 mb-pz2  font-semibold leading-6 text-white sm:mt-0 sm:w-full sm:text-start">
-        <p className="my-2">Unsere Öffnungszeiten:</p>
-        <span className="text-sm">Derzeit geschlossen</span>
+        <p className="my-2 md:text-2xl">Unsere Öffnungszeiten:</p>
+        <span className="text-md">Derzeit geschlossen</span>
       </div>
     );
   }
 
   return (
-    <div className="text-lg text-start mt-pz5 font-semibold leading-6 text-white sm:mt-0 sm:w-pz50">
-      Unsere Öffnungszeiten: <br />
-      <div className="text-sm mt-pz2">
+    <div className=" text-start mt-pz5  text-white sm:mt-0 sm:w-pz50 mb-4">
+      <h4 className="text-lg md:text-2xl font-semibold">
+        Unsere Öffnungszeiten:
+      </h4>
+      <div className="text-md my-pz2">
         {formattedOpeningHours.map((hours, index) => (
-          <p className="p-1" key={index}>
+          <p className="py-1" key={index}>
             {hours}
           </p>
         ))}
