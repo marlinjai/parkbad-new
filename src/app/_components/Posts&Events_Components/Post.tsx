@@ -1,29 +1,38 @@
 import Image from "next/image";
 import imageUrlBuilder from "@sanity/image-url";
+import { PortableText } from "@portabletext/react";
+import {
+  PortableTextBlock,
+  PortableTextSpan,
+  PortableTextMarkDefinition,
+} from "@portabletext/types";
 import { client } from "@/sanity/lib/sanity.client";
 import SiteLayout from "../UtilityComponents/SiteLayout";
 import { PostPageProps, PostorEventItem } from "@/types/componentTypes";
 import AuthorAvatar from "./AuthorAvatar";
 import PostDate from "./PostDate";
-import { PortableText, PortableTextComponentProps } from "@portabletext/react";
-import { PortableTextBlock, PortableTextSpan } from "@portabletext/types";
 
-// Define a more specific type for the block components
-interface BlockProps {
-  children: React.ReactNode;
-}
-// Define a type for your custom image component props
-interface MyImageProps {
-  value: {
-    asset: {
-      _ref?: string;
-      url: string;
-    };
-    alt?: string;
-    caption?: string;
+// Define interfaces for any custom block types
+interface MyImageBlock extends PortableTextBlock {
+  _type: "image";
+  asset: {
+    _ref: string;
+    url: string;
   };
+  alt?: string;
+  caption?: string;
+}
+
+type CustomPortableTextBlock =
+  | MyImageBlock
+  | PortableTextBlock<PortableTextMarkDefinition, PortableTextSpan>;
+
+// Custom image component props
+interface MyImageProps {
+  value: MyImageBlock;
   index: number;
 }
+
 const builder = imageUrlBuilder(client);
 
 function renderImage(item: PostorEventItem) {
@@ -52,6 +61,7 @@ function renderImage(item: PostorEventItem) {
     </div>
   ) : null;
 }
+
 function MyImage({ value, index }: MyImageProps) {
   const imageUrl = builder.image(value.asset).url();
   const orientationClass =
@@ -62,7 +72,7 @@ function MyImage({ value, index }: MyImageProps) {
       <img
         src={imageUrl}
         alt={value.alt || " "}
-        className="rounded-lg shadow-lg mb-4 max-w-full h-auto block mt-8 ml-auto mr-auto"
+        className="rounded-lg shadow-lg mb-4 w-full h-auto block mt-8"
       />
       {value.caption && (
         <figcaption className="text-center">{value.caption}</figcaption>
@@ -72,69 +82,73 @@ function MyImage({ value, index }: MyImageProps) {
 }
 
 function renderContent(item: PostorEventItem) {
-  const content = item.content || item.eventContent;
-
-  const components: PortableTextComponentProps = {
-    types: {
-      image: MyImage,
-    },
-    block: {
-      normal: ({ children }: BlockProps) => (
-        <p className=" text-justify text-xl  leading-8">{children}</p>
-      ),
-      h1: ({ children }: BlockProps) => (
-        <h1 className=" text-justify text-3xl font-semibold">{children}</h1>
-      ),
-      h2: ({ children }: BlockProps) => (
-        <h2 className=" text-justify text-3xl my-8 font-semibold">
-          {children}
-        </h2>
-      ),
-      h3: ({ children }: BlockProps) => (
-        <h3 className=" text-justify text-3xl my-8 font-semibold">
-          {children}
-        </h3>
-      ),
-      h4: ({ children }: BlockProps) => (
-        <h4 className=" text-justify text-2xl my-8 font-semibold">
-          {children}
-        </h4>
-      ),
-      h5: ({ children }: BlockProps) => (
-        <h5 className=" text-justify text-2xl my-8 font-semibold">
-          {children}
-        </h5>
-      ),
-      h6: ({ children }: BlockProps) => (
-        <h6 className=" text-justify text-2xl my-8 font-semibold">
-          {children}
-        </h6>
-      ),
-    },
-  };
-
-  return content ? (
-    <PortableText value={content} components={components} />
-  ) : null;
+  return (
+    <PortableText
+      value={item.content || item.eventContent}
+      components={{
+        types: {
+          image: MyImage,
+        },
+        block: {
+          normal: ({ children }) => (
+            <p className="text-justify text-xl leding-6 my-4">{children}</p>
+          ),
+          h1: ({ children }) => (
+            <h1 className=" text-center font-semibold my-8 text-2xl">
+              {children}
+            </h1>
+          ),
+          h2: ({ children }) => (
+            <h2 className=" text-center font-semibold my-8 text-2xl">
+              {children}
+            </h2>
+          ),
+          h3: ({ children }) => (
+            <h3 className=" text-center font-semibold my-8 text-2xl">
+              {children}
+            </h3>
+          ),
+          h4: ({ children }) => (
+            <h4 className=" text-center font-semibold my-8 text-2xl">
+              {children}
+            </h4>
+          ),
+          h5: ({ children }) => (
+            <h5 className=" text-center font-semibold my-8 text-2xl">
+              {children}
+            </h5>
+          ),
+          h6: ({ children }) => (
+            <h6 className=" text-center font-semibold my-8 text-2xl">
+              {children}
+            </h6>
+          ),
+          // Define more custom components for different styles if needed
+        },
+      }}
+    />
+  );
 }
 
 function renderDate(item: PostorEventItem) {
-  const date = item.date;
-  const start = item.eventStart;
-  const end = item.eventEnd;
-  return date ? (
-    <PostDate dateString={date} />
-  ) : (
-    <div className="flex justify-center">
-      <PostDate dateString={start} />
-      <p className="mx-2"> - </p>
-      <PostDate dateString={end} />
+  const date = item.date || "";
+  const start = item.eventStart || "";
+  const end = item.eventEnd || "";
+  return (
+    <div>
+      <PostDate dateString={date || start} />
+      {end && (
+        <>
+          <span> - </span>
+          <PostDate dateString={end} />
+        </>
+      )}
     </div>
   );
 }
 
 export default function Post({ post, customevent, preview }: PostPageProps) {
-  const itemToShow: PostorEventItem | null = post || customevent || null;
+  const itemToShow = post || customevent;
   if (!itemToShow) return null;
 
   return (
