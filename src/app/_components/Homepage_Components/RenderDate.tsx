@@ -31,6 +31,6 @@ export default function renderDate(event: PostorEventItem) {
   if (event.date) {
     const date = new Date(event.date);
     let formattedDate = format(date, "dd.MM.yyyy");
-    return <p>{formattedDate}</p>;
+    return <p className="">{formattedDate}</p>;
   }
 }

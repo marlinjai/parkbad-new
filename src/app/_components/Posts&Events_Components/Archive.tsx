@@ -62,6 +62,18 @@ export default function Archive({
     setData(filteredData);
   }, [sortKey, filterType, combinedData]);
 
+  function getGridClasses(length: number) {
+    if (length === 2) {
+      return "md:grid-cols-2";
+    } else if (length === 3) {
+      return "lg:grid-cols-3";
+    } else if (length >= 4) {
+      return "xl:grid-cols-4";
+    } else {
+      return "grid-cols-1";
+    }
+  }
+
   return (
     <>
       <div className="flex flex-col items-center justify-center">
@@ -88,11 +100,21 @@ export default function Archive({
         </div>
       </div>
 
-      <div className="grid grid-cols-1  xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 p-10">
+      <div
+        className={`grid grid-cols-1  xs:grid-cols-2 md:grid-cols-3 ${
+          data.length == 2
+            ? "md:grid-cols-2"
+            : data.length == 3
+            ? "lg:grid-cols-3 md:grid-cols-2"
+            : data.length >= 4
+            ? "xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2"
+            : null
+        }  p-10`}
+      >
         {data.map((item) => (
           <div key={item._id} className="  p-4 rounded-lg ">
             <a href={`/${item.slug}`}>
-              <div className="relative h-60 w-full">
+              <div className="relative h-vw30 md:h-vw20 w-full">
                 <Image
                   src={builder.image(item.coverImage).url()}
                   alt={item.title}

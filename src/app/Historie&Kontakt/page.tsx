@@ -287,7 +287,7 @@ export default async function Historie() {
           <dl className="mx-auto mt-16 grid max-w-xl grid-cols-1 gap-12 md:gap-x-36 gap-y-16 text-base leading-7 xs:grid-cols-2 lg:mx-0 lg:max-w-none">
             {values.map((value) => (
               <div key={value.name}>
-                <dt className="font-semibold text-brand-colour-light">
+                <dt className="font-semibold text-brand-colour-light text-4sc">
                   {value.name}
                 </dt>
                 <dd className="mt-1 text-brand-colour-light/50">

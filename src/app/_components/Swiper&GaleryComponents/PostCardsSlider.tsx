@@ -38,10 +38,7 @@ export default function PostCardSlider({
   return (
     <>
       <div className={isReady ? "opacity-100 mb-pz25" : " opacity-0"}>
-        <h2
-          id="news"
-          className="text-center text-brand-colour-light my-pz5 text-2sc"
-        >
+        <h2 className="text-center text-brand-colour-light my-pz5 text-2sc">
           Neuigkeiten & Veranstaltungen
         </h2>
         <CardSwiper className="text-center h-vw60 w-vw75 md:w-vw60 md:h-vw40 ">
@@ -72,7 +69,7 @@ export default function PostCardSlider({
                   />
                   <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
                   <div className="absolute bottom-4 xs:bottom-8 md:bottom-10 z-50 w-full">
-                    <div className="flex flex-col items-center justify-center  text-brand-colour-light">
+                    <div className="flex flex-col items-center justify-center  text-brand-colour-light text-3sc">
                       <svg
                         id="Layer_1"
                         xmlns="http://www.w3.org/2000/svg"

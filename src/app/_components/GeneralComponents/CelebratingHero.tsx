@@ -5,6 +5,7 @@ import { urlForImage } from "@/sanity/lib/sanity.image";
 import { client } from "@/sanity/lib/sanity.client";
 import Image from "next/image";
 import FeiernFader from "../Swiper&GaleryComponents/FeiernfaderSwiper";
+import Kontakt from "../UtilityComponents/Kontakt";
 
 const builder = urlForImage(client);
 
@@ -36,7 +37,7 @@ export default async function CelebratingHero() {
 
       {/* Content section */}
       <div className="absolute -mt-48 overflow-hidden sm:-mt-24">
-        <div className="mx-auto max-w-7xl px-12 lg:flex lg:px-8">
+        <div className="mx-auto max-w-7xl px-12 lg:flex lg:px-8 ml-vw4">
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:min-w-full lg:max-w-none lg:flex-none lg:gap-y-8">
             <div className="lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
               <h2 className="text-2xl font-bold tracking-tight text-brand-colour-light sm:text-4xl">
@@ -50,6 +51,7 @@ export default async function CelebratingHero() {
                 <a href="mailto:marlinjp@hotmail.de">Anfrage stellen</a>
               </button>
             </div>
+            <Kontakt></Kontakt>
           </div>
         </div>
       </div>

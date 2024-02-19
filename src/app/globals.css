@@ -196,3 +196,9 @@ swiper-container {
 .lg-thumb-item:hover {
   border-color: #fcd539 !important;
 }
+
+.min-h-vh90.w-vw90.md\:w-vw75.lg\:w-vw55::after {
+  content: "";
+  display: table;
+  clear: both;
+}
