@@ -22,10 +22,10 @@ export default function HomePage({
       <TrippleIcon></TrippleIcon>
       <PostCardsSlider posts={posts} customevents={customevents} />
       {/* <LogoCloud></LogoCloud> */}
-
-      <div className="relative isolate h-full ">
+      <InfiniteImageSlider images={historyImages} />
+      {/* <div className="relative isolate h-full ">
         <svg
-          className="absolute inset-x-0 top-0 -z-10 h-[64rem] w-full stroke-brand-accent-4 [mask-image:radial-gradient(32rem_32rem_at_center,white,transparent)]"
+          className="absolute  inset-x-0 top-0 -z-10 h-[64rem] w-full stroke-brand-accent-4 [mask-image:radial-gradient(32rem_32rem_at_center,white,transparent)]"
           aria-hidden="true"
         >
           <defs>
@@ -69,7 +69,7 @@ export default function HomePage({
             }}
           />
         </div>
-        <InfiniteImageSlider images={historyImages} />
+       
         {/* <div className="overflow-hidden h-full">
           <div className="mt-14 flex justify-end gap-4  sm:justify-start sm:gap-8 sm:pl-20 lg:mt-0 lg:pl-0">
             <div className=" w-vw30 sm:w-44 flex-none space-y-8 sm:mr-0 sm">
@@ -150,7 +150,6 @@ export default function HomePage({
             </div>
           </div>
         </div> */}
-      </div>
     </SiteLayout>
   );
 }
