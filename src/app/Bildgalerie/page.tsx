@@ -17,9 +17,9 @@ export default async function Bildgalerie() {
   return (
     <SiteLayout>
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-4sc md:text-3sc font-carlson text-brand-colour-light font-bold mt-10 ">
-          Erinnerungen aus dem Parkbad
-        </h1>
+        <h2 className="text-center text-brand-colour-light mt-pz5 text-2sc">
+          Bildgalerie
+        </h2>
       </div>
       <div className="p-4 md:p-12 xl:p-20 flex flex-wrap justify-center">
         {/* <Zoomgallery images={firstGallery.images}></Zoomgallery> */}

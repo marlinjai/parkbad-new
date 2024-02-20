@@ -37,7 +37,7 @@ export default function PostCardSlider({
 
   return (
     <>
-      <div className={isReady ? "opacity-100 mb-pz25" : " opacity-0"}>
+      <div className={isReady ? "opacity-100 mb-pz15" : " opacity-0"}>
         <h2 className="text-center text-brand-colour-light my-pz5 text-2sc">
           Neuigkeiten & Veranstaltungen
         </h2>

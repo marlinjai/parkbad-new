@@ -5,6 +5,7 @@ export type HomePageProps = {
   posts: PostType[];
   customevents: CustomEvent[];
   preview?: boolean;
+  historyImages: any;
 };
 
 export type FooterProps = {

@@ -174,6 +174,11 @@ export const galleryHeaderQuery = groq`
   ${galleryFields}
 }`;
 
+export const homeImageQuery = groq`
+*[_type == 'gallery' && galleryTitle == "Homepage Gallerie" ] | order(imageTitle asc){
+  ${galleryFields}
+}`;
+
 export const historyFaderQuery = groq`
 *[_type == 'gallery' && galleryTitle == "HistoryFader" ] | order(imageTitle asc){
   ${galleryFields}

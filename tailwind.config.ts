@@ -202,6 +202,12 @@ const config: Config = {
         blurBG:
           "brightness(71%) contrast(135%) saturate(60%) blur(86.5px) hue-rotate(0deg)",
       },
+      keyframes: {
+        slide: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" }, // Adjust based on your needs
+        },
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],

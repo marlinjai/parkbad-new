@@ -124,14 +124,14 @@ export default function Archive({
                 />
               </div>
             </a>
-            <div className="p-4">
+            <div className="p-4 text-center">
               <div className=" h-16">
                 <h2 className="text-2xl text-white font-semibold">
                   {item.title}
                 </h2>
               </div>
 
-              <p className="text-white mt-2 h-24">{item.excerpt}</p>
+              <p className="text-white text-lg mt-2 h-24">{item.excerpt}</p>
               <div className="flex flex-col items-center">
                 <Button
                   styles="w-pz80"
