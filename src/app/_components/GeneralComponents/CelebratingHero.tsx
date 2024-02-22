@@ -5,13 +5,17 @@ import { urlForImage } from "@/sanity/lib/sanity.image";
 import { client } from "@/sanity/lib/sanity.client";
 import Image from "next/image";
 
-import RentingForm from "../UtilityComponents/RentingForm";
-
 const builder = urlForImage(client);
 
 interface CelebratingHeroProps {
   heroImages: Gallery[];
 }
+
+import dynamic from "next/dynamic";
+const RentingFormNoSSR = dynamic(
+  () => import("../UtilityComponents/RentingForm"),
+  { ssr: false }
+);
 
 export default function CelebratingHero(props: CelebratingHeroProps) {
   const heroImages = props.heroImages[0].images.map((image) => ({
@@ -36,7 +40,7 @@ export default function CelebratingHero(props: CelebratingHeroProps) {
       {/* Content section */}
       <div className="absolute  overflow-hidden w-screen h-screen flex justify-center items-start">
         <div className="-mt-8">
-          <RentingForm
+          <RentingFormNoSSR
             headline="Möchtest du das Parkbad mieten?"
             subheadline="Schreib uns worum es geht und wir melden uns bei dir"
             buttonHoverColor="bg-brand-colour-dark"
