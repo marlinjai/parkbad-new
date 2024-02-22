@@ -14,10 +14,16 @@ const BubbleBackground: React.FC<BubbleBackgroundProps> = ({ children }) => {
   const [tgY, setTgY] = useState<number>(0);
 
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
     const move = () => {
       setCurX((curX) => curX + (tgX - curX) / 20);
       setCurY((curY) => curY + (tgY - curY) / 20);
-      requestAnimationFrame(move);
+      if (typeof window !== "undefined") {
+        requestAnimationFrame(move);
+      }
     };
 
     const handleMouseMove = (event: MouseEvent) => {
@@ -30,7 +36,6 @@ const BubbleBackground: React.FC<BubbleBackgroundProps> = ({ children }) => {
 
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [tgX, tgY]);
-
   return (
     <div className="w-full h-full overflow-hidden">
       {children}
