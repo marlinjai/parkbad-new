@@ -24,10 +24,6 @@ export default function RentingForm(myFormProps: FormProps) {
   const [rows, setRows] = React.useState(4);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-  const handleButtonClick = () => {
-    setIsFormVisible(true);
-  };
-
   useEffect(() => {
     const handleResize = () => {
       if (typeof window !== "undefined") {
@@ -49,6 +45,7 @@ export default function RentingForm(myFormProps: FormProps) {
       };
     }
   }, []);
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget); // Use currentTarget instead of target
