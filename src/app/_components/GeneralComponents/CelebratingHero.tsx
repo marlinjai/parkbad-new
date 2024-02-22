@@ -6,7 +6,6 @@ import { client } from "@/sanity/lib/sanity.client";
 import Image from "next/image";
 
 import RentingForm from "../UtilityComponents/RentingForm";
-import { useEffect, useRef, useState } from "react";
 
 const builder = urlForImage(client);
 
@@ -37,11 +36,11 @@ export default function CelebratingHero(props: CelebratingHeroProps) {
       {/* Content section */}
       <div className="absolute  overflow-hidden w-screen h-screen flex justify-center items-start">
         <div className="-mt-8">
-          <RentingForm
+          {/* <RentingForm
             headline="Möchtest du das Parkbad mieten?"
             subheadline="Schreib uns worum es geht und wir melden uns bei dir"
             buttonHoverColor="bg-brand-colour-dark"
-          />
+          /> */}
         </div>
       </div>
     </>
