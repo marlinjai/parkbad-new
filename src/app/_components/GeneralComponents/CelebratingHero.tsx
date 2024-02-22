@@ -1,58 +1,75 @@
+"use client";
+
 import { Gallery } from "@/types/sanityTypes";
-import { sanityFetch } from "@/sanity/lib/sanity.fetch";
-import { celebrationFaderQuery } from "@/sanity/lib/sanity.queries";
 import { urlForImage } from "@/sanity/lib/sanity.image";
 import { client } from "@/sanity/lib/sanity.client";
 import Image from "next/image";
-import FeiernFader from "../Swiper&GaleryComponents/FeiernfaderSwiper";
-import Kontakt from "../UtilityComponents/Kontakt";
+
+import RentingForm from "../UtilityComponents/RentingForm";
+import { useEffect, useRef, useState } from "react";
 
 const builder = urlForImage(client);
 
-export default async function CelebratingHero() {
-  const heroImagesArray = await sanityFetch<Gallery[]>({
-    query: celebrationFaderQuery,
-  });
+interface CelebratingHeroProps {
+  heroImages: Gallery[];
+}
 
-  const heroImages = heroImagesArray[0].images.map((image) => ({
+export default function CelebratingHero(props: CelebratingHeroProps) {
+  const heroImages = props.heroImages[0].images.map((image) => ({
     src: builder.image(image).url(),
     alt: image.alt,
   }));
+  const [isFormVisible, setIsFormVisible] = useState(true);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  const handleButtonClick = () => {
+    setIsFormVisible(true);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(event.target as Node)) {
+        setIsFormVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     //    {/* Hero section */}
     <>
-      <div className=" w-screen h-vh70 md:h-screen relative ">
+      <div className=" w-screen h-screen md:h-screen relative ">
         {/* <FeiernFader images={heroImages} /> */}
         <Image
           src={heroImages[0].src}
           alt={heroImages[0].alt}
           fill={true}
           priority={true}
-          style={{
-            objectFit: "cover",
-          }}
+          className="object-cover w-screen h-screen md:h-screen"
         ></Image>
       </div>
 
       {/* Content section */}
-      <div className="absolute -mt-48 overflow-hidden sm:-mt-24">
-        <div className="mx-auto max-w-7xl px-12 lg:flex lg:px-8 ml-vw4">
-          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:min-w-full lg:max-w-none lg:flex-none lg:gap-y-8">
-            <div className="lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
-              <h2 className="text-2xl font-bold tracking-tight text-brand-colour-light sm:text-4xl">
-                Möchtest du das Parkbad <br></br> für eine Feier mieten?
-              </h2>
-              <p className="mt-6 text-xl leading-8 text-gray-100">
-                Dann stell uns doch eine Anfrage. <br></br>Wir melden uns dann
-                bei dir
-              </p>
-              <button className="mt-8 bg-brand-border-orange border border-transparent rounded-md shadow px-6 py-3 inline-flex items-center text-base font-medium text-white hover:bg-brand-colour-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-colour-dark">
-                <a href="mailto:marlinjp@hotmail.de">Anfrage stellen</a>
-              </button>
-            </div>
-            <Kontakt></Kontakt>
-          </div>
+      <div className="absolute  overflow-hidden w-screen h-screen flex justify-center items-start">
+        <div className="-mt-8" ref={formRef}>
+          {isFormVisible ? (
+            <RentingForm
+              headline="Möchtest du das Parkbad mieten?"
+              subheadline="Schreib uns worum es geht und wir melden uns bei dir"
+              buttonHoverColor="bg-brand-colour-dark"
+            />
+          ) : (
+            <button
+              className=" text-brand-colour-light "
+              onClick={handleButtonClick}
+            >
+              Show Form
+            </button>
+          )}
         </div>
       </div>
     </>

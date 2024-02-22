@@ -37,7 +37,7 @@ export default function PostCardSlider({
 
   return (
     <>
-      <div className={isReady ? "opacity-100 mb-pz15" : " opacity-0"}>
+      <div className={isReady ? "opacity-100 mb-vh10" : " opacity-0"}>
         <h2 className="text-center text-brand-colour-light my-pz5 text-2sc">
           Neuigkeiten & Veranstaltungen
         </h2>
@@ -76,7 +76,7 @@ export default function PostCardSlider({
                         viewBox="0 0 92 5"
                         className=" mb-2 h-1 w-12  stroke-brand-colour-light"
                       >
-                        <line
+                        {/* <line
                           x1="2.5"
                           y1="2.5"
                           x2="89.5"
@@ -84,10 +84,12 @@ export default function PostCardSlider({
                           strokeLinecap="round"
                           strokeMiterlimit="10"
                           strokeWidth="5"
-                        />
+                        /> */}
                       </svg>
                       {renderDate(item)}
-                      <h3>{item.title ? item.title : item.eventTitle}</h3>
+                      <h3 className=" mt-2 sm:text-3xl">
+                        {item.title ? item.title : item.eventTitle}
+                      </h3>
                     </div>
                   </div>
                 </a>

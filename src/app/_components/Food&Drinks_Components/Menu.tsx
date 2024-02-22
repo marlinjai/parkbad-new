@@ -27,7 +27,7 @@ export default function Menu({
         {/* Toggle button */}
         <div className="">
           <button
-            className="sm:w-vw25 md:w-vw20 m-pz2 w-vw35 my-pz5 sm:my-pz5 text-brand-text-button rounded-full bg-primary-buton-color p-pz1 font-carlson sm:text-1sc shadow-md"
+            className="sm:w-vw25 md:w-vw20 m-pz2 w-vw35 my-pz5 sm:my-pz5 text-brand-text-button rounded-full bg-primary-buton-color p-pz1 font-carlson md:text-4sc shadow-md"
             onClick={() => setShowDrinks(!showDrinks)}
           >
             {showDrinks ? "Speisen anzeigen" : "Getränke anzeigen"}

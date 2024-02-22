@@ -2,7 +2,7 @@ export default function TrippleIcon() {
   return (
     <>
       <div className="flex pt-pz5 justify-center relative">
-        <span id="news" className=" absolute top-0 "></span>
+        <span id="news" className=" absolute top-1 "></span>
         <div className="flex w-pz20 justify-center text-center ">
           <svg
             id="Layer_1"

@@ -23,7 +23,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" className=" scroll-smooth">
-      <body className="no-scrollbar disable-scrolling-horizontal bg-brand-accent-4 ${inter.className} ">
+      <body className="no-scrollbar disable-scrolling-horizontal w-screen bg-brand-accent-4 ${inter.className} ">
         {draftMode().isEnabled ? (
           <>
             <PreviewProvider token={token}>{children}</PreviewProvider>

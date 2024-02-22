@@ -92,35 +92,37 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
   // ...rest of your component
   return (
     <>
-      <style>{keyframes}</style>
-      <h2 className="text-center text-brand-colour-light mb-pz5 text-2sc">
-        Impressionen aus dem Parkbad
-      </h2>
-      <div className="relative overflow-hidden mb-pz15 py-15 ">
-        <div
-          ref={sliderRef}
-          className="whitespace-nowrap App"
-          style={sliderStyle}
-        >
-          <LightGallery onInit={onInit} speed={500} plugins={[lgZoom]}>
-            {duplicatedImages.map((image, index) => {
-              return (
-                <a href={builder.image(image).url()} key={index}>
-                  <Image
-                    alt={image.alt}
-                    src={builder.image(image).url()}
-                    sizes="(max-width: 1200px) 500px, 800px"
-                    width={800}
-                    height={600}
-                    key={index}
-                    className={`${
-                      index % 2 == 0 ? " mt-24" : ""
-                    } inline-block h-72 w-72 object-cover mx-10 rounded-2xl shadow-lg`}
-                  />
-                </a>
-              );
-            })}
-          </LightGallery>
+      <div className="">
+        <style>{keyframes}</style>
+        <h2 className="text-center text-brand-colour-light  sm:my-pz5 text-2sc">
+          Impressionen aus dem Parkbad
+        </h2>
+        <div className="relative overflow-hidden mb-pz15 ">
+          <div
+            ref={sliderRef}
+            className="whitespace-nowrap App"
+            style={sliderStyle}
+          >
+            <LightGallery onInit={onInit} speed={500} plugins={[lgZoom]}>
+              {duplicatedImages.map((image, index) => {
+                return (
+                  <a href={builder.image(image).url()} key={index}>
+                    <Image
+                      alt={image.alt}
+                      src={builder.image(image).url()}
+                      sizes="(max-width: 1200px) 500px, 800px"
+                      width={800}
+                      height={600}
+                      key={index}
+                      className={`${
+                        index % 2 == 0 ? " mt-24" : ""
+                      } inline-block h-vw30 w-vw30 sm:h-72 sm:w-72 object-cover mx-5 sm:mx-10 rounded-2xl shadow-lg`}
+                    />
+                  </a>
+                );
+              })}
+            </LightGallery>
+          </div>
         </div>
       </div>
     </>
