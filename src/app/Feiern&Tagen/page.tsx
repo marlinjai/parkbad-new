@@ -4,14 +4,15 @@ import { sanityFetch } from "@/sanity/lib/sanity.fetch";
 import { Gallery } from "@/types/sanityTypes";
 import { celebrationFaderQuery } from "@/sanity/lib/sanity.queries";
 
-export default async function FeiernUndTagen() {
-  const heroImagesArray = await sanityFetch<Gallery[]>({
-    query: celebrationFaderQuery,
-  });
+export default function FeiernUndTagen() {
+  // const heroImagesArray = await sanityFetch<Gallery[]>({
+  //   query: celebrationFaderQuery,
+  // });
 
   return (
     <SiteLayout>
-      <CelebratingHero heroImages={heroImagesArray}></CelebratingHero>
+      {/* <CelebratingHero heroImages={heroImagesArray}></CelebratingHero> */}
+      <h1>Feiern und Tagen</h1>
     </SiteLayout>
   );
 }
