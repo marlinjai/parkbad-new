@@ -110,7 +110,7 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
                     <Image
                       alt={image.alt}
                       src={builder.image(image).url()}
-                      sizes="(max-width: 1200px) 500px, 800px"
+                      sizes="(max-width: 640px) 350px, 600px"
                       width={800}
                       height={600}
                       key={index}
