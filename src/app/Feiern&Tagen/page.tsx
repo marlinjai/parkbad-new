@@ -1,4 +1,3 @@
-import React from "react";
 import SiteLayout from "../_components/UtilityComponents/SiteLayout";
 import CelebratingHero from "../_components/GeneralComponents/CelebratingHero";
 import { sanityFetch } from "@/sanity/lib/sanity.fetch";
