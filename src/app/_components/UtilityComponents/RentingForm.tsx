@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useEffect } from "react";
 import { SubmitButton } from "./SubmitButton";
 import { TbCircleChevronsDown } from "react-icons/tb";
 import { TbCircleChevronsUp } from "react-icons/tb";
@@ -28,24 +28,27 @@ export default function RentingForm(myFormProps: FormProps) {
     setIsFormVisible(true);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) {
-        // 640px is the default breakpoint for 'sm' in Tailwind CSS
-        setRows(2);
-      } else {
-        setRows(4);
+      if (typeof window !== "undefined") {
+        if (window.innerWidth < 640) {
+          // 640px is the default breakpoint for 'sm' in Tailwind CSS
+          setRows(2);
+        } else {
+          setRows(4);
+        }
       }
     };
 
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Call the function initially to set the correct number of rows
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", handleResize);
+      handleResize(); // Call the function initially to set the correct number of rows
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
   }, []);
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget); // Use currentTarget instead of target

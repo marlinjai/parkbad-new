@@ -69,7 +69,7 @@ function MyImage({ value, index }: MyImageProps) {
 
   return (
     <figure className={`${orientationClass} w-full md:w-1/2`}>
-      <img
+      <Image
         src={imageUrl}
         alt={value.alt || " "}
         className="rounded-lg shadow-lg mb-4 w-full h-auto block mt-8"
