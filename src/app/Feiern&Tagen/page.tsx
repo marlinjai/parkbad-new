@@ -4,10 +4,10 @@ import { sanityFetch } from "@/sanity/lib/sanity.fetch";
 import { Gallery } from "@/types/sanityTypes";
 import { celebrationFaderQuery } from "@/sanity/lib/sanity.queries";
 
-export default function FeiernUndTagen() {
-  // const heroImagesArray = await sanityFetch<Gallery[]>({
-  //   query: celebrationFaderQuery,
-  // });
+export default async function FeiernUndTagen() {
+  const heroImagesArray = await sanityFetch<Gallery[]>({
+    query: celebrationFaderQuery,
+  });
 
   return (
     <SiteLayout>
