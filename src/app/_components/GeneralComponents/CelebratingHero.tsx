@@ -19,25 +19,6 @@ export default function CelebratingHero(props: CelebratingHeroProps) {
     src: builder.image(image).url(),
     alt: image.alt,
   }));
-  const [isFormVisible, setIsFormVisible] = useState(true);
-  const formRef = useRef<HTMLDivElement>(null);
-
-  const handleButtonClick = () => {
-    setIsFormVisible(true);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (formRef.current && !formRef.current.contains(event.target as Node)) {
-        setIsFormVisible(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     //    {/* Hero section */}
@@ -55,21 +36,12 @@ export default function CelebratingHero(props: CelebratingHeroProps) {
 
       {/* Content section */}
       <div className="absolute  overflow-hidden w-screen h-screen flex justify-center items-start">
-        <div className="-mt-8" ref={formRef}>
-          {isFormVisible ? (
-            <RentingForm
-              headline="Möchtest du das Parkbad mieten?"
-              subheadline="Schreib uns worum es geht und wir melden uns bei dir"
-              buttonHoverColor="bg-brand-colour-dark"
-            />
-          ) : (
-            <button
-              className=" text-brand-colour-light "
-              onClick={handleButtonClick}
-            >
-              Show Form
-            </button>
-          )}
+        <div className="-mt-8">
+          <RentingForm
+            headline="Möchtest du das Parkbad mieten?"
+            subheadline="Schreib uns worum es geht und wir melden uns bei dir"
+            buttonHoverColor="bg-brand-colour-dark"
+          />
         </div>
       </div>
     </>

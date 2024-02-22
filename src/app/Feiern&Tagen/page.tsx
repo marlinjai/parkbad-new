@@ -11,8 +11,7 @@ export default async function FeiernUndTagen() {
 
   return (
     <SiteLayout>
-      {/* <CelebratingHero heroImages={heroImagesArray}></CelebratingHero> */}
-      <h1>Feiern und Tagen</h1>
+      <CelebratingHero heroImages={heroImagesArray}></CelebratingHero>
     </SiteLayout>
   );
 }
