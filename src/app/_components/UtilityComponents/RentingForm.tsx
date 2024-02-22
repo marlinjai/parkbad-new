@@ -21,30 +21,7 @@ export default function RentingForm(myFormProps: FormProps) {
     message: null,
   });
 
-  const [rows, setRows] = React.useState(4);
   const [isFormVisible, setIsFormVisible] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (typeof window !== "undefined") {
-        if (window.innerWidth < 640) {
-          // 640px is the default breakpoint for 'sm' in Tailwind CSS
-          setRows(2);
-        } else {
-          setRows(4);
-        }
-      }
-    };
-
-    if (typeof window !== "undefined") {
-      window.addEventListener("resize", handleResize);
-      handleResize(); // Call the function initially to set the correct number of rows
-
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }
-  }, []);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -212,7 +189,7 @@ export default function RentingForm(myFormProps: FormProps) {
                   <textarea
                     name="message"
                     id="message"
-                    rows={rows}
+                    rows={3}
                     required
                     className="block w-full rounded-md border-0 px-3.5 py-1 sm:py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-border-orange sm:text-sm sm:leading-6"
                     defaultValue={""}
