@@ -102,6 +102,11 @@
   );
 }
 
+.p {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .myCarouselSwiper {
   margin-top: 10%;
   width: 70vw;

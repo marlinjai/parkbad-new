@@ -46,14 +46,14 @@ const Modal: React.FC<ModalProps> = ({ id, onClose }) => {
     >
       <div className="fixed inset-0 bg-black opacity-70"></div>
       <div
-        className={`hide-scrollbar p-pz5 flex gap-pz5 items-center justify-between flex-col relative mx-4 -mb-pz50 md:-mb-pz15 w-vw90 overflow-y-auto rounded-3xl bg-brand-accent-2 shadow-lg md:w-vw60 opacity-0`}
+        className={`absolute hide-scrollbar p-pz5 flex gap-pz5 items-center justify-between flex-col sm:pb-pz5 pb-5 -bottom-1 w-vw90 overflow-y-auto rounded-t-3xl bg-brand-accent-2 shadow-lg md:w-vw60 opacity-0`}
         style={{ maxHeight: "80vh" }} // limit height to 80% of the view height
         onClick={stopPropagation}
         ref={modalRef}
       >
-        <div className=" flex justify-center items-center text-brand-colour-light text-xl flex-col gap-4">
+        <div className=" flex justify-center items-center text-brand-colour-light text-xl flex-col px-4 gap-4">
           <div className=" h-full mb-pz5 flex justify-center">
-            <div className="relative h-full  w-vw90 md:w-vw75 lg:w-vw55 w-vw55::after">
+            <div className="relative h-full  w-vw80 md:w-vw75 lg:w-vw55 w-vw55::after">
               {/* Your existing layout here */}
               {/* Sub-container for the two big squares and the middle rectangle */}
               <div
@@ -137,7 +137,8 @@ const Modal: React.FC<ModalProps> = ({ id, onClose }) => {
           border-solid 
           border-brand-border-orange 
           bg-brand-colour-darker 
-          pt-10 
+          pt-8 
+          pb-8
 
           md:py-14 
 "

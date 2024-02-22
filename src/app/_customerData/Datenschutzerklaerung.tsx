@@ -7,12 +7,12 @@ const Datenschutzerklaerung = () => {
         Datenschutzerklärung
       </h2>
       <h2 className="mb-4 text-2xl font-semibold">Verantwortlicher</h2>
-      <p>
+      <p className="text-sm md:text-xl">
         Im Sinne der Datenschutzgesetze, insbesondere der
         EU-Datenschutzgrundverordnung (DSGVO), ist:
       </p>
       <br />
-      <p>
+      <p className="text-sm md:text-xl">
         Parkbad Gütersloh
         <br />
         Franz-Josef Füchtenschnieder
@@ -25,15 +25,15 @@ const Datenschutzerklaerung = () => {
       </p>
 
       <section>
-        <h2 className="mb-4 mt-6 text-2xl font-semibold">
+        <h2 className="mb-4 mt-6 text-md sm:text-2xl font-semibold">
           Ihre Betroffenenrechte
         </h2>
-        <p>
+        <p className="text-sm md:text-xl">
           Unter den angegebenen Kontaktdaten unseres Datenschutzbeauftragten
           können Sie jederzeit folgende Rechte ausüben:
         </p>
         <br />
-        <ul>
+        <ul className="text-sm md:text-xl">
           <li>
             Auskunft über Ihre bei uns gespeicherten Daten und deren
             Verarbeitung (Art. 15 DSGVO)
@@ -54,21 +54,21 @@ const Datenschutzerklaerung = () => {
           </li>
         </ul>
         <br />
-        <p>
+        <p className="text-sm md:text-xl">
           <strong>
             Sofern Sie uns eine Einwilligung erteilt haben, können Sie diese
             jederzeit mit Wirkung für die Zukunft widerrufen.
           </strong>
         </p>
         <br />
-        <p>
+        <p className="text-sm md:text-xl">
           Sie können sich jederzeit mit einer Beschwerde an eine
           Aufsichtsbehörde wenden, z. B. an die zuständige Aufsichtsbehörde des
           Bundeslands Ihres Wohnsitzes oder an die für uns als verantwortliche
           Stelle zuständige Behörde.
         </p>
         <br />
-        <p>
+        <p className="text-sm md:text-xl">
           Eine Liste der Aufsichtsbehörden (für den nichtöffentlichen Bereich)
           mit Anschrift finden Sie{" "}
           <a href="https://www.datenschutzexperte.de/landesdatenschutzbeauftragter/">
@@ -87,7 +87,7 @@ const Datenschutzerklaerung = () => {
           Art und Zweck der Verarbeitung:
         </h3>
         <br />
-        <p>
+        <p className="text-sm md:text-xl">
           Wenn Sie auf unsere Website zugreifen, d.h., wenn Sie sich nicht
           registrieren oder anderweitig Informationen übermitteln, werden
           automatisch Informationen allgemeiner Natur erfasst. Diese
@@ -96,9 +96,11 @@ const Datenschutzerklaerung = () => {
           Internet-Service-Providers, Ihre IP-Adresse und ähnliches.
         </p>
         <br />
-        <p>Sie werden insbesondere zu folgenden Zwecken verarbeitet:</p>
+        <p className="text-sm md:text-xl">
+          Sie werden insbesondere zu folgenden Zwecken verarbeitet:
+        </p>
         <br />
-        <p>
+        <p className="text-sm md:text-xl">
           Sicherstellung eines problemlosen Verbindungsaufbaus der Website,
           Sicherstellung einer reibungslosen Nutzung unserer Website, Auswertung
           der Systemsicherheit und -stabilität sowie zur Optimierung unserer
@@ -112,21 +114,21 @@ const Datenschutzerklaerung = () => {
           Rechtsgrundlage und berechtigtes Interesse:
         </h3>
         <br />
-        <p>
+        <p className="text-sm md:text-xl">
           Die Verarbeitung erfolgt gemäß Art. 6 Abs. 1 lit. f DSGVO auf Basis
           unseres berechtigten Interesses an der Verbesserung der Stabilität und
           Funktionalität unserer Website.
         </p>
         <br />
         <h3 className="mb-4 mt-6 text-xl font-semibold">Empfänger:</h3>
-        <p>
+        <p className="text-sm md:text-xl">
           Empfänger der Daten sind ggf. technische Dienstleister, die für den
           Betrieb und die Wartung unserer Webseite als Auftragsverarbeiter tätig
           werden.
         </p>
         <br />
         <h3 className="mb-4 mt-6 text-xl font-semibold">Speicherdauer:</h3>
-        <p>
+        <p className="text-sm md:text-xl">
           Die Daten werden gelöscht, sobald diese für den Zweck der Erhebung
           nicht mehr erforderlich sind. Dies ist für die Daten, die der
           Bereitstellung der Website dienen, grundsätzlich der Fall, wenn die
@@ -136,7 +138,7 @@ const Datenschutzerklaerung = () => {
         <h3 className="mb-4 mt-6 text-xl font-semibold">
           Bereitstellung vorgeschrieben oder erforderlich:
         </h3>
-        <p>
+        <p className="text-sm md:text-xl">
           Die Bereitstellung der vorgenannten personenbezogenen Daten ist weder
           gesetzlich noch vertraglich vorgeschrieben. Ohne die IP-Adresse ist
           jedoch der Dienst und die Funktionsfähigkeit unserer Website nicht
@@ -152,12 +154,12 @@ const Datenschutzerklaerung = () => {
         <h3 className="mb-4 mt-6 text-xl font-semibold">
           Art und Zweck der Verarbeitung:
         </h3>
-        <p>
+        <p className="text-sm md:text-xl">
           Für die Zustellung unseres Newsletters erheben wir personenbezogene
           Daten, die über eine Eingabemaske an uns übermittelt werden.
         </p>
         <br />
-        <p>
+        <p className="text-sm md:text-xl">
           Für eine wirksame Registrierung benötigen wir eine valide
           E-Mail-Adresse. Um zu überprüfen, dass eine Anmeldung tatsächlich
           durch den Inhaber einer E-Mail-Adresse erfolgt, setzen wir das
@@ -167,14 +169,14 @@ const Datenschutzerklaerung = () => {
         </p>
 
         <h3 className="mb-4 mt-6 text-xl font-semibold">Rechtsgrundlage:</h3>
-        <p>
+        <p className="text-sm md:text-xl">
           Auf Grundlage Ihrer ausdrücklich erteilten Einwilligung (Art. 6 Abs. 1
           lit. a DSGVO), übersenden wir Ihnen regelmäßig unseren Newsletter bzw.
           vergleichbare Informationen per E-Mail an Ihre angegebene
           E-Mail-Adresse.
         </p>
         <br />
-        <p>
+        <p className="text-sm md:text-xl">
           Die Einwilligung zur Speicherung Ihrer persönlichen Daten und ihrer
           Nutzung für den Newsletterversand können Sie jederzeit mit Wirkung für
           die Zukunft widerrufen. In jedem Newsletter findet sich dazu ein
@@ -184,10 +186,12 @@ const Datenschutzerklaerung = () => {
         </p>
         <br />
         <h3 className="mb-4 mt-6 text-xl font-semibold">Empfänger:</h3>
-        <p>Empfänger der Daten sind ggf. Auftragsverarbeiter.</p>
+        <p className="text-sm md:text-xl">
+          Empfänger der Daten sind ggf. Auftragsverarbeiter.
+        </p>
         <br />
         <h3 className="mb-4 mt-6 text-xl font-semibold">Speicherdauer:</h3>
-        <p>
+        <p className="text-sm md:text-xl">
           Die Daten werden in diesem Zusammenhang nur verarbeitet, solange die
           entsprechende Einwilligung vorliegt. Danach werden sie gelöscht.
         </p>
@@ -195,7 +199,7 @@ const Datenschutzerklaerung = () => {
         <h3 className="mb-4 mt-6 text-xl font-semibold">
           Bereitstellung vorgeschrieben oder erforderlich:
         </h3>
-        <p>
+        <p className="text-sm md:text-xl">
           Die Bereitstellung Ihrer personenbezogenen Daten erfolgt freiwillig,
           allein auf Basis Ihrer Einwilligung. Ohne bestehende Einwilligung
           können wir Ihnen unseren Newsletter leider nicht zusenden.
@@ -204,7 +208,7 @@ const Datenschutzerklaerung = () => {
         <h3 className="mb-4 mt-6 text-xl font-semibold">
           Widerruf der Einwilligung:
         </h3>
-        <p>
+        <p className="text-sm md:text-xl">
           Die Einwilligung zur Speicherung Ihrer persönlichen Daten und ihrer
           Nutzung für den Newsletterversand können Sie jederzeit mit Wirkung für
           die Zukunft widerrufen. Die Abmeldung kann über den in jeder E-Mail
@@ -219,7 +223,7 @@ const Datenschutzerklaerung = () => {
           SSL-Verschlüsselung
         </h2>
 
-        <p>
+        <p className="text-sm md:text-xl">
           Um die Sicherheit Ihrer Daten bei der Übertragung zu schützen,
           verwenden wir dem aktuellen Stand der Technik entsprechende
           Verschlüsselungsverfahren (z. B. SSL) über HTTPS.
@@ -231,7 +235,7 @@ const Datenschutzerklaerung = () => {
         <h3 className="mb-4 mt-6 text-xl font-semibold">
           Einzelfallbezogenes Widerspruchsrecht
         </h3>
-        <p>
+        <p className="text-sm md:text-xl">
           Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen
           Situation ergeben, jederzeit gegen die Verarbeitung Sie betreffender
           personenbezogener Daten, die aufgrund Art. 6 Abs. 1 lit. f DSGVO
@@ -240,7 +244,7 @@ const Datenschutzerklaerung = () => {
           Bestimmung gestütztes Profiling im Sinne von Art. 4 Nr. 4 DSGVO.
         </p>
         <br />
-        <p>
+        <p className="text-sm md:text-xl">
           Legen Sie Widerspruch ein, werden wir Ihre personenbezogenen Daten
           nicht mehr verarbeiten, es sei denn, wir können zwingende
           schutzwürdige Gründe für die Verarbeitung nachweisen, die Ihre
@@ -252,7 +256,7 @@ const Datenschutzerklaerung = () => {
         <h3 className="mb-4 mt-6 text-xl font-semibold">
           Empfänger eines Widerspruchs
         </h3>
-        <p>
+        <p className="text-sm md:text-xl">
           <strong>
             <a
               className=" mail-link hover:text-brand-ccent-2"
@@ -265,7 +269,7 @@ const Datenschutzerklaerung = () => {
         <h3 className="mb-4 mt-6 text-xl font-semibold">
           Änderung unserer Datenschutzerklärung
         </h3>
-        <p>
+        <p className="text-sm md:text-xl">
           Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie
           stets den aktuellen rechtlichen Anforderungen entspricht oder um
           Änderungen unserer Leistungen in der Datenschutzerklärung umzusetzen,
@@ -276,13 +280,13 @@ const Datenschutzerklaerung = () => {
         <h3 className="mb-4 mt-6 text-xl font-semibold">
           Fragen an den Datenschutzbeauftragten
         </h3>
-        <p>
+        <p className="text-sm md:text-xl">
           Wenn Sie Fragen zum Datenschutz haben, schreiben Sie uns bitte eine
           E-Mail oder wenden Sie sich direkt an die für den Datenschutz
           verantwortliche Person in unserer Organisation:
         </p>
         <br />
-        <p>
+        <p className="text-sm md:text-xl">
           <strong>
             <a
               className=" mail-link hover:text-brand-ccent-2"
@@ -293,7 +297,7 @@ const Datenschutzerklaerung = () => {
           </strong>
         </p>
         <br />
-        <p>
+        <p className="text-sm md:text-xl">
           Die Datenschutzerklärung wurde mithilfe der activeMind AG erstellt,
           den Experten für externe Datenschutzbeauftragte (Version #2020-09-30).
         </p>

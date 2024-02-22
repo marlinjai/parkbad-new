@@ -7,7 +7,7 @@ const Hausordnung = () => {
         Hausordnung
       </h2>
       <h3 className="mb-4 mt-6 text-xl font-semibold">Liebe Besucher</h3>
-      <ol className="list-decimal ">
+      <ol className="list-decimal text-sm md:text-xl">
         <li className="m-3">
           Mitgebrachte Speisen & Getränke dürfen gern auf der Wiese verzehrt
           werden
@@ -25,7 +25,9 @@ const Hausordnung = () => {
           schöne Umgebung!
         </li>
       </ol>
-      <p>Einen angenehmen Aufenthalt wünscht ihr Parkbad-team</p>
+      <p className=" text-sm md:text-xl">
+        Einen angenehmen Aufenthalt wünscht ihr Parkbad-team
+      </p>
     </>
   );
 };

@@ -40,7 +40,7 @@ const Impressum = () => {
       <h3 className="md:mb-4 md:mt-6 text-lg font-semibold">
         § 1 Warnhinweis zu Inhalten
       </h3>
-      <p>
+      <p className=" text-sm md:text-xl">
         Die kostenlosen und frei zugänglichen Inhalte dieser Webseite wurden mit
         größtmöglicher Sorgfalt erstellt. Der Anbieter dieser Webseite übernimmt
         jedoch keine Gewähr für die Richtigkeit und Aktualität der
@@ -54,7 +54,7 @@ const Impressum = () => {
       </p>
       <br />
       <h3 className="mb-4 mt-6 text-xl font-semibold">§ 2 Externe Links</h3>
-      <p>
+      <p className=" text-sm md:text-xl">
         Diese Website enthält Verknüpfungen zu Websites Dritter (“externe
         Links”). Diese Websites unterliegen der Haftung der jeweiligen
         Betreiber. Der Anbieter hat bei der erstmaligen Verknüpfung der externen
@@ -72,7 +72,7 @@ const Impressum = () => {
       <h3 className="mb-4 mt-6 text-xl font-semibold">
         § 3 Urheber- und Leistungsschutzrechte
       </h3>
-      <p>
+      <p className=" text-sm md:text-xl">
         Die auf dieser Website veröffentlichten Inhalte unterliegen dem
         deutschen Urheber- und Leistungsschutzrecht. Jede vom deutschen Urheber-
         und Leistungsschutzrecht nicht zugelassene Verwertung bedarf der
@@ -93,14 +93,16 @@ const Impressum = () => {
       <h3 className="mb-4 mt-6 text-xl font-semibold">
         § 4 Besondere Nutzungsbedingungen
       </h3>
-      <p>
+      <p className=" text-sm md:text-xl">
         Soweit besondere Bedingungen für einzelne Nutzungen dieser Website von
         den vorgenannten Paragraphen abweichen, wird an entsprechender Stelle
         ausdrücklich darauf hingewiesen. In diesem Falle gelten im jeweiligen
         Einzelfall die besonderen Nutzungsbedingungen.
       </p>
       <br />
-      <p>Quelle: Erstellt mit www.juraforum.de</p>
+      <p className=" text-sm md:text-xl">
+        Quelle: Erstellt mit www.juraforum.de
+      </p>
     </>
   );
 };

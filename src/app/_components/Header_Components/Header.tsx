@@ -59,7 +59,7 @@ export function OverlayNavigation({ isOpen, onClose }: OverlayNavigationProps) {
     >
       <div className="flex flex-col justify-center gap-8 ">
         <Link href="/" className="hover:text-brand-accent-2">
-          Home
+          Startseite
         </Link>
         <Link href="/Neuigkeiten&Events" className="hover:text-brand-accent-2">
           Neuigkeiten
@@ -67,11 +67,14 @@ export function OverlayNavigation({ isOpen, onClose }: OverlayNavigationProps) {
         <Link href="/Essen&Trinken" className="hover:text-brand-accent-2">
           Essen & Trinken
         </Link>
-        <Link href="/Bildgalerie" className="hover:text-brand-accent-2">
-          Bildgalerie
+        <Link href="/Feiern&Tagen" className="hover:text-brand-accent-2">
+          Feiern & Tagen
         </Link>
         <Link href="/Historie&Kontakt" className="hover:text-brand-accent-2">
           Historie & Kontakt
+        </Link>
+        <Link href="/Bildgalerie" className="hover:text-brand-accent-2">
+          Bildgalerie
         </Link>
       </div>
     </div>
