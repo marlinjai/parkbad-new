@@ -114,6 +114,7 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
                       width={800}
                       height={600}
                       key={index}
+                      priority={true}
                       className={`${
                         index % 2 == 0 ? " mt-24" : ""
                       } inline-block h-vw30 w-vw30 sm:h-72 sm:w-72 object-cover mx-5 sm:mx-10 rounded-2xl shadow-lg`}
