@@ -15,7 +15,7 @@ export default function SiteLayout({
   children: React.ReactNode;
   preview?: boolean;
 }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const pathname = usePathname();
   const [searchParams] = useSearchParams();
 
