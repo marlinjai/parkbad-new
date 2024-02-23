@@ -12,6 +12,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+
+    "downlevelIteration": true,
+    // ... other options
     "incremental": true,
     "plugins": [
       {
@@ -27,7 +30,8 @@
     "src/types/swiper.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "src/app/_context/LoadingContext.js"
   ],
   "exclude": ["node_modules"]
 }
