@@ -7,15 +7,17 @@ const defaultOptions = {
   loop: true,
   autoplay: true,
   animationData: animationData,
-  rendererSettings: {
-    preserveAspectRatio: "xMidYMid slice",
-  },
+  // rendererSettings: {
+  //   preserveAspectRatio: "xMidYMid slice",
+  // },
 };
 
 export default function Loading() {
   return (
     <div className=" flex justify-center items-center  w-screen h-screen overflow-hidden bg-slate-950">
-      <Lottie options={defaultOptions} width={500} height={500} />
+      <div className="">
+        <Lottie options={defaultOptions} width={400} height={400} />
+      </div>
     </div>
   );
 }

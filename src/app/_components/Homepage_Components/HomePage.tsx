@@ -7,7 +7,7 @@ import TrippleIcon from "./TrippleLogo";
 import PostCardsSlider from "../Swiper&GaleryComponents/PostCardsSlider";
 import Image from "next/image";
 import InfiniteImageSlider from "./InfiniteImageSlider";
-import LoadingSpinner from "../UtilityComponents/LoadingSpinner";
+import Loading from "../UtilityComponents/LoadingSpinner";
 
 export default function HomePage({
   preview,
@@ -17,6 +17,7 @@ export default function HomePage({
 }: HomePageProps) {
   return (
     <>
+      {/* <Loading></Loading> */}
       <SiteLayout preview={preview}>
         <VideoSection></VideoSection>
         <TrippleIcon></TrippleIcon>
