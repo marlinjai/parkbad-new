@@ -23,14 +23,14 @@ export default function HomePage({
         <TrippleIcon></TrippleIcon>
         <PostCardsSlider posts={posts} customevents={customevents} />
 
-        <div className="relative overflow-hidden">
+        <div className="relative -mb-pz5 overflow-hidden">
           <Image
             src={"/bg-graphic.svg"}
             alt="background graphic"
             fill={true}
             className="absolute object-cover w-pz100 h-pz80 mx-auto "
           ></Image>
-          <div className=" w-screen pb-32 pt-36 sm:pt-60  lg:pt-32">
+          <div className=" w-screen pb-12 pt-8 sm:pt-60  lg:pt-32">
             <div className="relative w-full  lg:shrink-0 ">
               <InfiniteImageSlider images={historyImages} />
             </div>
