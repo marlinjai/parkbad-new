@@ -18,6 +18,7 @@ export default function HomePage({
   return (
     <>
       {/* <Loading></Loading> */}
+
       <SiteLayout preview={preview}>
         <VideoSection></VideoSection>
         <TrippleIcon></TrippleIcon>
