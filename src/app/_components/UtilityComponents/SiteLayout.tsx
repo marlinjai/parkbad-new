@@ -29,7 +29,7 @@ export default function SiteLayout({
     // Simulate a loading period (you can adjust the timeout as needed)
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2500);
+    }, 3500);
 
     // Cleanup the timer if the component unmounts
     return () => clearTimeout(timer);
