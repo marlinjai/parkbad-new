@@ -175,7 +175,7 @@ export const galleryHeaderQuery = groq`
 }`;
 
 export const homeImageQuery = groq`
-*[_type == 'gallery' && galleryTitle == "Homepage Gallerie" ] | order(imageTitle asc){
+*[_type == 'gallery' && galleryTitle == "Homepage Gallerie" ] {
   ${galleryFields}
 }`;
 

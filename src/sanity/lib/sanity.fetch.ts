@@ -1,4 +1,4 @@
-"server-only";
+import "server-only";
 
 import type { QueryParams } from "@sanity/client";
 import { draftMode } from "next/headers";
@@ -33,7 +33,7 @@ export async function sanityFetch<QueryResponse>({
       perspective: "previewDrafts",
     }),
     next: {
-      revalidate: 300,
+      ...(isDraftMode ? { revalidate: 30 } : { revalidate: 300 }),
       tags,
     },
   });
