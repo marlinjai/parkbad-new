@@ -8,6 +8,7 @@ interface EmailRequestBody {
   firstName: string;
   lastName: string;
   email: string;
+  phone: string;
   message: string;
 }
 
@@ -30,7 +31,10 @@ export async function POST(request: Request) {
         " " +
         requestBody.firstName +
         " " +
-        requestBody.email,
+        requestBody.email +
+        " " +
+        requestBody.phone +
+        " ",
     });
 
     return Response.json(data);
