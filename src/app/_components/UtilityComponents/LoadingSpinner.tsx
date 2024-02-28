@@ -15,7 +15,7 @@ const defaultOptions = {
 export default function Loading() {
   return (
     <div className=" flex justify-center items-center  w-screen h-screen overflow-hidden bg-slate-950">
-      <div className=" -ml-3">
+      <div className=" -ml-3 md:scale-125">
         <Lottie options={defaultOptions} width={400} height={400} />
       </div>
     </div>

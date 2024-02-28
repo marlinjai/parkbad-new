@@ -15,6 +15,7 @@ export default function HomePage({
   customevents,
   historyImages,
 }: HomePageProps) {
+  console.log("historyImages", historyImages);
   return (
     <>
       {/* <Loading></Loading> */}
