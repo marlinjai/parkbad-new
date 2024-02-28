@@ -21,7 +21,7 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
 
   useEffect(() => {
     setDuplicatedImages([...images[0].images, ...images[0].images]);
-  }, []);
+  }, [images]);
   // Let's say you want a fixed animation duration of 20 seconds
 
   const calculateTotalWidth = () => {
