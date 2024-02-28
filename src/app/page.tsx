@@ -10,7 +10,6 @@ import { draftMode } from "next/headers";
 import PreviewHomePage from "@/app/_components/Homepage_Components/PreviewHomePage";
 import PreviewProvider from "@/app/_components/UtilityComponents/PreviewProvider";
 import { CustomEvent, Gallery, PostType } from "@/types/sanityTypes";
-import { GetStaticProps } from "next";
 
 export default async function Home() {
   const posts = await sanityFetch<PostType[]>({ query: homePostsQuery });

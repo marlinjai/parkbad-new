@@ -1,4 +1,4 @@
-import "server-only";
+"server-only";
 
 import type { QueryParams } from "@sanity/client";
 import { draftMode } from "next/headers";
