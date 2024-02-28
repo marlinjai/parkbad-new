@@ -25,7 +25,8 @@ export default function RentingForm(myFormProps: FormProps) {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget); // Use currentTarget instead of target
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const formProps = Object.fromEntries(formData);
 
     try {
@@ -43,6 +44,7 @@ export default function RentingForm(myFormProps: FormProps) {
             ? { message: myFormProps.mailSendError }
             : { message: "Ihre Anfrage wurde erfolgreich versendet!" }
         );
+        form.reset(); // Reset the form fields
       } else {
         throw new Error("Response not OK");
       }

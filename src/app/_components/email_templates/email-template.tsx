@@ -4,6 +4,7 @@ interface EmailTemplateProps {
   firstName: string;
   lastName: string;
   email: string;
+  phone: string;
   message: string;
 }
 
@@ -11,6 +12,7 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   firstName,
   lastName,
   email,
+  phone,
   message,
 }) => (
   <div>
@@ -25,6 +27,7 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
       Name: {firstName} {lastName}
     </h3>
     <h3>Email: {email}</h3>
+    <h3>Phone: {phone}</h3>
     <h3>Message: {message}</h3>
     <h1>
       Best regards, <br />
