@@ -42,7 +42,9 @@ export default function Gallery(props: ZoomgalleryProps) {
                 width={800}
                 height={600}
                 key={index}
-                className={`${index !== 0 ? "mt-4 lg:mt-4" : ""} object-cover`}
+                className={`${
+                  index !== 0 ? "mt-4 lg:mt-4" : ""
+                } object-cover rounded-lg shadow-lg`}
               />
             </a>
           );

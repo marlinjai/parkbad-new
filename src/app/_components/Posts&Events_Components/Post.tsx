@@ -11,6 +11,8 @@ import SiteLayout from "../UtilityComponents/SiteLayout";
 import { PostPageProps, PostorEventItem } from "@/types/componentTypes";
 import AuthorAvatar from "./AuthorAvatar";
 import PostDate from "./PostDate";
+import { getCroppedImageSrc } from "../UtilityComponents/GetCroppedImageSrc";
+import renderDate from "../Homepage_Components/RenderDate";
 
 // Define interfaces for any custom block types
 interface MyImageBlock extends PortableTextBlock {
@@ -36,14 +38,16 @@ interface MyImageProps {
 const builder = imageUrlBuilder(client);
 
 function renderImage(item: PostorEventItem) {
-  const image = item.coverImage || (item.eventImage && item.eventImage.asset);
+  const image = item.coverImage || item.eventImage;
+
+  console.log("outer image", image);
   return image ? (
     <div className="relative mx-auto w-full h-vh60 md:h-vh60">
       <Image
-        src={builder.image(image).url()}
+        src={getCroppedImageSrc(image)}
         alt={image?.alt || "Image"}
         layout="fill"
-        objectFit="cover"
+        className=" object-cover"
         priority={true}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
@@ -82,6 +86,7 @@ function MyImage({ value, index }: MyImageProps) {
 }
 
 function renderContent(item: PostorEventItem) {
+  console.log("item", item);
   return (
     <PortableText
       value={item.content || item.eventContent}
@@ -93,57 +98,60 @@ function renderContent(item: PostorEventItem) {
           normal: ({ children }) => (
             <p className="text-justify text-xl leding-6 my-4">{children}</p>
           ),
-          h1: ({ children }) => (
-            <h1 className=" text-center font-semibold my-8 text-2xl">
-              {children}
-            </h1>
+          normalLeft: ({ children }) => (
+            <p className="text-left text-xl leding-6 my-4">{children}</p>
           ),
-          h2: ({ children }) => (
-            <h2 className=" text-center font-semibold my-8 text-2xl">
-              {children}
-            </h2>
+          normalCenter: ({ children }) => (
+            <p className="text-center text-xl leding-6 my-4">{children}</p>
           ),
-          h3: ({ children }) => (
-            <h3 className=" text-center font-semibold my-8 text-2xl">
-              {children}
-            </h3>
+          normalRight: ({ children }) => (
+            <p className="text-right text-xl leding-6 my-4">{children}</p>
           ),
-          h4: ({ children }) => (
-            <h4 className=" text-center font-semibold my-8 text-2xl">
-              {children}
-            </h4>
+          h1Center: ({ children }) => (
+            <h1 className=" text-center font-bold my-8 text-4xl">{children}</h1>
           ),
-          h5: ({ children }) => (
-            <h5 className=" text-center font-semibold my-8 text-2xl">
-              {children}
-            </h5>
+          h1Left: ({ children }) => (
+            <h1 className=" text-left font-bold my-8 text-4xl">{children}</h1>
           ),
-          h6: ({ children }) => (
-            <h6 className=" text-center font-semibold my-8 text-2xl">
+          h1Right: ({ children }) => (
+            <h1 className=" text-right font-bold my-8 text-4xl">{children}</h1>
+          ),
+          h2Left: ({ children }) => (
+            <h2 className=" text-left font-bold my-8 text-3xl">{children}</h2>
+          ),
+          h2Center: ({ children }) => (
+            <h2 className=" text-center font-bold my-8 text-3xl">{children}</h2>
+          ),
+          h2Right: ({ children }) => (
+            <h2 className=" text-right font-bold my-8 text-3xl">{children}</h2>
+          ),
+          h3Left: ({ children }) => (
+            <h3 className=" text-left font-bold my-8 text-2xl">{children}</h3>
+          ),
+          h3Center: ({ children }) => (
+            <h3 className=" text-center font-bold my-8 text-2xl">{children}</h3>
+          ),
+          h3Right: ({ children }) => (
+            <h3 className=" text-right font-bold my-8 text-2xl">{children}</h3>
+          ),
+          h4Left: ({ children }) => (
+            <h4 className=" text-left font-bold my-8 text-xl">{children}</h4>
+          ),
+          h4Center: ({ children }) => (
+            <h4 className=" text-center font-bold my-8 text-xl">{children}</h4>
+          ),
+          h4Right: ({ children }) => (
+            <h4 className=" text-right font-bold my-8 text-xl">{children}</h4>
+          ),
+          blockquote: ({ children }) => (
+            <blockquote className=" text-center italic my-8">
               {children}
-            </h6>
+            </blockquote>
           ),
           // Define more custom components for different styles if needed
         },
       }}
     />
-  );
-}
-
-function renderDate(item: PostorEventItem) {
-  const date = item.date || "";
-  const start = item.eventStart || "";
-  const end = item.eventEnd || "";
-  return (
-    <div>
-      <PostDate dateString={date || start} />
-      {end && (
-        <>
-          <span> - </span>
-          <PostDate dateString={end} />
-        </>
-      )}
-    </div>
   );
 }
 

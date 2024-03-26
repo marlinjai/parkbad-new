@@ -36,7 +36,5 @@ export default async function Page({ params }: { params: any }) {
     );
   }
 
-  console.log("Post", post);
-
   return <Post preview={isDraftMode} post={post} customevent={event} />;
 }

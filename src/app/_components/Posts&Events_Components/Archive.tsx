@@ -4,9 +4,10 @@ import { urlForImage } from "../../../sanity/lib/sanity.image";
 import { client } from "../../../sanity/lib/sanity.client";
 import { PostType, CustomEvent } from "@/types/sanityTypes";
 import { useEffect, useState, useMemo } from "react";
-import { parseISO, compareAsc } from "date-fns";
+import { parseISO, compareAsc, compareDesc } from "date-fns";
 import Image from "next/image";
 import Button from "../UtilityComponents/Button";
+import renderDate from "../Homepage_Components/RenderDate";
 
 const builder = urlForImage(client);
 
@@ -19,22 +20,26 @@ export default function Archive({
 }) {
   const combinedData = useMemo(
     () => [
-      ...posts.map((post) => ({
-        ...post,
-        type: "post",
-        date: post._updatedAt,
-        slug: post.slug,
-      })),
       ...events.map((event) => ({
         ...event,
         type: "event",
         title: event.eventTitle,
-        date: event.eventStart,
+        startDate: event.eventStart,
+        endDate: event.eventEnd,
         coverImage: event.eventImage,
         slug: event.slug,
       })),
+      ...posts.map((post) => ({
+        ...post,
+        type: "post",
+        startDate: post.date,
+        endDate: post.date,
+        title: post.title,
+
+        slug: post.slug,
+      })),
     ],
-    [posts, events]
+    [events, posts]
   );
 
   const [data, setData] = useState(combinedData);
@@ -51,11 +56,16 @@ export default function Archive({
 
     // Sort
     filteredData.sort((a, b) => {
-      if (sortKey === "date") {
-        return compareAsc(parseISO(a.date), parseISO(b.date));
-      } else if (sortKey === "title") {
+      if (sortKey === "dateDsc") {
+        return compareDesc(parseISO(a.startDate), parseISO(b.startDate)); // Use compareDesc for descending order
+      } else if (sortKey === "dateAsc") {
+        return compareAsc(parseISO(a.startDate), parseISO(b.startDate));
+      } else if (sortKey === "titleAsc") {
         return a.title.localeCompare(b.title);
+      } else if (sortKey === "titleDsc") {
+        return b.title.localeCompare(a.title);
       }
+
       return 0;
     });
 
@@ -93,8 +103,10 @@ export default function Archive({
             onChange={(e) => setSortKey(e.target.value)}
             className="border p-2 rounded-sm"
           >
-            <option value="date">Sort by Date</option>
-            <option value="title">Sort by Title</option>
+            <option value="dateDsc">Neuste zuerst</option>
+            <option value="dateAsc">Älteste zuerst</option>
+            <option value="titleAsc">A - Z</option>
+            <option value="titleDsc">Z - A</option>
             {/* Add other sort options as needed */}
           </select>
         </div>
@@ -130,8 +142,9 @@ export default function Archive({
                   {item.title}
                 </h2>
               </div>
-
-              <p className="text-white text-lg mt-2 h-24">{item.excerpt}</p>
+              {/* 
+              <p className="text-white text-lg mt-2 h-24">{item.excerpt}</p> */}
+              <p className="text-white text-lg mt-2 h-24">{renderDate(item)}</p>
               <div className="flex flex-col items-center">
                 <Button
                   styles="w-pz80"

@@ -15,7 +15,6 @@ export default function HomePage({
   customevents,
   historyImages,
 }: HomePageProps) {
-  console.log("historyImages", historyImages);
   return (
     <>
       {/* <Loading></Loading> */}
@@ -23,9 +22,10 @@ export default function HomePage({
       <SiteLayout preview={preview}>
         <VideoSection></VideoSection>
         <TrippleIcon></TrippleIcon>
+
         <PostCardsSlider posts={posts} customevents={customevents} />
 
-        <div className="relative -mb-pz5 overflow-hidden">
+        <div className="relative -mb-pz5 -mt-pz5  overflow-hidden">
           <Image
             src={"/bg-graphic.svg"}
             alt="background graphic"

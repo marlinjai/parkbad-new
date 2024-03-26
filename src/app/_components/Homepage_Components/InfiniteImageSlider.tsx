@@ -70,7 +70,7 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
   }, [duplicatedImages]);
   const builder = urlForImage(client);
   // The fixed duration for your animation
-  const fixedAnimationDuration = 34; // in seconds
+  const fixedAnimationDuration = 54; // in seconds
   // Inline keyframe styles
   const keyframes = `
    @keyframes slide {
@@ -93,7 +93,7 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
     <>
       <div className="">
         <style>{keyframes}</style>
-        <h2 className="text-center text-brand-colour-light  sm:my-pz5 text-2sc">
+        <h2 className="text-center text-brand-colour-light  sm:my-pz5 text-2sc sm:text-5sc">
           Impressionen aus dem Parkbad
         </h2>
         <div className="relative overflow-hidden mb-pz15 ">

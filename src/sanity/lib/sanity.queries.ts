@@ -8,7 +8,12 @@ const postFields = groq`
   _updatedAt,
   content,
   excerpt,
-  coverImage,
+  coverImage{
+    asset->{url, _ref, _id,metadata},
+    crop,
+    hotspot,
+    alt
+  },
   "slug": slug.current,
   "author": author->{name, picture},
 `;
@@ -17,7 +22,12 @@ const eventFields = groq`
       eventTitle,
       eventContent,
       excerpt,
-      eventImage,
+      eventImage{
+        asset->{url, _ref, _id,metadata},
+        crop,
+        hotspot,
+        alt
+      },
       eventStart,
       eventEnd,
       "slug": slug.current,
@@ -116,7 +126,7 @@ export const eventQuery = groq`*[_type == "customevent" && slug.current == $slug
   }`;
 
 export const homepageEventsQuery = groq`
-  *[_type == "customevent" && (eventEnd > now() || !defined(eventEnd))] | order(_updatedAt desc) {
+  *[_type == "customevent" && (eventEnd > now() || !defined(eventEnd))] | order(eventStart asc) {
     ${eventFields}
   }
 `;

@@ -48,7 +48,30 @@ export default defineType({
       title: "Beitragsinhalt",
       type: "array",
       of: [
-        { type: "block" },
+        {
+          type: "block",
+
+          styles: [
+            { title: "Normal", value: "normal" },
+            { title: "Normal Left", value: "normalLeft" },
+            { title: "Normal Center", value: "normalCenter" },
+            { title: "Normal Right", value: "normalRight" },
+            { title: "H1 Left", value: "h1Left" },
+            { title: "H1 Center", value: "h1Center" },
+            { title: "H1 Right", value: "h1Right" },
+            { title: "H2 Left", value: "h2Left" },
+            { title: "H2 Center", value: "h2Center" },
+            { title: "H2 Right", value: "h2Right" },
+            { title: "H3 Left", value: "h3Left" },
+            { title: "H3 Center", value: "h3Center" },
+            { title: "H3 Right", value: "h3Right" },
+            { title: "H4 Left", value: "h4Left" },
+            { title: "H4 Center", value: "h4Center" },
+            { title: "H4 Right", value: "h4Right" },
+            { title: "Quote", value: "blockquote" },
+          ],
+        },
+
         {
           type: "image",
           options: {
@@ -83,6 +106,7 @@ export default defineType({
       options: {
         hotspot: true,
       },
+
       fields: [
         {
           name: "alt",

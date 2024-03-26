@@ -13,6 +13,8 @@ import Image from "next/image";
 import { PostorEventItem } from "@/types/componentTypes";
 import renderDate from "../Homepage_Components/RenderDate";
 import { useEffect, useState } from "react";
+import { getCroppedImageSrc } from "../UtilityComponents/GetCroppedImageSrc";
+import AuthorAvatar from "../Posts&Events_Components/AuthorAvatar";
 
 const builder = urlForImage(client);
 
@@ -23,7 +25,7 @@ export default function PostCardSlider({
   posts: PostType[];
   customevents: CustomEvent[];
 }) {
-  const items: PostorEventItem[] | null = [...posts, ...customevents];
+  const items: PostorEventItem[] | null = [...customevents, ...posts];
 
   const [isReady, setIsReady] = useState(false);
 
@@ -38,10 +40,10 @@ export default function PostCardSlider({
   return (
     <>
       <div className={isReady ? "opacity-100 mb-vh10" : " opacity-0"}>
-        <h2 className="text-center text-brand-colour-light my-pz8 text-2sc">
+        <h2 className="text-center text-brand-colour-light my-4  text-2sc sm:text-5sc">
           Neuigkeiten & Veranstaltungen
         </h2>
-        <CardSwiper className="text-center h-vw60 w-vw75 md:w-vw60 md:h-vw40 ">
+        <CardSwiper className="text-center h-vw60 w-vw75 md:w-vw50 md:h-vw35 ">
           {items.map((item) => (
             <SwiperSlide style={{ borderRadius: "1rem" }} key={item._id}>
               <div className="flex flex-col justify-center items-center ">
@@ -52,14 +54,12 @@ export default function PostCardSlider({
                   <Image
                     src={
                       item.coverImage
-                        ? builder.image(item.coverImage).url()
-                        : builder.image(item.eventImage).url()
+                        ? getCroppedImageSrc(item.coverImage)
+                        : item.eventImage
+                        ? getCroppedImageSrc(item.eventImage)
+                        : "/bg-graphic.svg"
                     }
-                    alt={
-                      item.coverImage
-                        ? item.coverImage.alt
-                        : item.eventImage.alt
-                    }
+                    alt={item.coverImage?.alt || item.eventImage?.alt || ""}
                     fill={true}
                     style={{
                       objectFit: "cover",
@@ -67,7 +67,7 @@ export default function PostCardSlider({
                     sizes="(max-width: 768px) 50, (max-width: 1200px) 70vw, 100vw"
                     priority={true}
                   />
-                  <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                  <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div>
                   <div className="absolute bottom-4 xs:bottom-8 md:bottom-10 z-50 w-full">
                     <div className="flex flex-col items-center justify-center  text-brand-colour-light text-3sc">
                       <svg
@@ -86,10 +86,16 @@ export default function PostCardSlider({
                           strokeWidth="5"
                         /> */}
                       </svg>
-                      {renderDate(item)}
-                      <h3 className=" mt-2 sm:text-3xl">
+                      {/* {item.author && (
+                        <AuthorAvatar
+                          name={item.author.name}
+                          picture={item.author.picture}
+                        />
+                      )} */}
+                      <h3 className=" mt-2 my-2 md:my-4 xs:text-2xl md:text-4xl">
                         {item.title ? item.title : item.eventTitle}
                       </h3>
+                      {renderDate(item)}
                     </div>
                   </div>
                 </a>

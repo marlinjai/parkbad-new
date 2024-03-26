@@ -48,16 +48,38 @@ export type PostImageProps = {
   fit?: "contain" | "cover"; // New fit prop to control objectFit value
 };
 
+export type SanityImageQueryResult = {
+  asset: {
+    _ref: string;
+    metadata: { dimensions: { width: number; height: number } };
+  };
+  crop: {
+    _type: "sanity.imageCrop";
+    bottom: number;
+    left: number;
+    right: number;
+    top: number;
+  };
+  hotspot: {
+    _type: "sanity.imageHotspot";
+    height: number;
+    width: number;
+    x: number;
+    y: number;
+  };
+
+  alt: string;
+};
 // Define a type alias for the item
 export type PostorEventItem = {
   _id: string;
   slug?: string;
   title?: string;
   eventTitle?: string;
-  coverImage?: any;
+  coverImage?: SanityImageQueryResult;
   content?: any;
   eventContent?: any;
-  eventImage?: any;
+  eventImage?: SanityImageQueryResult;
   author?: Author;
   date?: string;
   eventStart?: string;

@@ -1,7 +1,7 @@
 import { PostorEventItem } from "@/types/componentTypes";
 import { format, isSameDay } from "date-fns";
 
-export default function renderDate(event: PostorEventItem) {
+export default function renderTime(event: PostorEventItem) {
   if (event.eventStart && event.eventEnd) {
     console.log("eventstart", event.eventStart);
     console.log("eventend", event.eventEnd);
@@ -20,17 +20,9 @@ export default function renderDate(event: PostorEventItem) {
     let formattedEndTime = format(end, "HH.mm");
     let formattedStartTime = format(start, "HH.mm");
     return (
-      <p className="xs:text-lg text-xs">
+      <p className="xs:text-xl text-xs">
         {isSameStartDateAndEndDate
-          ? [
-              formattedStartDay,
-              " ",
-              <br className="" key="br1" />,
-              formattedStartTime,
-              " - ",
-              formattedEndTime,
-              " Uhr",
-            ]
+          ? [formattedStartDay, " ", <br className="" key="br1" />]
           : [
               formattedStartDay,
               " ",
@@ -48,6 +40,6 @@ export default function renderDate(event: PostorEventItem) {
   if (event.date) {
     const date = new Date(event.date);
     let formattedDate = format(date, "dd.MM.yyyy");
-    return <p className="">{formattedDate}</p>;
+    return "";
   }
 }

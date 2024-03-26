@@ -1,14 +1,14 @@
 export default function TrippleIcon() {
   return (
     <>
-      <div className="flex pt-pz5 justify-center relative">
+      <div className="flex pt-8 justify-center relative gap-10 md:gap-28 px-[30vw]">
         <span id="news" className=" absolute top-1 "></span>
-        <div className="flex w-pz20 justify-center text-center ">
+        <div className="flex justify-center text-center ">
           <svg
             id="Layer_1"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 583.48 471.07"
-            className=" w-pz55"
+            className=" w-full h-auto fill-none stroke-brand-accent-3"
           >
             <path
               d="m417.32,322.17c-10.14,0-20.32-.99-30.25-2.95-30.81-6.08-58.76-21.19-80.83-43.72-23-23.47-37.75-52.98-42.66-85.35-1.57-10.34-2.1-20.9-1.57-31.36,1.98-39.11,18.48-75.75,46.47-103.18,29.24-28.65,67.89-44.43,108.82-44.43,1.82,0,3.66.03,5.48.1,8.46.3,16.95,1.29,25.23,2.95,30.62,6.14,58.41,21.22,80.36,43.62,20.81,21.24,35.03,47.77,41.1,76.73,2.7,12.87,3.77,26.06,3.17,39.22-1.8,39.4-18.31,76.32-46.5,103.94-28.56,27.99-66.3,43.76-106.26,44.41-.85.01-1.7.02-2.56.02Z"
@@ -66,11 +66,11 @@ export default function TrippleIcon() {
             />
           </svg>
         </div>
-        <div className="flex w-pz20 justify-center text-center ">
+        <div className="flex justify-center text-center ">
           <svg
             id="Line"
             enableBackground="new 0 0 32 32"
-            className=" h-auto w-pz50 fill-brand-accent-3"
+            className=" h-auto w-full fill-brand-accent-3"
             viewBox="0 0 32 32"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -91,11 +91,11 @@ export default function TrippleIcon() {
             />
           </svg>
         </div>
-        <div className="flex w-pz20 justify-center text-center">
+        <div className="flex justify-center text-center">
           <svg
             version="1.1"
             viewBox="0 0 511.998 511.998"
-            className=" w-pz45 fill-brand-accent-3"
+            className=" w-full fill-brand-accent-3"
           >
             <g>
               <g>

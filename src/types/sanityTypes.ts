@@ -13,7 +13,7 @@ export type PostType = {
   _id: string;
   title: string;
   coverImage?: any;
-  date?: string;
+  date: string;
   showUntilDate?: string;
   _updatedAt: string;
   excerpt?: string;
@@ -72,13 +72,22 @@ export type FoodCategory = {
 };
 
 export type GalleryImage = {
+  metadata: any;
   url: any;
   _type: "image";
   asset: {
     _ref: string;
     url: string;
+    metadata: {
+      dimensions: {
+        width: number;
+        height: number;
+      };
+    };
+    crop?: any;
+    hotspot?: any;
   };
-  hotspot?: any;
+  crop?: any;
   alt: string;
 };
 
