@@ -29,21 +29,23 @@ export default function Gallery(props: ZoomgalleryProps) {
     console.log("lightGallery has been initialized");
   };
 
-  const imageRefs = useRef([]);
+  const imageRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
   useEffect(() => {
-    imageRefs.current.forEach((ref, index) => {
-      gsap.fromTo(
-        ref,
-        { autoAlpha: 0 },
-        {
-          autoAlpha: 1,
-          scrollTrigger: {
-            trigger: ref,
-            start: "top 75%",
-          },
-        }
-      );
+    imageRefs.current.forEach((ref) => {
+      if (ref) {
+        gsap.fromTo(
+          ref,
+          { autoAlpha: 0 },
+          {
+            autoAlpha: 1,
+            scrollTrigger: {
+              trigger: ref,
+              start: "top 75%",
+            },
+          }
+        );
+      }
     });
   }, []);
 
