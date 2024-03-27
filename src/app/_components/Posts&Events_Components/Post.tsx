@@ -42,7 +42,7 @@ function renderImage(item: PostorEventItem) {
 
   console.log("outer image", image);
   return image ? (
-    <div className="relative mx-auto w-full h-vh60 md:h-vh60">
+    <div className="relative mx-auto w-full h-vh40 md:h-vh60">
       <Image
         src={getCroppedImageSrc(image)}
         alt={image?.alt || "Image"}

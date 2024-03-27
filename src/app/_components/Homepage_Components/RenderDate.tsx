@@ -15,7 +15,7 @@ export default function renderDate(event: PostorEventItem) {
     let formattedEndTime = format(end, "HH.mm");
     let formattedStartTime = format(start, "HH.mm");
     return (
-      <p className="xs:text-lg text-xs">
+      <p className="xs:text-lg text-sm">
         {isSameStartDateAndEndDate
           ? [
               formattedStartDay,
