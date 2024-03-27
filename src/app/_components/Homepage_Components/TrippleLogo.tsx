@@ -1,7 +1,7 @@
 export default function TrippleIcon() {
   return (
     <>
-      <div className="flex pt-8 justify-center relative gap-10 md:gap-28 px-[20vw] sm:px-[30vw]">
+      <div className="flex pt-12 sm:pt-8  justify-center relative gap-10 md:gap-28 px-[20vw] sm:px-[30vw]">
         <span id="news" className=" absolute top-1 "></span>
         <div className="flex justify-center text-center ">
           <svg
