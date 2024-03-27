@@ -1,11 +1,10 @@
 import { PostorEventItem } from "@/types/componentTypes";
-import { format, isSameDay } from "date-fns";
+import { format, isSameDay, parseISO } from "date-fns";
 
 export default function renderDate(event: PostorEventItem) {
   if (event.eventStart && event.eventEnd) {
-    const start = new Date(event.eventStart);
-
-    const end = new Date(event.eventEnd);
+    const start = parseISO(event.eventStart);
+    const end = parseISO(event.eventEnd);
 
     // Determine if the start and end dates are the same day
     const isSameStartDateAndEndDate = isSameDay(start, end);
@@ -41,7 +40,7 @@ export default function renderDate(event: PostorEventItem) {
     );
   }
   if (event.date) {
-    const date = new Date(event.date);
+    const date = parseISO(event.date);
     let formattedDate = format(date, "dd.MM.yyyy");
     return <p className="">{formattedDate}</p>;
   }

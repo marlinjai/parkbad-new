@@ -10,7 +10,6 @@ import { client } from "@/sanity/lib/sanity.client";
 import SiteLayout from "../UtilityComponents/SiteLayout";
 import { PostPageProps, PostorEventItem } from "@/types/componentTypes";
 import AuthorAvatar from "./AuthorAvatar";
-import PostDate from "./PostDate";
 import { getCroppedImageSrc } from "../UtilityComponents/GetCroppedImageSrc";
 import renderDate from "../Homepage_Components/RenderDate";
 
@@ -42,7 +41,7 @@ function renderImage(item: PostorEventItem) {
 
   console.log("outer image", image);
   return image ? (
-    <div className="relative mx-auto w-full h-vh40 md:h-vh60">
+    <div className="relative mx-auto w-full h-vh45 md:h-vh70 p-4 sm:p-0">
       <Image
         src={getCroppedImageSrc(image)}
         alt={image?.alt || "Image"}
@@ -51,15 +50,20 @@ function renderImage(item: PostorEventItem) {
         priority={true}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-      <div className="absolute inset-0 flex top-pz45 flex-col justify-center items-center gap-2 text-white text-center">
-        <h1 className="mx-pz15 text-4sc font-bold leading-tight tracking-tighter md:text-6xl md:leading-none">
-          {item.title || item.eventTitle || "No title"}
-        </h1>
-        {item.author && (
-          <AuthorAvatar name={item.author.name} picture={item.author.picture} />
-        )}
-        <div className="text-date leading-tight tracking-tighter">
-          {renderDate(item)}
+      <div className=" absolute inset-0 flex top-pz45 flex-col justify-center items-center gap-2 text-white text-center">
+        <div className="flex gap-2 flex-col justify-center items-center">
+          <h1 className=" text-center text-4sc font-bold leading-tight tracking-tighter md:text-6xl md:leading-none">
+            {item.title || item.eventTitle || "No title"}
+          </h1>
+          {item.author && (
+            <AuthorAvatar
+              name={item.author.name}
+              picture={item.author.picture}
+            />
+          )}
+          <div className="text-date text-center leading-tight tracking-tighter">
+            {renderDate(item)}
+          </div>
         </div>
       </div>
     </div>
