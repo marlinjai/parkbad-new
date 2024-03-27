@@ -93,7 +93,7 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
     <>
       <div className="">
         <style>{keyframes}</style>
-        <h2 className="text-center text-brand-colour-light  sm:my-pz5 text-2sc sm:text-5sc">
+        <h2 className="text-center text-brand-colour-light  sm:my-pz10 text-2sc sm:text-5sc">
           Impressionen aus dem Parkbad
         </h2>
         <div className="relative overflow-hidden mb-pz15 ">
