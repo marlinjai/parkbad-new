@@ -3,15 +3,10 @@ import { format, isSameDay } from "date-fns";
 
 export default function renderDate(event: PostorEventItem) {
   if (event.eventStart && event.eventEnd) {
-    console.log("eventstart", event.eventStart);
-    console.log("eventend", event.eventEnd);
-
     const start = new Date(event.eventStart);
 
-    console.log("start", start);
     const end = new Date(event.eventEnd);
 
-    console.log("end", end);
     // Determine if the start and end dates are the same day
     const isSameStartDateAndEndDate = isSameDay(start, end);
 

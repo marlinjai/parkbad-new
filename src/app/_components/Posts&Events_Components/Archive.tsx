@@ -47,7 +47,9 @@ export default function Archive({
   const [sortKey, setSortKey] = useState("date"); // default sort key
 
   useEffect(() => {
-    let filteredData = combinedData;
+    console.log("Effect triggered");
+
+    let filteredData = [...combinedData]; // Create a new array instead of mutating state directly
 
     // Filter by type
     if (filterType !== "all") {
@@ -57,9 +59,9 @@ export default function Archive({
     // Sort
     filteredData.sort((a, b) => {
       if (sortKey === "dateDsc") {
-        return compareDesc(parseISO(a.startDate), parseISO(b.startDate)); // Use compareDesc for descending order
-      } else if (sortKey === "dateAsc") {
         return compareAsc(parseISO(a.startDate), parseISO(b.startDate));
+      } else if (sortKey === "dateAsc") {
+        return compareAsc(parseISO(b.startDate), parseISO(a.startDate));
       } else if (sortKey === "titleAsc") {
         return a.title.localeCompare(b.title);
       } else if (sortKey === "titleDsc") {
@@ -69,9 +71,10 @@ export default function Archive({
       return 0;
     });
 
+    console.log("Filtered and sorted data:", filteredData);
+
     setData(filteredData);
   }, [sortKey, filterType, combinedData]);
-
   function getGridClasses(length: number) {
     if (length === 2) {
       return "md:grid-cols-2";
@@ -136,16 +139,18 @@ export default function Archive({
                 />
               </div>
             </a>
-            <div className="p-4 text-center">
-              <div className=" h-16">
+            <div className="p-4 text-center flex flex-col justify-start">
+              <div className=" h-16 flex justify-center items-center">
                 <h2 className="text-2xl text-white font-semibold">
                   {item.title}
                 </h2>
               </div>
               {/* 
               <p className="text-white text-lg mt-2 h-24">{item.excerpt}</p> */}
-              <p className="text-white text-lg mt-2 h-24">{renderDate(item)}</p>
-              <div className="flex flex-col items-center">
+              <div className=" h-20 flex justify-center items-center">
+                <p className="text-white text-lg">{renderDate(item)}</p>
+              </div>
+              <div className=" h-16 flex justify-center items-center">
                 <Button
                   styles="w-pz80"
                   href={`/${item.slug}`}

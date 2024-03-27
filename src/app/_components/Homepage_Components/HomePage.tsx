@@ -25,7 +25,7 @@ export default function HomePage({
 
         <PostCardsSlider posts={posts} customevents={customevents} />
 
-        <div className="relative -mb-pz5 -mt-pz5  overflow-hidden">
+        <div className="relative -mb-pz5 -mt-pz15  overflow-hidden">
           <Image
             src={"/bg-graphic.svg"}
             alt="background graphic"

@@ -7,13 +7,13 @@ import { SanityImageQueryResult } from "@/types/componentTypes";
 const builder = imageUrlBuilder(client);
 
 export const getCroppedImageSrc = (
-  image: SanityImageQueryResult // Details on this type in the appendix
+  image: GalleryImage // Details on this type in the appendix
 ) => {
   // get the image's reference
   const crop = image.crop;
 
   // get the image's og dimensions
-  const dimensions = image.asset.metadata.dimensions;
+  const dimensions = image.asset?.metadata?.dimensions;
 
   const width = dimensions?.width;
 

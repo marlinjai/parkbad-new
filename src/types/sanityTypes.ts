@@ -85,7 +85,13 @@ export type GalleryImage = {
       };
     };
     crop?: any;
-    hotspot?: any;
+    hotspot: {
+      _type: "sanity.imageHotspot";
+      height: number;
+      width: number;
+      x: number;
+      y: number;
+    };
   };
   crop?: any;
   alt: string;

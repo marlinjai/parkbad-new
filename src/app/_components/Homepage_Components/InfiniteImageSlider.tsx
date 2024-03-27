@@ -70,7 +70,7 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
   }, [duplicatedImages]);
   const builder = urlForImage(client);
   // The fixed duration for your animation
-  const fixedAnimationDuration = 54; // in seconds
+  const fixedAnimationDuration = 44; // in seconds
   // Inline keyframe styles
   const keyframes = `
    @keyframes slide {
