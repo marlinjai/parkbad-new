@@ -7,7 +7,7 @@ import { SanityImageQueryResult } from "@/types/componentTypes";
 const builder = imageUrlBuilder(client);
 
 export const getCroppedImageSrc = (
-  image: GalleryImage // Details on this type in the appendix
+  image: SanityImageQueryResult // Details on this type in the appendix
 ) => {
   // get the image's reference
   const crop = image.crop;
