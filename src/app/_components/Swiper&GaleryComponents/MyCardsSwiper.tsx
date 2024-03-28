@@ -30,18 +30,14 @@ export function CardSwiper(props: CardSwiperProps) {
       // pass component props to parameters
       const params = {
         ...rest,
-        speed: 900,
+        speed: 1200,
         effect: "cards",
         modules: [EffectCards, Navigation, Pagination, Autoplay, Keyboard],
         navigation: {
           nextEl: ".my-swiper-button-next",
           prevEl: ".my-swiper-button-prev",
         },
-        // autoplay: {
-        //   delay: 2700,
-        //   disableOnInteraction: true,
-        //   pauseOnMouseEnter: true,
-        // },
+
         pagination: {
           el: ".swiper-pagination",
           clickable: true,

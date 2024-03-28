@@ -115,7 +115,7 @@ export const homePostsQuery = groq`
 }`;
 
 export const eventsQuery = groq`
-    *[_type == "customevent"] | order(_updatedAt desc) {
+    *[_type == "customevent"] | order(eventStart asc) {
       ${eventFields}
     }
   `;
