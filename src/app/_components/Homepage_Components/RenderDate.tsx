@@ -11,6 +11,8 @@ export default function renderDate(event: PostorEventItem) {
   if (event.eventStart && event.eventEnd) {
     const timeZone = "Europe/Berlin"; // replace with your desired timezone
 
+    console.log("event", event);
+
     const start = utcToZonedTime(
       zonedTimeToUtc(event.eventStart, timeZone),
       timeZone

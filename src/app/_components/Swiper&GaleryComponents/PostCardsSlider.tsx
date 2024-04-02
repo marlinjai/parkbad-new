@@ -44,39 +44,42 @@ export default function PostCardSlider({
           Neuigkeiten & Veranstaltungen
         </h2>
         <CardSwiper className="text-center h-vw60 w-vw75 md:w-vw50 md:h-vw35 ">
-          {items.map((item) => (
-            <SwiperSlide style={{ borderRadius: "1rem" }} key={item._id}>
-              <div className="flex flex-col justify-center items-center ">
-                <a
-                  href={`/${item.slug}`}
-                  className="text-center h-full w-full absolute inset-0 z-0"
-                >
-                  <Image
-                    src={
-                      item.coverImage
-                        ? getCroppedImageSrc(item.coverImage)
-                        : item.eventImage
-                        ? getCroppedImageSrc(item.eventImage)
-                        : "/bg-graphic.svg"
-                    }
-                    alt={item.coverImage?.alt || item.eventImage?.alt || ""}
-                    fill={true}
-                    style={{
-                      objectFit: "cover",
-                    }}
-                    sizes="(max-width: 768px) 50, (max-width: 1200px) 70vw, 100vw"
-                    priority={true}
-                  />
-                  <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div>
-                  <div className="absolute bottom-4 xs:bottom-8 md:bottom-10 z-50 w-full">
-                    <div className="flex flex-col items-center justify-center  text-brand-colour-light text-3sc">
-                      <svg
-                        id="Layer_1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 92 5"
-                        className=" mb-2 h-1 w-12  stroke-brand-colour-light"
-                      >
-                        {/* <line
+          {items.map(
+            (item) => (
+              console.log("item", item),
+              (
+                <SwiperSlide style={{ borderRadius: "1rem" }} key={item._id}>
+                  <div className="flex flex-col justify-center items-center ">
+                    <a
+                      href={`/${item.slug}`}
+                      className="text-center h-full w-full absolute inset-0 z-0"
+                    >
+                      <Image
+                        src={
+                          item.coverImage
+                            ? getCroppedImageSrc(item.coverImage)
+                            : item.eventImage
+                            ? getCroppedImageSrc(item.eventImage)
+                            : "/bg-graphic.svg"
+                        }
+                        alt={item.coverImage?.alt || item.eventImage?.alt || ""}
+                        fill={true}
+                        style={{
+                          objectFit: "cover",
+                        }}
+                        sizes="(max-width: 768px) 50, (max-width: 1200px) 70vw, 100vw"
+                        priority={true}
+                      />
+                      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div>
+                      <div className="absolute bottom-4 xs:bottom-8 md:bottom-10 z-50 w-full">
+                        <div className="flex flex-col items-center justify-center  text-brand-colour-light text-3sc">
+                          <svg
+                            id="Layer_1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 92 5"
+                            className=" mb-2 h-1 w-12  stroke-brand-colour-light"
+                          >
+                            {/* <line
                           x1="2.5"
                           y1="2.5"
                           x2="89.5"
@@ -85,23 +88,25 @@ export default function PostCardSlider({
                           strokeMiterlimit="10"
                           strokeWidth="5"
                         /> */}
-                      </svg>
-                      {/* {item.author && (
+                          </svg>
+                          {/* {item.author && (
                         <AuthorAvatar
                           name={item.author.name}
                           picture={item.author.picture}
                         />
                       )} */}
-                      <h3 className=" mt-2 my-2 md:my-4 xs:text-2xl md:text-4xl">
-                        {item.title ? item.title : item.eventTitle}
-                      </h3>
-                      {renderDate(item)}
-                    </div>
+                          <h3 className=" mt-2 my-2 md:my-4 xs:text-2xl md:text-4xl">
+                            {item.title ? item.title : item.eventTitle}
+                          </h3>
+                          {renderDate(item)}
+                        </div>
+                      </div>
+                    </a>
                   </div>
-                </a>
-              </div>
-            </SwiperSlide>
-          ))}
+                </SwiperSlide>
+              )
+            )
+          )}
         </CardSwiper>
       </div>
     </>
