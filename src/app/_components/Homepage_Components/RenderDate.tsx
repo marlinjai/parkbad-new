@@ -1,10 +1,24 @@
 import { PostorEventItem } from "@/types/componentTypes";
-import { format, isSameDay, parseISO } from "date-fns";
+import { isSameDay } from "date-fns";
+import { zonedTimeToUtc, utcToZonedTime, format } from "date-fns-tz";
+
+// ...
+
+// ...
 
 export default function renderDate(event: PostorEventItem) {
+  const timeZone = "Europe/Berlin";
   if (event.eventStart && event.eventEnd) {
-    const start = parseISO(event.eventStart);
-    const end = parseISO(event.eventEnd);
+    const timeZone = "Europe/Berlin"; // replace with your desired timezone
+
+    const start = utcToZonedTime(
+      zonedTimeToUtc(event.eventStart, timeZone),
+      timeZone
+    );
+    const end = utcToZonedTime(
+      zonedTimeToUtc(event.eventEnd, timeZone),
+      timeZone
+    );
 
     // Determine if the start and end dates are the same day
     const isSameStartDateAndEndDate = isSameDay(start, end);
@@ -40,7 +54,7 @@ export default function renderDate(event: PostorEventItem) {
     );
   }
   if (event.date) {
-    const date = parseISO(event.date);
+    const date = utcToZonedTime(zonedTimeToUtc(event.date, timeZone), timeZone);
     let formattedDate = format(date, "dd.MM.yyyy");
     return <p className="">{formattedDate}</p>;
   }
