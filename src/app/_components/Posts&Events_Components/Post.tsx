@@ -61,7 +61,7 @@ function renderImage(item: PostorEventItem) {
               picture={item.author.picture}
             />
           )}
-          <div className="text-date text-center leading-tight tracking-tighter">
+          <div className="text-date text-center mb-1 leading-tight tracking-tighter">
             {renderDate(item)}
           </div>
         </div>
