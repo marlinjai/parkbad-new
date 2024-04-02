@@ -129,7 +129,7 @@ export default function Archive({
         {data.map((item) => (
           <div key={item._id} className="  p-4 rounded-lg ">
             <a href={`/${item.slug}`}>
-              <div className="relative h-vw30 md:h-vw20 w-full">
+              <div className="relative h-vw35 md:h-vw20 w-full">
                 <Image
                   src={builder.image(item.coverImage).url()}
                   alt={item.title}

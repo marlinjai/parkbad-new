@@ -1,5 +1,3 @@
-// ./nextjs-app/app/[slug]/page.tsx
-
 import Post from "@/app/_components/Posts&Events_Components/Post";
 import {
   eventPathsQuery,
