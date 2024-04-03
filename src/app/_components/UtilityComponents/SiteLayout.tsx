@@ -51,7 +51,7 @@ export default function SiteLayout({
         <>
           <Header />
           <AlertBanner preview={preview} />
-          <main className="flex justify-center flex-col min-h-vh40 bg-brand-accent-2">
+          <main className="flex justify-center w-screen flex-col min-h-vh40 bg-brand-accent-2">
             {children}
           </main>
           <Footer openingHours={openingHours} />
