@@ -68,9 +68,10 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
       window.removeEventListener("resize", calculateTotalWidth);
     };
   }, [duplicatedImages]);
+
   const builder = urlForImage(client);
   // The fixed duration for your animation
-  const fixedAnimationDuration = 44; // in seconds
+  const fixedAnimationDuration = 45; // in seconds
   // Inline keyframe styles
   const keyframes = `
    @keyframes slide {
