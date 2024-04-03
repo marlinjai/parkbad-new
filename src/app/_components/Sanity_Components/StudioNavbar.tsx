@@ -1,7 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
 import { HiOutlineArrowLeft } from "react-icons/hi";
-import brandLogo from "../../../assets/logo temporary.png"; // Adjust the path as needed
 
 function StudioNavbar(props: any) {
   return (

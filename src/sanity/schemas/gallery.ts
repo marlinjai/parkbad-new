@@ -30,14 +30,14 @@ export default defineType({
       of: [
         {
           type: "image",
-          options: { hotspot: true, metadata: ["dimensions"] },
-          fields: [
-            {
-              name: "alt",
-              type: "string",
-              title: "Alternative Text",
-            },
-          ],
+          options: { hotspot: true, metadata: ["palette"] },
+          // fields: [
+          //   {
+          //     name: "alt",
+          //     type: "string",
+          //     title: "Alternative Text",
+          //   },
+          // ],
         },
       ],
     }),
