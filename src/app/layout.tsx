@@ -28,14 +28,14 @@ export default async function RootLayout({
       <body className="no-scrollbar  overflow-x-hidden disable-scrolling-horizontal w-screen bg-brand-accent-4 ${inter.className} ">
         {draftMode().isEnabled ? (
           <>
-            <PreviewProvider token={token}>
-              {children}
-              <Analytics />
-              <SpeedInsights />
-            </PreviewProvider>
+            <PreviewProvider token={token}>{children}</PreviewProvider>
           </>
         ) : (
-          children
+          <>
+            {children}
+            <Analytics />
+            <SpeedInsights />
+          </>
         )}
       </body>
     </html>
