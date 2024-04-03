@@ -1,5 +1,3 @@
-// ./nextjs-app/app/_components/Posts.tsx
-"use client";
 import SiteLayout from "../UtilityComponents/SiteLayout";
 import { HomePageProps } from "@/types/componentTypes";
 import VideoSection from "./videoSection";

@@ -32,10 +32,10 @@ export async function sanityFetch<QueryResponse>({
       token: token,
       perspective: "previewDrafts",
     }),
-    // next: {
-    //   ...(isDraftMode ? { revalidate: 30 } : { revalidate: 300 }),
-    //   tags,
-    // },
-    cache: "no-store",
+    next: {
+      ...(isDraftMode ? { revalidate: 30 } : { revalidate: 300 }),
+      tags,
+    },
+    //cache: "no-store",
   });
 }
