@@ -14,7 +14,7 @@
     "@sanity/image-url": "^1.0.2",
     "@sanity/orderable-document-list": "^1.2.1",
     "@sanity/vision": "3.14.1",
-    "@vercel/speed-insights": "^1.0.10",
+    "@vercel/analytics": "^1.2.2",
     "date-fns-tz": "^2.0.1",
     "gsap": "^3.12.5",
     "lightgallery": "^2.7.2",

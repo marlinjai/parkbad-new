@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import dynamic from "next/dynamic";
 import { draftMode } from "next/headers";
 import { token } from "@/sanity/lib/sanity.fetch";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,8 +27,10 @@ export default async function RootLayout({
       <body className="no-scrollbar  overflow-x-hidden disable-scrolling-horizontal w-screen bg-brand-accent-4 ${inter.className} ">
         {draftMode().isEnabled ? (
           <>
-            <PreviewProvider token={token}>{children}</PreviewProvider>
-            <SpeedInsights />
+            <PreviewProvider token={token}>
+              {children}
+              <Analytics />
+            </PreviewProvider>
           </>
         ) : (
           children
