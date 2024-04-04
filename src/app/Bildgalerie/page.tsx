@@ -4,11 +4,9 @@ import { Gallery } from "@/types/sanityTypes";
 import { zoomGalleryQuery } from "@/sanity/lib/sanity.queries";
 import LightImageGallery from "../_components/Swiper&GaleryComponents/LightImageGallery";
 
-export default function Bildgalerie({
-  galleryData,
-}: {
-  galleryData: Gallery[];
-}) {
+export default async function Bildgalerie() {
+  const galleryData = await sanityFetch<Gallery[]>({ query: zoomGalleryQuery });
+
   if (!galleryData || !galleryData.length) {
     return <div>No gallery data available</div>;
   }
@@ -27,15 +25,4 @@ export default function Bildgalerie({
       </div>
     </SiteLayout>
   );
-}
-
-export async function getStaticProps() {
-  const galleryData = await sanityFetch<Gallery[]>({ query: zoomGalleryQuery });
-
-  return {
-    props: {
-      galleryData,
-    },
-    revalidate: 300, // Re-generate the page every 5 minutes
-  };
 }

@@ -5,7 +5,6 @@ import TrippleIcon from "./TrippleLogo";
 import PostCardsSlider from "../Swiper&GaleryComponents/PostCardsSlider";
 import Image from "next/image";
 import InfiniteImageSlider from "./InfiniteImageSlider";
-import Loading from "../UtilityComponents/LoadingSpinner";
 
 export default function HomePage({
   preview,
