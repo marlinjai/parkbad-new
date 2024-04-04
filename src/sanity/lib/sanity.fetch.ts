@@ -27,6 +27,7 @@ export async function sanityFetch<QueryResponse>({
   }
 
   return client.fetch<QueryResponse>(query, params, {
+    cache: "no-store",
     next: { revalidate: 30 },
   });
 }
