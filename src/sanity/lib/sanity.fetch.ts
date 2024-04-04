@@ -26,7 +26,7 @@ export async function sanityFetch<QueryResponse>({
     );
   }
 
-  return await client.fetch<QueryResponse>(query, params, {
+  return client.fetch<QueryResponse>(query, params, {
     ...(isDraftMode && {
       cache: undefined,
       token: token,
