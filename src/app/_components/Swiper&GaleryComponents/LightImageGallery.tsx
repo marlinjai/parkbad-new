@@ -6,9 +6,7 @@ import LightGallery from "lightgallery/react";
 // import styles
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-zoom.css";
-import "lightgallery/css/lg-thumbnail.css";
 
-import lgThumbnail from "lightgallery/plugins/thumbnail";
 import lgZoom from "lightgallery/plugins/zoom";
 import { GalleryImage } from "@/types/sanityTypes";
 import { urlForImage } from "@/sanity/lib/sanity.image";
@@ -34,7 +32,7 @@ export default function Gallery(props: ZoomgalleryProps) {
       <LightGallery
         onInit={onInit}
         speed={500}
-        plugins={[lgZoom, lgThumbnail]}
+        plugins={[lgZoom]}
         elementClassNames="my-gallery"
       >
         {props.images.map((image, index) => {
