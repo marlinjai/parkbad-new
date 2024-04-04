@@ -26,7 +26,7 @@ export async function sanityFetch<QueryResponse>({
     );
   }
 
-  return client.fetch<QueryResponse>(query, params, {
+  return await client.fetch<QueryResponse>(query, params, {
     ...(isDraftMode && {
       cache: undefined,
       token: token,
@@ -34,7 +34,6 @@ export async function sanityFetch<QueryResponse>({
     }),
     next: {
       ...(isDraftMode ? { revalidate: 30 } : { revalidate: 300 }),
-      tags,
     },
     //cache: "no-store",
   });
