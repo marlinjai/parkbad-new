@@ -95,7 +95,7 @@ export default function PostCardSlider({
                           picture={item.author.picture}
                         />
                       )} */}
-                          <h3 className=" mt-2 my-2 md:my-4 xs:text-2xl md:text-4xl">
+                          <h3 className=" mt-2 my-2 px-6 md:my-4 xs:text-2xl md:text-4xl">
                             {item.title ? item.title : item.eventTitle}
                           </h3>
                           {renderDate(item)}
