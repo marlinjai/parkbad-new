@@ -32,9 +32,7 @@ export async function sanityFetch<QueryResponse>({
       token: token,
       perspective: "previewDrafts",
     }),
-    next: {
-      ...(isDraftMode ? { revalidate: 30 } : { revalidate: 300 }),
-    },
+    next: { revalidate: 30 },
     //cache: "no-store",
   });
 }
