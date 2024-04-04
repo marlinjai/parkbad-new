@@ -1,13 +1,14 @@
 import { sanityFetch } from "@/sanity/lib/sanity.fetch";
 import SiteLayout from "../_components/UtilityComponents/SiteLayout";
-import Zoomgallery from "../_components/Swiper&GaleryComponents/Zoomgallery";
 import { Gallery } from "@/types/sanityTypes";
 import { zoomGalleryQuery } from "@/sanity/lib/sanity.queries";
 import LightImageGallery from "../_components/Swiper&GaleryComponents/LightImageGallery";
 
-export default async function Bildgalerie() {
-  const galleryData = await sanityFetch<Gallery[]>({ query: zoomGalleryQuery });
-
+export default function Bildgalerie({
+  galleryData,
+}: {
+  galleryData: Gallery[];
+}) {
   if (!galleryData || !galleryData.length) {
     return <div>No gallery data available</div>;
   }
@@ -22,10 +23,19 @@ export default async function Bildgalerie() {
         </h2>
       </div>
       <div className="p-4 md:p-12 xl:p-20 flex flex-wrap justify-center">
-        {/* <Zoomgallery images={firstGallery.images}></Zoomgallery> */}
-
         <LightImageGallery images={firstGallery.images}></LightImageGallery>
       </div>
     </SiteLayout>
   );
+}
+
+export async function getStaticProps() {
+  const galleryData = await sanityFetch<Gallery[]>({ query: zoomGalleryQuery });
+
+  return {
+    props: {
+      galleryData,
+    },
+    revalidate: 300, // Re-generate the page every 5 minutes
+  };
 }
