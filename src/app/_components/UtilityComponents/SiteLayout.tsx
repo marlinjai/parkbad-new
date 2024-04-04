@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
 import AlertBanner from "./AlertBanner";
 import { Header } from "../Header_Components/Header";
 import Footer from "../Footer_Components/Footer";
@@ -16,8 +15,6 @@ export default function SiteLayout({
   preview?: boolean;
 }) {
   const [loading, setLoading] = useState(true);
-  const pathname = usePathname();
-  const [searchParams] = useSearchParams();
 
   // Use the OpeningHour[] type for your state
   const [openingHours, setOpeningHours] = useState<OpeningHour[]>([]);
@@ -33,7 +30,7 @@ export default function SiteLayout({
 
     // Cleanup the timer if the component unmounts
     return () => clearTimeout(timer);
-  }, [pathname, searchParams]); // React to changes in path or search parameters
+  }, []); // React to changes in path or search parameters
 
   useEffect(() => {
     const fetchData = async () => {
