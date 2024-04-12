@@ -28,7 +28,7 @@ const Impressum = () => {
         <br />
         <br />
         Geschäftsführer: Franz-Josef Füchtenschnieder <br />
-        Verantwortlich für den Inhalt (gem. § 18 MStV): Franz-Josef
+        Verantwortlich für den Inhalt (gem. § 18 Abs. 1 MStV): Franz-Josef
         Füchtenschnieder
         <br />
       </p>
