@@ -27,10 +27,6 @@ export async function sanityFetch<QueryResponse>({
   }
 
   return client.fetch<QueryResponse>(query, params, {
-    //next: { revalidate: 30 },
-
-    // https://www.sanity.io/docs/api-caching
-    // tags,
     cache: "no-store",
   });
 }

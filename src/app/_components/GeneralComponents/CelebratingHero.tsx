@@ -41,7 +41,7 @@ export default function CelebratingHero(props: CelebratingHeroProps) {
       <div className="absolute  overflow-hidden w-screen h-screen flex justify-center items-start">
         <div className="-mt-8">
           <RentingFormNoSSR
-            headline="Möchtest du das Parkbad mieten?"
+            headline="Möchtest du im Parkbad feiern?"
             subheadline="Schreib uns worum es geht und wir melden uns bei dir"
             buttonHoverColor="bg-brand-colour-dark"
           />
