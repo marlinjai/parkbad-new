@@ -1,20 +1,19 @@
 "use client";
 
 // Import Swiper React components
-import { CardSwiper, SwiperSlide } from "./MyCardsSwiper";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import "swiper/css/autoplay";
-import { PostType, CustomEvent } from "@/types/sanityTypes";
-import { urlForImage } from "@/sanity/lib/sanity.image";
 import { client } from "@/sanity/lib/sanity.client";
-import Image from "next/image";
+import { urlForImage } from "@/sanity/lib/sanity.image";
 import { PostorEventItem } from "@/types/componentTypes";
-import renderDate from "../Homepage_Components/RenderDate";
+import { CustomEvent, PostType } from "@/types/sanityTypes";
+import Image from "next/image";
 import { useEffect, useState } from "react";
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import renderDate from "../Homepage_Components/RenderDate";
 import { getCroppedImageSrc } from "../UtilityComponents/GetCroppedImageSrc";
-import AuthorAvatar from "../Posts&Events_Components/AuthorAvatar";
+import { CardSwiper, SwiperSlide } from "./MyCardsSwiper";
 
 const builder = urlForImage(client);
 
@@ -39,11 +38,15 @@ export default function PostCardSlider({
 
   return (
     <>
-      <div className={isReady ? "opacity-100 mb-vh10" : " opacity-0"}>
+      <div
+        className={
+          isReady ? "opacity-100 mb-vh10 overflow-x-clip" : " opacity-0"
+        }
+      >
         <h2 className="text-center text-brand-colour-light my-12 sm:mb-12 sm:mt-4   text-2sc sm:text-5sc ">
           Neuigkeiten & Veranstaltungen
         </h2>
-        <CardSwiper className="text-center h-vw60 w-vw75 md:w-vw50 md:h-vw35 ">
+        <CardSwiper className="text-center h-vw55 w-vw65 md:w-vw50 md:h-vw35 ">
           {items.map(
             (item) => (
               console.log("item", item),
