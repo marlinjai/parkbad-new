@@ -13,7 +13,6 @@ export default function VideoSection() {
         autoPlay
         loop
         muted
-        poster="/video-bg.png"
       />
       <div className="  flex justify-center">
         <SvgOverlays></SvgOverlays>
