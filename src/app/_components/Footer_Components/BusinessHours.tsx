@@ -1,5 +1,4 @@
-import { OpeningHour, GroupedOpeningHour } from "@/types/componentTypes";
-import internal from "stream";
+import { GroupedOpeningHour, OpeningHour } from "@/types/componentTypes";
 
 // Mapping English days to German
 const dayTranslation: { [key: string]: string } = {

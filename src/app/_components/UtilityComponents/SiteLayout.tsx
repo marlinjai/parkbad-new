@@ -1,10 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import AlertBanner from "./AlertBanner";
-import { Header } from "../Header_Components/Header";
-import Footer from "../Footer_Components/Footer";
 import fetchOpeningHours from "@/app/services/googleMaps";
 import { OpeningHour } from "@/types/componentTypes";
+import React, { useEffect, useState } from "react";
+import Footer from "../Footer_Components/Footer";
+import { Header } from "../Header_Components/Header";
+import AlertBanner from "./AlertBanner";
 import Loading from "./LoadingSpinner";
 
 export default function SiteLayout({
@@ -34,12 +34,21 @@ export default function SiteLayout({
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetchOpeningHours("Parkbad Gütersloh");
-      setOpeningHours(response);
+      try {
+        const response = await fetchOpeningHours("Parkbad Gütersloh");
+        console.log("response:", response);
+        setOpeningHours(response);
+      } catch (error) {
+        console.error("Error fetching opening hours:", error);
+      }
     };
 
     fetchData();
-  }, []);
+  }, []); // Empty dependency array means this effect runs once on mount]); // Empty dependency array means this effect runs once on mount
+
+  useEffect(() => {
+    console.log("openingHours:", openingHours);
+  }, [openingHours]); // This effect runs whenever openingHours changes
 
   return (
     <>
