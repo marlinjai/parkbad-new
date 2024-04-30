@@ -1,3 +1,4 @@
+"use client";
 import SvgOverlays from "./SvgOverlays";
 
 export default function VideoSection() {
