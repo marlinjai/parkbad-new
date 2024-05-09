@@ -102,7 +102,7 @@ function renderContent(item: PostorEventItem) {
         },
         block: {
           normal: ({ children }) => (
-            <p className="text-justify text-xl leding-6 my-4">{children}</p>
+            <p className="text-left text-xl leding-6 my-4">{children}</p>
           ),
           normalLeft: ({ children }) => (
             <p className="text-left text-xl leding-6 my-4">{children}</p>
