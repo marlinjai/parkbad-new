@@ -1,7 +1,5 @@
 "use client";
 
-import React, { useState, FormEvent } from "react";
-import { SubmitButton } from "./SubmitButton";
 import Form from "./Form";
 
 interface KontaktPropsType {
@@ -104,7 +102,7 @@ export default function Kontakt(kontaktProps: KontaktPropsType) {
           border-solid 
           border-brand-border-orange 
           bg-brand-colour-darker 
-          pt-10 
+          p-10 
 
           md:py-14 
 "
@@ -112,14 +110,14 @@ export default function Kontakt(kontaktProps: KontaktPropsType) {
               {/* Smaller square below the left big square */}
               <div
                 className="
-            absolute 
-            left-2 top-2 h-4 
-            w-4 border-2 border-solid 
-            border-brand-border-orange bg-brand-accent-2 md:left-3 
-            md:top-3 md:h-6 md:w-6 
-            lg:left-4 
-            lg:top-4 
-            lg:h-8 lg:w-8"
+                          absolute 
+                    left-2 top-2 h-4 
+                    w-4 border-2 border-solid 
+                    border-brand-border-orange bg-brand-accent-2 md:left-3 
+                    md:top-3 md:h-6 md:w-6 
+                    lg:left-4 
+                    lg:top-4 
+                    lg:h-8 lg:w-8"
               ></div>
 
               {/* Smaller square below the right big square */}
