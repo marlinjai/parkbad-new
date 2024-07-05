@@ -1,5 +1,3 @@
-import React from "react";
-
 const Impressum = () => {
   return (
     <>
@@ -7,7 +5,7 @@ const Impressum = () => {
         Impressum
       </h2>
       <p className="mb-4 mt-6 text-sm md:text-xl">
-        Angaben gemäß § 5 TMG Parkbad Gütersloh Am Parkbad 7-9
+        Angaben gemäß § 5 DDG Parkbad Gütersloh Am Parkbad 7-9
         <br />
         <br />
         33332 Gütersloh
