@@ -71,6 +71,13 @@ export type SanityImageQueryResult = {
   alt: string;
 };
 // Define a type alias for the item
+export type EventDay = {
+  date: string;
+  startTime: string;
+  endTime: string;
+  description?: string;
+};
+
 export type PostorEventItem = {
   _id: string;
   slug?: string;
@@ -84,6 +91,7 @@ export type PostorEventItem = {
   date?: string;
   eventStart?: string;
   eventEnd?: string;
+  eventDays?: EventDay[];
 };
 
 export type OpeningHour = {

@@ -110,16 +110,88 @@ export default defineType({
       ],
     }),
     defineField({
+      name: "eventDays",
+      title: "Veranstaltungstage",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            {
+              name: "date",
+              title: "Datum",
+              type: "date",
+              validation: (rule) => rule.required(),
+            },
+            {
+              name: "startTime",
+              title: "Startzeit",
+              type: "string",
+              options: {
+                list: Array.from({ length: 48 }, (_, i) => {
+                  const hour = Math.floor(i / 2);
+                  const minute = i % 2 === 0 ? "00" : "30";
+                  return {
+                    title: `${hour.toString().padStart(2, "0")}:${minute}`,
+                    value: `${hour.toString().padStart(2, "0")}:${minute}`,
+                  };
+                }),
+              },
+              validation: (rule) => rule.required(),
+            },
+            {
+              name: "endTime",
+              title: "Endzeit",
+              type: "string",
+              options: {
+                list: Array.from({ length: 48 }, (_, i) => {
+                  const hour = Math.floor(i / 2);
+                  const minute = i % 2 === 0 ? "00" : "30";
+                  return {
+                    title: `${hour.toString().padStart(2, "0")}:${minute}`,
+                    value: `${hour.toString().padStart(2, "0")}:${minute}`,
+                  };
+                }),
+              },
+              validation: (rule) => rule.required(),
+            },
+            {
+              name: "description",
+              title: "Tagesbeschreibung (optional)",
+              type: "text",
+            },
+          ],
+          preview: {
+            select: {
+              date: "date",
+              startTime: "startTime",
+              endTime: "endTime",
+              description: "description",
+            },
+            prepare({ date, startTime, endTime, description }) {
+              return {
+                title: `${new Date(date).toLocaleDateString(
+                  "de-DE"
+                )} | ${startTime} - ${endTime}`,
+                subtitle: description || "Keine Beschreibung",
+              };
+            },
+          },
+        },
+      ],
+      validation: (rule) => rule.required().min(1),
+    }),
+    defineField({
       name: "eventStart",
-      title: "Event-Start",
+      title: "Event-Start (Legacy)",
       type: "datetime",
-      initialValue: () => new Date().toISOString(),
+      hidden: true,
     }),
     defineField({
       name: "eventEnd",
-      title: "Event-Ende",
+      title: "Event-Ende (Legacy)",
       type: "datetime",
-      initialValue: () => new Date().toISOString(),
+      hidden: true,
     }),
     defineField({
       name: "author",
