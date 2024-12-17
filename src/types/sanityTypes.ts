@@ -1,3 +1,5 @@
+import { EventDay } from "./componentTypes";
+
 export type Author = {
   name?: string;
   picture?: any;
@@ -32,6 +34,7 @@ export type CustomEvent = {
   author?: Author;
   slug: string;
   content?: any;
+  eventDays?: EventDay[];
 };
 
 export type Food = {

@@ -36,10 +36,10 @@ export default function SiteLayout({
     const fetchData = async () => {
       try {
         const response = await fetchOpeningHours("Parkbad Gütersloh");
-        console.log("response:", response);
+        // console.log("response:", response);
         setOpeningHours(response);
       } catch (error) {
-        console.error("Error fetching opening hours:", error);
+        // console.error("Error fetching opening hours:", error);
       }
     };
 
@@ -47,7 +47,7 @@ export default function SiteLayout({
   }, []); // Empty dependency array means this effect runs once on mount]); // Empty dependency array means this effect runs once on mount
 
   useEffect(() => {
-    console.log("openingHours:", openingHours);
+    // console.log("openingHours:", openingHours);
   }, [openingHours]); // This effect runs whenever openingHours changes
 
   return (

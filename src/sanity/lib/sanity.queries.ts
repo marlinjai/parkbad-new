@@ -30,6 +30,7 @@ const eventFields = groq`
       },
       eventStart,
       eventEnd,
+      eventDays,
       "slug": slug.current,
       "author": author->{name, picture},
 `;
@@ -126,7 +127,7 @@ export const eventQuery = groq`*[_type == "customevent" && slug.current == $slug
   }`;
 
 export const homepageEventsQuery = groq`
-  *[_type == "customevent" && (eventEnd > now() || !defined(eventEnd))] | order(eventStart asc) {
+  *[_type == "customevent" && (eventEnd > now() || !defined(eventEnd)  || eventDays[eventDays.length - 1].date > now())] | order(eventStart asc) {
     ${eventFields}
   }
 `;

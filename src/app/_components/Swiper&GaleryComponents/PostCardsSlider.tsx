@@ -73,7 +73,7 @@ export default function PostCardSlider({
                         sizes="(max-width: 768px) 50, (max-width: 1200px) 70vw, 100vw"
                         priority={true}
                       />
-                      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div>
+                      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-black/70 to-transparent opacity-95"></div>
                       <div className="absolute bottom-4 xs:bottom-8 md:bottom-10 z-50 w-full">
                         <div className="flex flex-col items-center justify-center  text-brand-colour-light text-3sc">
                           <svg
