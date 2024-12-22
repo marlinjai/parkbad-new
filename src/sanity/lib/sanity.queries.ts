@@ -6,16 +6,7 @@ const postFields = groq`
   date,
   showUntilDate,
   _updatedAt,
-  content[]{
-    ...,
-    _type == "file" => {
-      ...,
-      asset->{
-        url,
-        mimeType
-      }
-    }
-  },
+  content,
   excerpt,
   coverImage{
     asset->{url, _ref, _id,metadata},
@@ -29,19 +20,7 @@ const postFields = groq`
 const eventFields = groq`
       _id,
       eventTitle,
-      eventStart,
-      eventEnd,
-      _updatedAt,
-      eventContent[]{
-        ...,
-        _type == "file" => {
-          ...,
-          asset->{
-            url,
-            mimeType
-          }
-        }
-      },
+      eventContent,
       excerpt,
       eventImage{
         asset->{url, _ref, _id,metadata},

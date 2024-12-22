@@ -1,11 +1,5 @@
 import { format, parseISO } from "date-fns";
-import {
-  defineArrayMember,
-  defineField,
-  defineType,
-  Rule,
-  SlugValidationContext,
-} from "sanity";
+import { defineField, defineType } from "sanity";
 
 import authorType from "./author";
 import { BsFillSunFill } from "react-icons/bs";
@@ -32,7 +26,7 @@ export default defineType({
       name: "eventTitle",
       title: "Veranstaltungstitel",
       type: "string",
-      validation: (rule: Rule) => rule.required(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "slug",
@@ -41,18 +35,18 @@ export default defineType({
       options: {
         source: "eventTitle",
         maxLength: 96,
-        isUnique: (value: string, context: SlugValidationContext) =>
-          context.defaultIsUnique(value, context),
+        isUnique: (value, context) => context.defaultIsUnique(value, context),
       },
-      validation: (rule: Rule) => rule.required(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "eventContent",
       title: "Event Beschreibung",
       type: "array",
       of: [
-        defineArrayMember({
+        {
           type: "block",
+
           styles: [
             { title: "Normal", value: "normal" },
             { title: "Normal Left", value: "normalLeft" },
@@ -72,48 +66,27 @@ export default defineType({
             { title: "H4 Right", value: "h4Right" },
             { title: "Quote", value: "blockquote" },
           ],
-        }),
-        defineArrayMember({
+        },
+        {
           type: "image",
           options: {
             hotspot: true,
           },
           fields: [
-            defineField({
+            {
               name: "caption",
               type: "string",
               title: "Image caption",
               description: "Caption displayed below the image.",
-            }),
-            defineField({
+            },
+            {
               name: "alt",
               type: "string",
               title: "Alternative text",
               description: "Important for SEO and accessiblity.",
-            }),
-          ],
-        }),
-        defineArrayMember({
-          type: "file",
-          title: "Video",
-          options: {
-            accept: "video/*",
-          },
-          fields: [
-            {
-              name: "caption",
-              type: "string",
-              title: "Video caption",
-              description: "Caption displayed below the video.",
-            },
-            {
-              name: "alt",
-              type: "string",
-              title: "Alternative text",
-              description: "Important for SEO and accessibility.",
             },
           ],
-        }),
+        },
       ],
     }),
     defineField({
@@ -129,11 +102,11 @@ export default defineType({
         hotspot: true,
       },
       fields: [
-        defineField({
+        {
           name: "alt",
           type: "string",
           title: "Alternative Text",
-        }),
+        },
       ],
     }),
     defineField({
@@ -141,16 +114,16 @@ export default defineType({
       title: "Veranstaltungstage",
       type: "array",
       of: [
-        defineArrayMember({
+        {
           type: "object",
           fields: [
-            defineField({
+            {
               name: "date",
               title: "Datum",
               type: "date",
               validation: (rule) => rule.required(),
-            }),
-            defineField({
+            },
+            {
               name: "startTime",
               title: "Startzeit",
               type: "string",
@@ -165,8 +138,8 @@ export default defineType({
                 }),
               },
               validation: (rule) => rule.required(),
-            }),
-            defineField({
+            },
+            {
               name: "endTime",
               title: "Endzeit",
               type: "string",
@@ -181,12 +154,12 @@ export default defineType({
                 }),
               },
               validation: (rule) => rule.required(),
-            }),
-            defineField({
+            },
+            {
               name: "description",
               title: "Tagesbeschreibung (optional)",
               type: "text",
-            }),
+            },
           ],
           preview: {
             select: {
@@ -204,7 +177,7 @@ export default defineType({
               };
             },
           },
-        }),
+        },
       ],
       validation: (rule) => rule.required().min(1),
     }),
@@ -224,7 +197,7 @@ export default defineType({
       name: "author",
       title: "Author",
       type: "reference",
-      to: [defineArrayMember({ type: authorType.name })],
+      to: [{ type: authorType.name }],
     }),
   ],
   preview: {
