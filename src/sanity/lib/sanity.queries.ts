@@ -6,7 +6,14 @@ const postFields = groq`
   date,
   showUntilDate,
   _updatedAt,
-  content,
+  content[]{
+    ...,
+    _type == "file" => {
+      "url": asset->url,
+      caption,
+      alt
+    }
+  },
   excerpt,
   coverImage{
     asset->{url, _ref, _id,metadata},
@@ -18,21 +25,30 @@ const postFields = groq`
   "author": author->{name, picture},
 `;
 const eventFields = groq`
-      _id,
-      eventTitle,
-      eventContent,
-      excerpt,
-      eventImage{
-        asset->{url, _ref, _id,metadata},
-        crop,
-        hotspot,
-        alt
-      },
-      eventStart,
-      eventEnd,
-      eventDays,
-      "slug": slug.current,
-      "author": author->{name, picture},
+  _id,
+  eventTitle,
+  eventContent[]{
+    ...,
+    _type == "file" => {
+      ...,
+      asset->{
+        url,
+        mimeType
+      }
+    }
+  },
+  excerpt,
+  eventImage{
+    asset->{url, _ref, _id,metadata},
+    crop,
+    hotspot,
+    alt
+  },
+  eventStart,
+  eventEnd,
+  eventDays,
+  "slug": slug.current,
+  "author": author->{name, picture},
 `;
 
 const foodFields = groq`

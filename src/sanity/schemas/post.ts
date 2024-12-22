@@ -92,6 +92,27 @@ export default defineType({
             },
           ],
         },
+        {
+          type: "file",
+          title: "Video",
+          options: {
+            accept: "video/*",
+          },
+          fields: [
+            {
+              name: "caption",
+              type: "string",
+              title: "Video caption",
+              description: "Caption displayed below the video.",
+            },
+            {
+              name: "alt",
+              type: "string",
+              title: "Alternative text",
+              description: "Important for SEO and accessibility.",
+            },
+          ],
+        },
       ],
     }),
     defineField({

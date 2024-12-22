@@ -92,13 +92,26 @@ function MyImage({ value, index }: MyImageProps) {
 }
 
 function renderContent(item: PostorEventItem) {
-  console.log("item", item);
   return (
     <PortableText
       value={item.content || item.eventContent}
       components={{
         types: {
           image: MyImage,
+          file: ({ value }: any) => (
+            <div className="my-8">
+              <video
+                controls
+                className="w-full rounded-lg"
+                src={value?.asset?.url}
+              />
+              {value.caption && (
+                <p className="mt-2 text-center text-white italic">
+                  {value.caption}
+                </p>
+              )}
+            </div>
+          ),
         },
         block: {
           normal: ({ children }) => (
