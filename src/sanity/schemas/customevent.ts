@@ -215,6 +215,12 @@ export default defineType({
       hidden: true,
     }),
     defineField({
+      name: "showUntilDate",
+      title: "Ende der Anzeige auf der Homepage",
+      type: "datetime",
+      initialValue: () => new Date().toISOString(),
+    }),
+    defineField({
       name: "author",
       title: "Author",
       type: "reference",
