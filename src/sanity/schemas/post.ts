@@ -1,6 +1,11 @@
 import { BookIcon } from "@sanity/icons";
 import { format, parseISO } from "date-fns";
-import { defineField, defineType } from "sanity";
+import {
+  defineArrayMember,
+  defineField,
+  defineType,
+  SlugValidationContext,
+} from "sanity";
 
 import authorType from "./author";
 
@@ -39,7 +44,8 @@ export default defineType({
       options: {
         source: "title",
         maxLength: 96,
-        isUnique: (value, context) => context.defaultIsUnique(value, context),
+        isUnique: (value: string, context: SlugValidationContext) =>
+          context.defaultIsUnique(value, context),
       },
       validation: (rule) => rule.required(),
     }),
@@ -48,9 +54,8 @@ export default defineType({
       title: "Beitragsinhalt",
       type: "array",
       of: [
-        {
+        defineArrayMember({
           type: "block",
-
           styles: [
             { title: "Normal", value: "normal" },
             { title: "Normal Left", value: "normalLeft" },
@@ -70,28 +75,46 @@ export default defineType({
             { title: "H4 Right", value: "h4Right" },
             { title: "Quote", value: "blockquote" },
           ],
-        },
-
-        {
+        }),
+        defineArrayMember({
           type: "image",
-          options: {
-            hotspot: true,
-          },
+          options: { hotspot: true },
           fields: [
-            {
+            defineField({
               name: "caption",
               type: "string",
               title: "Image caption",
               description: "Caption displayed below the image.",
-            },
-            {
+            }),
+            defineField({
               name: "alt",
               type: "string",
               title: "Alternative text",
               description: "Important for SEO and accessiblity.",
-            },
+            }),
           ],
-        },
+        }),
+        defineArrayMember({
+          type: "file",
+          title: "Video",
+          options: {
+            accept: "video/*",
+          },
+          fields: [
+            defineField({
+              name: "caption",
+              type: "string",
+              title: "Video caption",
+              description: "Caption displayed below the video.",
+            }),
+            defineField({
+              name: "alt",
+              type: "string",
+              title: "Alternative text",
+              description: "Important for SEO and accessibility.",
+            }),
+          ],
+        }),
       ],
     }),
     defineField({

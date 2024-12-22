@@ -92,13 +92,39 @@ function MyImage({ value, index }: MyImageProps) {
 }
 
 function renderContent(item: PostorEventItem) {
-  console.log("item", item);
   return (
     <PortableText
       value={item.content || item.eventContent}
       components={{
         types: {
           image: MyImage,
+          file: ({ value }) => {
+            // Check if it's a video file by checking the mimeType or file extension
+            const isVideo =
+              value.asset?.mimeType?.startsWith("video/") ||
+              value.asset?.url?.match(/\.(mp4|webm|ogg)$/i);
+
+            if (isVideo) {
+              return (
+                <figure className="w-full my-8">
+                  <video
+                    controls
+                    className="w-full rounded-lg shadow-lg"
+                    playsInline
+                  >
+                    <source src={value.asset.url} type={value.asset.mimeType} />
+                    Your browser does not support the video tag.
+                  </video>
+                  {value.caption && (
+                    <figcaption className="text-center mt-2 text-white">
+                      {value.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              );
+            }
+            return null;
+          },
         },
         block: {
           normal: ({ children }) => (

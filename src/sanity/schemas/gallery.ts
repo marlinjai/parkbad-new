@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineField, defineType, SlugValidationContext } from "sanity";
 import { BsImages } from "react-icons/bs";
 
 export default defineType({
@@ -19,7 +19,8 @@ export default defineType({
       options: {
         source: "galleryTitle",
         maxLength: 96,
-        isUnique: (value, context) => context.defaultIsUnique(value, context),
+        isUnique: (value: string, context: SlugValidationContext) =>
+          context.defaultIsUnique(value, context),
       },
       validation: (rule) => rule.required(),
     }),
