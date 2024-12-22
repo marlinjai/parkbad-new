@@ -129,13 +129,12 @@ export default defineType({
       options: {
         hotspot: true,
       },
-
       fields: [
-        {
+        defineField({
           name: "alt",
           type: "string",
           title: "Alternative Text",
-        },
+        }),
       ],
     }),
     defineField({
