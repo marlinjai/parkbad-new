@@ -44,22 +44,37 @@ export default function renderDate(event: PostorEventItem) {
         day.startTime === days[0].startTime && day.endTime === days[0].endTime
     );
 
-    if (allSameTime) {
+    // For multiple days with different times, show them individually
+    if (!allSameTime) {
       return (
         <p className="xs:text-lg text-sm">
-          {dateRanges.map((range, index) => (
+          {days.map((day, index) => (
             <span key={index}>
-              {format(range.start, "dd.MM.yyyy", { locale: de })}
-              {!isEqual(range.start, range.end) &&
-                ` - ${format(range.end, "dd.MM.yyyy", { locale: de })}`}
-              {index < dateRanges.length - 1 && <br />}
+              {format(new Date(day.date), "dd.MM.yyyy", { locale: de })}
+              <br />
+              {`${day.startTime} - ${day.endTime} Uhr`}
+              {index < days.length - 1 && <br />}
             </span>
           ))}
-          <br />
-          {`${days[0].startTime} - ${days[0].endTime} Uhr`}
         </p>
       );
     }
+
+    // For days with the same times (original code)
+    return (
+      <p className="xs:text-lg text-sm">
+        {dateRanges.map((range, index) => (
+          <span key={index}>
+            {format(range.start, "dd.MM.yyyy", { locale: de })}
+            {!isEqual(range.start, range.end) &&
+              ` - ${format(range.end, "dd.MM.yyyy", { locale: de })}`}
+            {index < dateRanges.length - 1 && <br />}
+          </span>
+        ))}
+        <br />
+        {`${days[0].startTime} - ${days[0].endTime} Uhr`}
+      </p>
+    );
   }
 
   // Reference to legacy event handling
