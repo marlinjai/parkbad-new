@@ -36,43 +36,59 @@ export default function renderDate(event: PostorEventItem) {
   // Handle new multi-day events
   if (event.eventDays && event.eventDays.length > 0) {
     const days = event.eventDays;
-    const dateRanges = findDateRanges(days);
 
-    // Check if all days have the same times
-    const allSameTime = days.every(
-      (day) =>
-        day.startTime === days[0].startTime && day.endTime === days[0].endTime
-    );
+    // Group days by time
+    const timeGroups: { [key: string]: { date: string }[] } = {};
 
-    // For multiple days with different times, show them individually
-    if (!allSameTime) {
+    days.forEach((day) => {
+      const timeKey = `${day.startTime}-${day.endTime}`;
+      if (!timeGroups[timeKey]) {
+        timeGroups[timeKey] = [];
+      }
+      timeGroups[timeKey].push(day);
+    });
+
+    // If only one time group, use the range display
+    if (Object.keys(timeGroups).length === 1) {
+      const dateRanges = findDateRanges(days);
       return (
         <p className="xs:text-lg text-sm">
-          {days.map((day, index) => (
+          {dateRanges.map((range, index) => (
             <span key={index}>
-              {format(new Date(day.date), "dd.MM.yyyy", { locale: de })}
-              <br />
-              {`${day.startTime} - ${day.endTime} Uhr`}
-              {index < days.length - 1 && <br />}
+              {format(range.start, "dd.MM.yyyy", { locale: de })}
+              {!isEqual(range.start, range.end) &&
+                ` - ${format(range.end, "dd.MM.yyyy", { locale: de })}`}
+              {index < dateRanges.length - 1 && <br />}
             </span>
           ))}
+          <br />
+          {`${days[0].startTime} - ${days[0].endTime} Uhr`}
         </p>
       );
     }
 
-    // For days with the same times (original code)
+    // For multiple time groups, display by group
     return (
       <p className="xs:text-lg text-sm">
-        {dateRanges.map((range, index) => (
-          <span key={index}>
-            {format(range.start, "dd.MM.yyyy", { locale: de })}
-            {!isEqual(range.start, range.end) &&
-              ` - ${format(range.end, "dd.MM.yyyy", { locale: de })}`}
-            {index < dateRanges.length - 1 && <br />}
-          </span>
-        ))}
-        <br />
-        {`${days[0].startTime} - ${days[0].endTime} Uhr`}
+        {Object.entries(timeGroups).map(([timeKey, daysInGroup], groupIndex) => {
+          const [startTime, endTime] = timeKey.split("-");
+          const dateRanges = findDateRanges(daysInGroup);
+
+          return (
+            <span key={groupIndex}>
+              {dateRanges.map((range, rangeIndex) => (
+                <span key={`${groupIndex}-${rangeIndex}`}>
+                  {format(range.start, "dd.MM.yyyy", { locale: de })}
+                  {!isEqual(range.start, range.end) &&
+                    ` - ${format(range.end, "dd.MM.yyyy", { locale: de })}`}
+                  <br />
+                </span>
+              ))}
+              {`${startTime} - ${endTime} Uhr`}
+              {groupIndex < Object.keys(timeGroups).length - 1 && <br />}
+            </span>
+          );
+        })}
       </p>
     );
   }
