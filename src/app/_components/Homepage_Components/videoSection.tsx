@@ -55,10 +55,10 @@ export default function VideoSection() {
   // Effect for delayed video show after loading
   useEffect(() => {
     if (isVideoLoaded) {
-      // Show video after 0.9 seconds delay
+      // Show video after 2.5 seconds delay
       const timer = setTimeout(() => {
         setShowVideo(true);
-      }, 1200); // Increased delay to ensure image is properly seen
+      }, 1200);
       
       return () => clearTimeout(timer);
     }
@@ -142,17 +142,17 @@ export default function VideoSection() {
       {/* Video background with optimized loading */}
       <video
         ref={videoRef}
-        className={`absolute left-0 top-0 max-h-vh90 md:max-h-vh100 min-h-vidbg w-vw100 object-cover transition-opacity duration-1000 ${showVideo ? 'opacity-100' : 'opacity-0'}`}
+        className={`left-0 top-0 max-h-vh90 md:max-h-vh100 min-h-vidbg w-vw100 object-cover transition-opacity duration-1000 ${showVideo ? 'opacity-100' : 'opacity-0'}`}
         playsInline
         muted
         loop
         preload="none" // Don't preload until we're ready
-        poster="/video-bg.webp" // Changed from WebP to PNG format
+        poster="/video-bg.webp"
         aria-hidden="true"
       />
 
       {/* SVG Overlay */}
-      <div className="absolute left-0 top-0 w-full h-full flex justify-center" style={{ zIndex: 2 }}>
+      <div className="flex justify-center " style={{ zIndex: 2 }}>
         <SvgOverlays />
       </div>
     </div>
