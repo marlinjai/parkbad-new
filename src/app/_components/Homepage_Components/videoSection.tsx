@@ -147,7 +147,7 @@ export default function VideoSection() {
         muted
         loop
         preload="none" // Don't preload until we're ready
-        poster="/video-bg.png"
+        poster="/video-bg.webp"
         aria-hidden="true"
       />
 
