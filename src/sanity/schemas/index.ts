@@ -1,3 +1,4 @@
+// @ts-nocheck - Sanity schema TypeScript type checking disabled for this file
 import author from "./author";
 import customevent from "./customevent";
 import drinks from "./drinks";

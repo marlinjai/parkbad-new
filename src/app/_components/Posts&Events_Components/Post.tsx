@@ -14,6 +14,7 @@ import { PostPageProps, PostorEventItem } from "@/types/componentTypes";
 import AuthorAvatar from "./AuthorAvatar";
 import { getCroppedImageSrc } from "../UtilityComponents/GetCroppedImageSrc";
 import renderDate from "../Homepage_Components/RenderDate";
+import React from "react";
 
 // Define interfaces for any custom block types
 interface MyImageBlock extends PortableTextBlock {
@@ -40,22 +41,31 @@ const builder = imageUrlBuilder(client);
 
 function renderImage(item: PostorEventItem) {
   const image = item.coverImage || item.eventImage;
+  
+  // Get the title and format for proper display
+  const rawTitle = item.title || item.eventTitle || "No title";
+  
+  // Replace newlines with <br> tags for proper rendering
+  const formattedTitle = rawTitle.replace(/\n/g, '<br />');
+  
+  console.log("Title with formatted line breaks:", formattedTitle);
 
-  console.log("outer image", image);
   return image ? (
     <div className="relative mx-auto w-full h-vh45 md:h-vh70 p-4 sm:p-0">
       <Image
         src={getCroppedImageSrc(image)}
         alt={image?.alt || "Image"}
         layout="fill"
-        className=" object-cover"
+        className="object-cover"
         priority={true}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-      <div className=" absolute inset-0 flex top-pz45 flex-col justify-center items-center gap-2 text-white text-center">
-        <div className="flex gap-2 flex-col justify-center items-center">
-          <h1 className=" text-center text-4sc font-bold leading-tight tracking-tighter md:text-6xl md:leading-none">
-            {item.title || item.eventTitle || "No title"}
+      <div className="absolute inset-0 flex top-pz45 flex-col justify-center items-center gap-2 text-white text-center">
+        <div className="flex gap-2 flex-col justify-center items-center max-w-3xl px-6 mx-auto">
+          <h1 className="text-center text-4sc font-bold leading-tight tracking-tighter md:text-5xl md:leading-tight max-w-3xl">
+            <span
+              dangerouslySetInnerHTML={{ __html: formattedTitle }}
+            />
           </h1>
           {item.author && (
             <AuthorAvatar

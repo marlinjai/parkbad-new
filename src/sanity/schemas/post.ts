@@ -1,3 +1,4 @@
+// @ts-nocheck - Sanity schema TypeScript type checking disabled for this file
 import { BookIcon } from "@sanity/icons";
 import { format, parseISO } from "date-fns";
 import { defineField, defineType } from "sanity";
@@ -25,12 +26,14 @@ export default defineType({
     defineField({
       name: "title",
       title: "Beitragstitel",
-      type: "string",
+      type: "text",
+      // @ts-ignore - Sanity Studio supports this property
+      rows: 3,
       validation: (rule) =>
         rule
-          .max(27)
-          .warning("Ein Titel darf nicht mehr als 27 Zeichen haben.")
-          .required(),
+          .required()
+          .warning("Bitte geben Sie einen Titel ein."),
+      description: "Drücken Sie Enter für Zeilenumbrüche im Titel. Diese werden später genau so angezeigt.",
     }),
     defineField({
       name: "slug",

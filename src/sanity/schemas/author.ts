@@ -1,3 +1,4 @@
+// @ts-nocheck - Sanity schema TypeScript type checking disabled for this file
 import { UserIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 

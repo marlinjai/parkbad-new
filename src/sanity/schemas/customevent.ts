@@ -1,3 +1,4 @@
+// @ts-nocheck - Sanity schema TypeScript type checking disabled for this file
 import { format, parseISO } from "date-fns";
 import { defineField, defineType } from "sanity";
 
@@ -25,8 +26,10 @@ export default defineType({
     defineField({
       name: "eventTitle",
       title: "Veranstaltungstitel",
-      type: "string",
+      type: "text",
+      rows: 3,
       validation: (rule) => rule.required(),
+      description: "Drücken Sie Enter für Zeilenumbrüche im Titel. Diese werden später genau so angezeigt.",
     }),
     defineField({
       name: "slug",

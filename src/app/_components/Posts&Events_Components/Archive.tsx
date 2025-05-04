@@ -4,10 +4,12 @@ import { urlForImage } from "../../../sanity/lib/sanity.image";
 import { client } from "../../../sanity/lib/sanity.client";
 import { PostType, CustomEvent } from "@/types/sanityTypes";
 import { useEffect, useState, useMemo } from "react";
-import { parseISO, compareAsc, compareDesc } from "date-fns";
+import { parseISO, compareAsc, compareDesc, format } from "date-fns";
 import Image from "next/image";
 import Button from "../UtilityComponents/Button";
 import renderDate from "../Homepage_Components/RenderDate";
+import { PostorEventItem, EventDay } from "@/types/componentTypes";
+import { de } from "date-fns/locale";
 
 const builder = urlForImage(client);
 
@@ -35,7 +37,6 @@ export default function Archive({
         startDate: post.date,
         endDate: post.date,
         title: post.title,
-
         slug: post.slug,
       })),
     ],
@@ -58,23 +59,86 @@ export default function Archive({
 
     // Sort
     filteredData.sort((a, b) => {
-      if (sortKey === "dateDsc") {
-        return compareAsc(parseISO(a.startDate), parseISO(b.startDate));
-      } else if (sortKey === "dateAsc") {
-        return compareAsc(parseISO(b.startDate), parseISO(a.startDate));
-      } else if (sortKey === "titleAsc") {
-        return a.title.localeCompare(b.title);
-      } else if (sortKey === "titleDsc") {
-        return b.title.localeCompare(a.title);
+      try {
+        // For newest first (descending)
+        if (sortKey === "dateDsc") {
+          // Handle both eventDays and startDate
+          const dateA = (a as any).eventDays?.[0]?.date || a.startDate;
+          const dateB = (b as any).eventDays?.[0]?.date || b.startDate;
+          return compareDesc(new Date(dateA), new Date(dateB));
+        } 
+        // For oldest first (ascending)
+        else if (sortKey === "dateAsc") {
+          // Handle both eventDays and startDate
+          const dateA = (a as any).eventDays?.[0]?.date || a.startDate;
+          const dateB = (b as any).eventDays?.[0]?.date || b.startDate;
+          return compareAsc(new Date(dateA), new Date(dateB));
+        }
+        else if (sortKey === "titleAsc") {
+          return a.title.localeCompare(b.title);
+        } 
+        else if (sortKey === "titleDsc") {
+          return b.title.localeCompare(a.title);
+        }
+      } catch (error) {
+        console.error("Error sorting items:", error);
       }
-
       return 0;
     });
 
     console.log("Filtered and sorted data:", filteredData);
-
     setData(filteredData);
   }, [sortKey, filterType, combinedData]);
+
+  // Function to truncate title to a specific length
+  const truncateTitle = (title: string, maxLength: number = 40) => {
+    if (!title) return "";
+    if (title.length <= maxLength) return title;
+    return `${title.substring(0, maxLength)}...`;
+  };
+
+  // Function to get a compact date format for the archive view
+  const getCompactDateDisplay = (item: any) => {
+    // For events with multiple days, show just the date range
+    if (item.eventDays && item.eventDays.length > 0) {
+      const days = item.eventDays;
+      const firstDay = new Date(days[0].date);
+      const lastDay = new Date(days[days.length - 1].date);
+      
+      // Format dates in compact form
+      const firstDate = format(firstDay, "dd.MM.yyyy", { locale: de });
+      const lastDate = format(lastDay, "dd.MM.yyyy", { locale: de });
+      
+      if (firstDate === lastDate) {
+        return <p className="text-white text-base">{firstDate}</p>;
+      }
+      
+      return <p className="text-white text-base">{firstDate} - {lastDate}</p>;
+    }
+    
+    // For legacy events
+    if (item.eventStart && item.eventEnd) {
+      const start = new Date(item.eventStart);
+      const end = new Date(item.eventEnd);
+      
+      const startDate = format(start, "dd.MM.yyyy");
+      const endDate = format(end, "dd.MM.yyyy");
+      
+      if (startDate === endDate) {
+        return <p className="text-white text-base">{startDate}</p>;
+      }
+      
+      return <p className="text-white text-base">{startDate} - {endDate}</p>;
+    }
+    
+    // For regular posts
+    if (item.date) {
+      return <p className="text-white text-base">{format(new Date(item.date), "dd.MM.yyyy")}</p>;
+    }
+    
+    return null;
+  };
+
   function getGridClasses(length: number) {
     if (length === 2) {
       return "md:grid-cols-2";
@@ -116,7 +180,7 @@ export default function Archive({
       </div>
 
       <div
-        className={`grid grid-cols-1  xs:grid-cols-2 md:grid-cols-3 ${
+        className={`grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 ${
           data.length == 2
             ? "md:grid-cols-2"
             : data.length == 3
@@ -124,38 +188,41 @@ export default function Archive({
             : data.length >= 4
             ? "xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2"
             : null
-        }  p-10`}
+        } p-10 gap-6`}
       >
         {data.map((item) => (
-          <div key={item._id} className="  p-4 rounded-lg ">
-            <a href={`/${item.slug}`}>
-              <div className="relative h-vw45 md:h-vw20 w-full">
+          <div key={item._id} className="flex flex-col bg-gray-800 rounded-lg shadow-lg h-full">
+            <a href={`/${item.slug}`} className="block overflow-hidden rounded-t-lg">
+              <div className="relative h-48 w-full">
                 <Image
                   src={builder.image(item.coverImage).url()}
                   alt={item.title}
                   fill={true}
                   sizes={"(min-width: 640px) 50vw, 100vw"}
-                  className="object-cover rounded-lg"
+                  className="object-cover transition-transform duration-300 hover:scale-105"
                 />
               </div>
             </a>
-            <div className="p-4 text-center flex flex-col justify-start">
-              <div className=" h-16 flex justify-center items-center">
-                <h2 className="text-2xl text-white font-semibold">
-                  {item.title}
+            <div className="p-4 flex flex-col flex-grow">
+              <div className="mb-3">
+                <h2 className="text-xl text-white font-semibold truncate" title={item.title}>
+                  {truncateTitle(item.title)}
                 </h2>
               </div>
-              {/* 
-              <p className="text-white text-lg mt-2 h-24">{item.excerpt}</p> */}
-              <div className=" h-20 flex justify-center items-center">
-                <p className="text-white text-lg">{renderDate(item)}</p>
-              </div>
-              <div className=" h-16 flex justify-center items-center">
+              
+              <div className="mt-auto">
+                <div className="mb-4">
+                  {getCompactDateDisplay(item)}
+                  <p className="text-gray-300 text-sm mt-1">
+                    {item.type === "event" ? "Veranstaltung" : "Beitrag"}
+                  </p>
+                </div>
+                
                 <Button
-                  styles="w-pz80"
+                  styles="w-full"
                   href={`/${item.slug}`}
                   text="weiterlesen"
-                ></Button>
+                />
               </div>
             </div>
           </div>
