@@ -3,7 +3,7 @@
 import { urlForImage } from "../../../sanity/lib/sanity.image";
 import { client } from "../../../sanity/lib/sanity.client";
 import { PostType, CustomEvent } from "@/types/sanityTypes";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { parseISO, compareAsc, compareDesc, format } from "date-fns";
 import Image from "next/image";
 import Button from "../UtilityComponents/Button";
@@ -46,6 +46,32 @@ export default function Archive({
   const [data, setData] = useState(combinedData);
   const [filterType, setFilterType] = useState("all"); // default to show all
   const [sortKey, setSortKey] = useState("dateDsc"); // default to newest first
+  const [imagesLoaded, setImagesLoaded] = useState<{[key: string]: boolean}>({});
+  const [visibleItems, setVisibleItems] = useState<{[key: string]: boolean}>({});
+  const [animatingItems, setAnimatingItems] = useState<{[key: string]: boolean}>({});
+  const [initialRender, setInitialRender] = useState(true);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const itemRefs = useRef<{[key: string]: HTMLDivElement | null}>({});
+  const imageRefs = useRef<{[key: string]: HTMLDivElement | null}>({});
+
+  // Set initial render state on component mount
+  useEffect(() => {
+    // Mark initial batch of items as visible immediately
+    const initialVisibleItems: {[key: string]: boolean} = {};
+    data.slice(0, 12).forEach(item => {
+      if (item._id) {
+        initialVisibleItems[item._id] = true;
+      }
+    });
+    setVisibleItems(initialVisibleItems);
+    
+    // After a short delay, mark that we're no longer in initial render
+    const timer = setTimeout(() => {
+      setInitialRender(false);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, [data]);
 
   useEffect(() => {
     console.log("Effect triggered");
@@ -88,7 +114,110 @@ export default function Archive({
 
     console.log("Filtered and sorted data:", filteredData);
     setData(filteredData);
+    
+    // Reset visibility when data changes
+    setVisibleItems({});
+    setAnimatingItems({});
+    setInitialRender(true);
+    
+    // After reset, immediately mark first batch as visible for new filter/sort
+    const newVisibleItems: {[key: string]: boolean} = {};
+    filteredData.slice(0, 12).forEach(item => {
+      if (item._id) {
+        newVisibleItems[item._id] = true;
+      }
+    });
+    setVisibleItems(newVisibleItems);
+    
+    // After a short delay, mark that we're no longer in initial render
+    const timer = setTimeout(() => {
+      setInitialRender(false);
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, [sortKey, filterType, combinedData]);
+
+  // Set up intersection observer for lazy loading images and animation
+  useEffect(() => {
+    if (initialRender) return; // Don't set up observers during initial render
+    
+    // Create intersection observer to detect when images enter viewport
+    const imageObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('data-id');
+            if (id) {
+              setImagesLoaded(prev => ({ ...prev, [id]: true }));
+              imageObserver.unobserve(entry.target);
+            }
+          }
+        });
+      },
+      { rootMargin: '200px' } // Load images 200px before they come into view
+    );
+    
+    // Create intersection observer for revealing items with animation
+    const itemObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('data-id');
+            if (id) {
+              // Mark as animating first
+              setAnimatingItems(prev => ({ ...prev, [id]: true }));
+              
+              // Use setTimeout to create a staggered effect
+              const delay = Math.floor(Math.random() * 150); // Random delay between 0-150ms for natural staggering
+              
+              setTimeout(() => {
+                setVisibleItems(prev => ({ ...prev, [id]: true }));
+              }, delay);
+              
+              itemObserver.unobserve(entry.target);
+            }
+          }
+        });
+      },
+      { 
+        threshold: 0.05,  // Trigger when just 5% of the item is visible for earlier start
+        rootMargin: '10% 0px -5% 0px' // Start animation before item fully enters viewport
+      }
+    );
+    
+    observerRef.current = itemObserver;
+
+    // Register all existing refs with their observers
+    Object.entries(imageRefs.current).forEach(([id, ref]) => {
+      if (ref && !imagesLoaded[id]) {
+        imageObserver.observe(ref);
+      }
+    });
+    
+    Object.entries(itemRefs.current).forEach(([id, ref]) => {
+      if (ref && !visibleItems[id] && !animatingItems[id]) {
+        itemObserver.observe(ref);
+      }
+    });
+
+    // Clean up observers on unmount
+    return () => {
+      imageObserver.disconnect();
+      itemObserver.disconnect();
+    };
+  }, [initialRender, imagesLoaded, visibleItems, animatingItems]);
+
+  // Register refs with intersection observers when they change
+  useEffect(() => {
+    if (!observerRef.current || initialRender) return;
+    
+    // For each item ref that exists, observe it
+    Object.entries(itemRefs.current).forEach(([id, ref]) => {
+      if (ref && observerRef.current && !visibleItems[id] && !animatingItems[id]) {
+        observerRef.current.observe(ref);
+      }
+    });
+  }, [data, visibleItems, animatingItems, initialRender]);
 
   // Function to truncate title to a specific length
   const truncateTitle = (title: string, maxLength: number = 40) => {
@@ -151,13 +280,18 @@ export default function Archive({
     }
   }
 
+  // Preload first 12 images immediately
+  const preloadFirstBatch = (index: number) => {
+    return index < 12;
+  };
+
   return (
     <>
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-4xl m-10 text-brand-colour-light">
           Alle Veranstaltungen & Beiträge
         </h1>
-        <div className="">
+        <div className="mb-8">
           <select
             onChange={(e) => setFilterType(e.target.value)}
             className="border p-2 mr-4 rounded-sm"
@@ -190,43 +324,84 @@ export default function Archive({
             : null
         } p-10 gap-6`}
       >
-        {data.map((item) => (
-          <div key={item._id} className="flex flex-col bg-gray-800 rounded-lg shadow-lg h-full">
-            <a href={`/${item.slug}`} className="block overflow-hidden rounded-t-lg">
-              <div className="relative h-48 w-full">
-                <Image
-                  src={builder.image(item.coverImage).url()}
-                  alt={item.title}
-                  fill={true}
-                  sizes={"(min-width: 640px) 50vw, 100vw"}
-                  className="object-cover transition-transform duration-300 hover:scale-105"
-                />
-              </div>
-            </a>
-            <div className="p-4 flex flex-col flex-grow">
-              <div className="mb-3">
-                <h2 className="text-xl text-white font-semibold truncate" title={item.title}>
-                  {truncateTitle(item.title)}
-                </h2>
-              </div>
-              
-              <div className="mt-auto">
-                <div className="mb-4">
-                  {getCompactDateDisplay(item)}
-                  <p className="text-gray-300 text-sm mt-1">
-                    {item.type === "event" ? "Veranstaltung" : "Beitrag"}
-                  </p>
+        {data.map((item, index) => {
+          // Determine if the item is visible
+          const isVisible = visibleItems[item._id || ''] || initialRender;
+          
+          // Calculate a consistent index-based delay for sequential reveal
+          // For initial items, no delay; for subsequent items, stagger by row with max cap
+          const staggerDelay = initialRender ? 0 : Math.min(index * 25, 300);
+          
+          return (
+            <div 
+              key={item._id} 
+              ref={el => itemRefs.current[item._id || ''] = el}
+              data-id={item._id}
+              style={{ 
+                transitionProperty: 'opacity, transform',
+                transitionDuration: '500ms',
+                transitionDelay: `${staggerDelay}ms`,
+                transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)', // Ease out quint
+                transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                opacity: isVisible ? 1 : 0,
+              }}
+              className="flex flex-col bg-gray-800 rounded-lg shadow-lg h-full overflow-hidden hover:shadow-xl"
+            >
+              <a href={`/${item.slug}`} className="block overflow-hidden rounded-t-lg">
+                <div 
+                  className="relative h-48 w-full bg-gray-700 overflow-hidden"
+                  ref={el => imageRefs.current[item._id || ''] = el}
+                  data-id={item._id}
+                >
+                  {(imagesLoaded[item._id || ''] || preloadFirstBatch(index)) && item.coverImage && (
+                    <>
+                      {/* Low quality placeholder */}
+                      <div 
+                        className="absolute inset-0 bg-cover bg-center blur-md transform scale-110"
+                        style={{ 
+                          backgroundImage: `url(${builder.image(item.coverImage).width(10).url()})` 
+                        }}
+                      />
+                      
+                      {/* Actual image that loads over placeholder */}
+                      <Image
+                        src={builder.image(item.coverImage).width(500).url()}
+                        alt={item.title}
+                        fill={true}
+                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        className="object-cover transition-all duration-700 hover:scale-105"
+                        loading={preloadFirstBatch(index) ? "eager" : "lazy"}
+                        priority={preloadFirstBatch(index)}
+                      />
+                    </>
+                  )}
+                </div>
+              </a>
+              <div className="p-4 flex flex-col flex-grow">
+                <div className="mb-3">
+                  <h2 className="text-xl text-white font-semibold truncate" title={item.title}>
+                    {truncateTitle(item.title)}
+                  </h2>
                 </div>
                 
-                <Button
-                  styles="w-full"
-                  href={`/${item.slug}`}
-                  text="weiterlesen"
-                />
+                <div className="mt-auto">
+                  <div className="mb-4">
+                    {getCompactDateDisplay(item)}
+                    <p className="text-gray-300 text-sm mt-1">
+                      {item.type === "event" ? "Veranstaltung" : "Beitrag"}
+                    </p>
+                  </div>
+                  
+                  <Button
+                    styles="w-full"
+                    href={`/${item.slug}`}
+                    text="weiterlesen"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </>
   );

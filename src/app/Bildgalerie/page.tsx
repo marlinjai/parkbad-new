@@ -4,10 +4,22 @@ import { Gallery } from "@/types/sanityTypes";
 import { zoomGalleryQuery } from "@/sanity/lib/sanity.queries";
 import LightImageGallery from "../_components/Swiper&GaleryComponents/LightImageGallery";
 
-export const revalidate = 3600; // Revalidate every hour
+// Generate static params at build time but revalidate every hour
+export const revalidate = 3600; // 1 hour in seconds
+
+// Generate metadata for the page
+export async function generateMetadata() {
+  return {
+    title: 'Bildgalerie | Parkbad Gütersloh',
+    description: 'Impressionen aus dem Parkbad Gütersloh - Entdecken Sie unsere Bildergalerie.'
+  };
+}
 
 export default async function Bildgalerie() {
-  const galleryData = await sanityFetch<Gallery[]>({ query: zoomGalleryQuery });
+  const galleryData = await sanityFetch<Gallery[]>({ 
+    query: zoomGalleryQuery,
+    revalidate: revalidate
+  });
 
   if (!galleryData || !galleryData.length) {
     return (
