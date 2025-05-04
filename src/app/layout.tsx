@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE,
-  description: "Die ofizielle Seite des Parkbads Gütersloh",
+  description: "Kultur und Veranstaltungen in Gütersloh, der ofizielle Kanal des Parkbads Gütersloh",
 };
 
 const PreviewProvider = dynamic(
