@@ -20,7 +20,10 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
   const [sliderWidth, setSliderWidth] = useState(0);
 
   useEffect(() => {
-    setDuplicatedImages([...images[0].images, ...images[0].images]);
+    // Create two sets of images with consistent positions (up/down)
+    const firstGroup = [...images[0].images];
+    const secondGroup = [...images[0].images];
+    setDuplicatedImages([...firstGroup, ...secondGroup]);
   }, [images]);
   // Let's say you want a fixed animation duration of 20 seconds
 
@@ -70,8 +73,8 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
   }, [duplicatedImages]);
 
   const builder = urlForImage(client);
-  // The fixed duration for your animation
-  const fixedAnimationDuration = 45; // in seconds
+  // The fixed duration for your animation - increase duration to slow it down
+  const fixedAnimationDuration = 70; // in seconds (changed from 45s to 70s for slower movement)
   // Inline keyframe styles
   const keyframes = `
    @keyframes slide {
@@ -92,10 +95,12 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
   // ...rest of your component
   return (
     <>
-      <div className="">
+      <div className="mt-36 mb-8">
         <style>{keyframes}</style>
-        <h2 className="text-center text-brand-colour-light  sm:my-pz10 text-2sc sm:text-5sc">
-          Impressionen aus dem Parkbad
+        <h2 className="text-center text-brand-colour-light mb-16 sm:mb-24 text-2sc sm:text-5sc">
+          <a href="/Bildgalerie" className="inline-block transform transition-transform duration-500 hover:scale-105">
+            Impressionen aus dem Parkbad
+          </a>
         </h2>
         <div className="relative overflow-hidden mb-pz15 ">
           <div
@@ -105,6 +110,11 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
           >
             <LightGallery onInit={onInit} speed={500} plugins={[lgZoom]}>
               {duplicatedImages.map((image, index) => {
+                // Determine if image should be at top position based on original index
+                // This ensures images maintain consistent positions throughout the loop
+                const originalIndex = index % images[0].images.length;
+                const isTopPosition = originalIndex % 2 === 0;
+                
                 return (
                   <a href={builder.image(image).url()} key={index}>
                     <Image
@@ -116,7 +126,7 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
                       key={index}
                       priority={true}
                       className={`${
-                        index % 2 == 0 ? " mt-24" : ""
+                        isTopPosition ? "mt-24" : ""
                       } inline-block h-vw30 w-vw30 sm:h-72 sm:w-72 object-cover mx-5 sm:mx-10 rounded-2xl shadow-lg`}
                     />
                   </a>

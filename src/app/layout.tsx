@@ -24,8 +24,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className=" scroll-smooth">
-      <body className="no-scrollbar  overflow-x-hidden disable-scrolling-horizontal w-screen bg-brand-accent-4 ${inter.className} ">
+    <html lang="en" className="scroll-smooth">
+      <head>
+        {/* Preload critical assets for faster LCP */}
+        <link rel="preload" as="image" href="/video-bg.png" fetchPriority="high" />
+      </head>
+      <body className="no-scrollbar overflow-x-hidden disable-scrolling-horizontal w-screen bg-brand-accent-4 ${inter.className} ">
         {draftMode().isEnabled ? (
           <>
             <PreviewProvider token={token}>{children}</PreviewProvider>
