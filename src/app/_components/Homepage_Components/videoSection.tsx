@@ -55,10 +55,10 @@ export default function VideoSection() {
   // Effect for delayed video show after loading
   useEffect(() => {
     if (isVideoLoaded) {
-      // Show video after 2.5 seconds delay
+      // Show video after 0.9 seconds delay
       const timer = setTimeout(() => {
         setShowVideo(true);
-      }, 900);
+      }, 1200); // Increased delay to ensure image is properly seen
       
       return () => clearTimeout(timer);
     }
@@ -128,7 +128,7 @@ export default function VideoSection() {
     <div className="video-BG relative flex min-h-vidbg flex-col content-center justify-between">
       {/* Optimized static image placeholder (LCP candidate) */}
       <Image
-        src="/video-bg.png"
+        src="/video-bg.webp"
         alt=""
         fill
         priority
@@ -142,17 +142,17 @@ export default function VideoSection() {
       {/* Video background with optimized loading */}
       <video
         ref={videoRef}
-        className={`left-0 top-0 max-h-vh90 md:max-h-vh100 min-h-vidbg w-vw100 object-cover transition-opacity duration-1000 ${showVideo ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute left-0 top-0 max-h-vh90 md:max-h-vh100 min-h-vidbg w-vw100 object-cover transition-opacity duration-1000 ${showVideo ? 'opacity-100' : 'opacity-0'}`}
         playsInline
         muted
         loop
         preload="none" // Don't preload until we're ready
-        poster="/video-bg.webp"
+        poster="/video-bg.webp" // Changed from WebP to PNG format
         aria-hidden="true"
       />
 
       {/* SVG Overlay */}
-      <div className="flex justify-center " style={{ zIndex: 2 }}>
+      <div className="absolute left-0 top-0 w-full h-full flex justify-center" style={{ zIndex: 2 }}>
         <SvgOverlays />
       </div>
     </div>

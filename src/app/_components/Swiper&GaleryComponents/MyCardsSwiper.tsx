@@ -48,6 +48,10 @@ export function CardSwiper(props: CardSwiperProps) {
           enabled: true,
           onlyInViewport: false,
         },
+        a11y: {
+          prevSlideMessage: 'Previous slide',
+          nextSlideMessage: 'Next slide',
+        }
       };
 
       // Assign it to swiper element
@@ -64,14 +68,19 @@ export function CardSwiper(props: CardSwiperProps) {
         {children}
 
         <div className="swiper-controls">
-          <div className="my-swiper-button-prev">
-            <div className=" slider-arrow left group bg-brand-colour-light hover:bg-brand-accent-3">
+          <button 
+            type="button"
+            className="my-swiper-button-prev" 
+            aria-label="Previous slide"
+          >
+            <div className="slider-arrow left group bg-brand-colour-light hover:bg-brand-accent-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="2"
-                className=" stroke-brand-accent-3 group-hover:stroke-brand-colour-light"
+                className="stroke-brand-accent-3 group-hover:stroke-brand-colour-light"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -80,15 +89,20 @@ export function CardSwiper(props: CardSwiperProps) {
                 />
               </svg>
             </div>
-          </div>
-          <div className="my-swiper-button-next">
-            <div className=" slider-arrow right group bg-brand-colour-light hover:bg-brand-accent-3">
+          </button>
+          <button 
+            type="button"
+            className="my-swiper-button-next" 
+            aria-label="Next slide"
+          >
+            <div className="slider-arrow right group bg-brand-colour-light hover:bg-brand-accent-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="2"
-                className=" stroke-brand-accent-3 group-hover:stroke-brand-colour-light"
+                className="stroke-brand-accent-3 group-hover:stroke-brand-colour-light"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -97,8 +111,8 @@ export function CardSwiper(props: CardSwiperProps) {
                 />
               </svg>
             </div>
-          </div>
-          <div className="swiper-pagination "></div>
+          </button>
+          <div className="swiper-pagination"></div>
         </div>
       </swiper-container>
     </div>
