@@ -45,7 +45,7 @@ export default function Archive({
 
   const [data, setData] = useState(combinedData);
   const [filterType, setFilterType] = useState("all"); // default to show all
-  const [sortKey, setSortKey] = useState("date"); // default sort key
+  const [sortKey, setSortKey] = useState("dateDsc"); // default to newest first
 
   useEffect(() => {
     console.log("Effect triggered");
