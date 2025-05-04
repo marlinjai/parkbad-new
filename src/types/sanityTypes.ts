@@ -86,6 +86,8 @@ export type GalleryImage = {
         width: number;
         height: number;
       };
+      lqip?: string;
+      palette?: any;
     };
     crop?: any;
     hotspot: {
@@ -98,11 +100,14 @@ export type GalleryImage = {
   };
   crop?: any;
   alt: string;
+  caption?: string;
+  takenAt?: string;
 };
 
 export type Gallery = {
   _id: string;
-  imageTitle: string;
+  galleryTitle: string;
+  publishedAt?: string;
   slug?: {
     current: string;
   };

@@ -25,22 +25,60 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "publishedAt",
+      title: "Veröffentlichungsdatum",
+      type: "datetime",
+      initialValue: () => new Date().toISOString(),
+    }),
+    defineField({
       name: "images",
       type: "array",
       title: "Images",
       of: [
         {
           type: "image",
-          options: { hotspot: true, metadata: ["palette"] },
-          // fields: [
-          //   {
-          //     name: "alt",
-          //     type: "string",
-          //     title: "Alternative Text",
-          //   },
-          // ],
+          options: { hotspot: true, metadata: ["palette", "dimensions", "lqip"] },
+          fields: [
+            {
+              name: "alt",
+              type: "string",
+              title: "Alternative Text",
+              description: "Beschreibung des Bildes für Screenreader und SEO",
+            },
+            {
+              name: "caption",
+              type: "string",
+              title: "Bildunterschrift",
+              description: "Wird unter dem Bild angezeigt (optional)"
+            },
+            {
+              name: "takenAt",
+              type: "datetime",
+              title: "Aufgenommen am",
+              description: "Datum, wann das Foto aufgenommen wurde (optional)",
+            }
+          ],
         },
       ],
+      options: {
+        layout: 'grid'
+      }
     }),
   ],
+  preview: {
+    select: {
+      title: 'galleryTitle',
+      media: 'images.0',
+      subtitle: 'publishedAt'
+    },
+    prepare({ title, media, subtitle }) {
+      return {
+        title,
+        media,
+        subtitle: subtitle 
+          ? new Date(subtitle).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })
+          : 'Kein Datum'
+      }
+    }
+  }
 });

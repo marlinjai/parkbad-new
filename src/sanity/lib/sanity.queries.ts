@@ -92,7 +92,18 @@ foods[]->{foodTitle, regularPrice, discount, category, "slug": slug.current, "se
 const galleryFields = groq`
 _id,
 galleryTitle,
-images,
+publishedAt,
+images[]{
+  ...,
+  asset->{
+    _id,
+    url,
+    metadata
+  },
+  alt,
+  caption,
+  takenAt
+},
 "slug": slug.current,
 `;
 
@@ -193,7 +204,7 @@ export const postBySlugQuery = groq`
 `;
 
 export const zoomGalleryQuery = groq`
-*[_type == 'gallery' && galleryTitle == "Zoomgallery" ] | order(imageTitle asc){
+*[_type == 'gallery' && galleryTitle == "Zoomgallery" ] | order(publishedAt desc){
   ${galleryFields}
 }`;
 
