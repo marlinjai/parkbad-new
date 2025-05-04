@@ -2,50 +2,28 @@
 "use server";
 
 import { OpeningHour } from "@/types/componentTypes";
-import axios from "axios";
 
-const apiKey = process.env.GOOGLE_MAPS_API_KEY;
-
-async function fetchOpeningHours(businessName: string): Promise<OpeningHour[]> {
+async function fetchOpeningHours(): Promise<OpeningHour[]> {
   try {
-    const searchURL = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(
-      businessName
-    )}&inputtype=textquery&fields=place_id&key=${apiKey}`;
-
-    const searchResponse = await fetch(searchURL);
-    const searchData = await searchResponse.json();
-
-    console.log("Search Data:", searchData); // Debugging
-
-    const placeId = searchData.candidates?.[0]?.place_id;
-    if (!placeId) {
-      console.error("Business not found for:", businessName); // Debugging
-      throw new Error("Business not found");
+    // Use absolute URL for server components
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
+                   (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
+    
+    // Use the cached API endpoint instead of direct Google API calls
+    const response = await fetch(`${baseUrl}/api/openingHours`, {
+      next: { revalidate: 86400 } // Revalidate once per day
+    });
+    
+    if (!response.ok) {
+      throw new Error(`API responded with status: ${response.status}`);
     }
-
-    const detailsURL = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=opening_hours&key=${apiKey}`;
-    const detailsResponse = await axios.get(detailsURL);
-    const detailsData = detailsResponse.data;
-
-    console.log("Details Data:", detailsData); // Debugging
-
-    let weekday_text = detailsData.result.opening_hours?.weekday_text;
-    let openingHours = weekday_text
-      ? weekday_text.map((day: string) => {
-          const dayParts = day.split(": ");
-          return { dayName: dayParts[0], hours: dayParts[1] };
-        })
-      : [];
-
-    if (!openingHours) {
-      console.log("No opening hours available for:", businessName); // Debugging
-      openingHours = [];
-    }
-
-    return openingHours;
+    
+    const data = await response.json();
+    return data.openingHours || [];
+    
   } catch (error) {
-    console.error("Error fetching opening hours for", businessName, ":", error);
-    throw error;
+    console.error("Error fetching opening hours:", error);
+    return []; // Return empty array on error
   }
 }
 

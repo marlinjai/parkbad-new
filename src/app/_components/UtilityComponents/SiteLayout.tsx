@@ -34,17 +34,20 @@ export default function SiteLayout({
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("Fetching opening hours data...");
       try {
-        const response = await fetchOpeningHours("Parkbad Gütersloh");
-        // console.log("response:", response);
+        const response = await fetchOpeningHours();
+        console.log("Opening hours fetched successfully:", response.length > 0 ? "Data found" : "No data");
         setOpeningHours(response);
       } catch (error) {
-        // console.error("Error fetching opening hours:", error);
+        console.error("Error fetching opening hours:", error);
+        // Still set empty array to prevent footer from crashing
+        setOpeningHours([]);
       }
     };
 
     fetchData();
-  }, []); // Empty dependency array means this effect runs once on mount]); // Empty dependency array means this effect runs once on mount
+  }, []); // Empty dependency array means this effect runs once on mount
 
   useEffect(() => {
     // console.log("openingHours:", openingHours);
