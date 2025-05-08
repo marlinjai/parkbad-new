@@ -88,7 +88,7 @@ export default function PostCardSlider({
           isReady ? "opacity-100 mb-vh10 overflow-x-clip" : " opacity-0"
         }
       >
-        <h2 className="text-center text-brand-colour-light my-16 sm:my-24 text-2sc sm:text-5sc">
+        <h2 id="news" className="text-center text-brand-colour-light pt-16 mb-16 sm:my-24 text-2sc sm:text-5sc">
           <a href="/Neuigkeiten&Events" className="inline-block transform transition-transform duration-500 hover:scale-105">
             Neuigkeiten & Veranstaltungen
           </a>
