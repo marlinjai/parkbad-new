@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import LightGallery from "lightgallery/react";
 
 // import styles
@@ -15,7 +15,6 @@ import lgThumbnail from "lightgallery/plugins/thumbnail";
 import { GalleryImage } from "@/types/sanityTypes";
 import { urlForImage } from "@/sanity/lib/sanity.image";
 import { client } from "@/sanity/lib/sanity.client";
-import Image from "next/image";
 
 const builder = urlForImage(client);
 
@@ -26,59 +25,55 @@ interface LightImageGalleryProps {
 // Create a simple, clean masonry grid using CSS grid
 export default function LightImageGallery({ images }: LightImageGalleryProps) {
   const galleryImages = images;
-  const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set([0, 1, 2, 3, 4, 5, 6, 7, 8]));
-  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Initialize lightgallery
   const onInit = () => {
     console.log("LightGallery has been initialized");
   };
-  
-  // Track when an image loads
-  const handleImageLoad = (index: number) => {
-    setLoadedImages(prev => ({
-      ...prev,
-      [index]: true
-    }));
-  };
-  
-  // Set up intersection observer for better lazy loading
+
+  // Set up intersection observer for scroll animations
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: '200px',
-      threshold: 0.01
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const index = parseInt(entry.target.getAttribute('data-index') || '0', 10);
-          
-          // Mark as visible
-          setVisibleImages(prev => {
-            const newSet = new Set(prev);
-            newSet.add(index);
-            return newSet;
-          });
-          
-          // Unobserve after it's marked visible
-          observer.unobserve(entry.target);
-        }
-      });
-    }, options);
-    
-    // Observe all image containers except the first few which are visible by default
-    imageRefs.current.forEach((ref, index) => {
-      if (ref && index >= 9) {
-        observer.observe(ref);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(entry.target.getAttribute('data-index') || '0', 10);
+            // Calculate delay based on the image's position in the viewport
+            const rect = entry.boundingClientRect;
+            const viewportHeight = window.innerHeight;
+            const distanceFromTop = rect.top;
+            const delay = Math.min((distanceFromTop / viewportHeight) * 500, 400); // Max 400ms delay
+            
+            // Only animate if the image hasn't been animated before
+            if (!entry.target.classList.contains('has-animated')) {
+              setTimeout(() => {
+                entry.target.classList.add('animate-fade-in');
+                entry.target.classList.add('has-animated');
+              }, delay);
+            } else {
+              // If already animated, just make it visible immediately
+              const element = entry.target as HTMLElement;
+              element.style.opacity = '1';
+              element.style.transform = 'translateY(0)';
+            }
+            
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '-20% 0px',
+        threshold: 0.3
       }
+    );
+
+    imageRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
     });
-    
-    return () => {
-      observer.disconnect();
-    };
+
+    return () => observer.disconnect();
   }, []);
 
   // Fix: Process images without circular reference
@@ -225,17 +220,14 @@ export default function LightImageGallery({ images }: LightImageGalleryProps) {
         subHtmlSelectorRelative={true}
       >
         {/* We use grid-flow-dense to fill in any gaps in the grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 auto-rows-[250px] grid-flow-dense">
+        <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3 auto-rows-[150px] sm:auto-rows-[200px] md:auto-rows-[250px] grid-flow-dense">
           {processedImages.map(({ image, colSpan, rowSpan, aspectRatio, index }) => {
             const width = image.asset?.metadata?.dimensions?.width || 800;
             const height = image.asset?.metadata?.dimensions?.height || 600;
-            const lqip = image.asset?.metadata?.lqip;
-            const isVisible = visibleImages.has(index);
-            const isLoaded = loadedImages[index];
             
-            // Calculate column and row span classes
+            // Calculate column and row span classes with responsive adjustments
             const spanClasses = `${
-              colSpan === 2 ? 'col-span-1 sm:col-span-2' : 'col-span-1'
+              colSpan === 2 ? 'col-span-2 xs:col-span-2 sm:col-span-2' : 'col-span-1'
             } ${
               rowSpan === 2 ? 'row-span-2' : 'row-span-1'
             }`;
@@ -244,65 +236,31 @@ export default function LightImageGallery({ images }: LightImageGalleryProps) {
               <div
                 key={index}
                 ref={el => imageRefs.current[index] = el}
-                data-index={index}
-                className={`${spanClasses} overflow-hidden transition-opacity duration-700 ${
-                  isVisible ? 'opacity-100' : 'opacity-0'
-                }`}
+                className={`${spanClasses} overflow-hidden rounded-lg shadow-lg transform transition-all duration-500 hover:scale-[1.02] opacity-0`}
                 style={{
-                  transitionDelay: `${Math.min(index * 0.05, 0.5)}s`,
+                  transform: 'translateY(20px)'
                 }}
               >
                 <a
-                  className="gallery-item block w-full h-full overflow-hidden rounded-lg shadow-lg transform transition-all duration-500"
+                  className="gallery-item block w-full h-full overflow-hidden"
                   href={builder.image(image).url()}
                   data-src={builder.image(image).url()}
                   data-sub-html={`<h4>${image.alt || ''}</h4><p>${image.caption || ''}</p>`}
                   data-lg-size={`${width}-${height}`}
                 >
                   <div className="relative w-full h-full overflow-hidden">
-                    {/* Placeholder while loading */}
-                    {isVisible && !isLoaded && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse">
-                        {lqip ? (
-                          <div 
-                            className="w-full h-full" 
-                            style={{ 
-                              backgroundImage: `url(${lqip})`, 
-                              backgroundSize: 'cover',
-                              backgroundPosition: 'center',
-                              filter: 'blur(10px)',
-                              transform: 'scale(1.1)'
-                            }}
-                          />
-                        ) : (
-                          <div className="w-10 h-10 border-4 border-gray-300 border-t-brand-colour rounded-full animate-spin" />
-                        )}
-                      </div>
-                    )}
-                    
-                    {/* Only render the image if it should be visible */}
-                    {isVisible && (
-                      <Image
-                        alt={image.alt || `Gallery image ${index + 1}`}
-                        src={builder.image(image).url()}
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        width={width}
-                        height={height}
-                        loading={index < 9 ? "eager" : "lazy"}
-                        priority={index < 9}
-                        onLoad={() => handleImageLoad(index)}
-                        className={`w-full h-full object-cover transition-all duration-700 ${
-                          isLoaded ? 'scale-100 opacity-100' : 'scale-105 opacity-0'
-                        }`}
-                      />
-                    )}
+                    <img
+                      alt={image.alt || `Gallery image ${index + 1}`}
+                      src={builder.image(image).url()}
+                      className="w-full h-full object-cover"
+                    />
                     
                     {/* Caption overlay that appears on hover */}
-                    {(image.caption || image.takenAt) && isLoaded && (
-                      <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-2 text-sm opacity-0 hover:opacity-100 transition-opacity">
+                    {(image.caption || image.takenAt) && (
+                      <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-1 sm:p-2 text-xs sm:text-sm opacity-0 hover:opacity-100 transition-opacity duration-300">
                         {image.caption && <p className="line-clamp-1">{image.caption}</p>}
                         {image.takenAt && (
-                          <p className="text-xs opacity-75">
+                          <p className="text-[10px] sm:text-xs opacity-75">
                             {new Date(image.takenAt).toLocaleDateString('de-DE')}
                           </p>
                         )}
@@ -315,6 +273,23 @@ export default function LightImageGallery({ images }: LightImageGalleryProps) {
           })}
         </div>
       </LightGallery>
+
+      <style jsx global>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-out forwards;
+        }
+      `}</style>
     </div>
   );
 }
