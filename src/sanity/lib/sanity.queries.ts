@@ -98,7 +98,8 @@ images[]{
   asset->{
     _id,
     url,
-    metadata
+    metadata,
+    hotspot
   },
   alt,
   caption,

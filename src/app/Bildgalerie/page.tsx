@@ -5,8 +5,8 @@ import { zoomGalleryQuery } from "@/sanity/lib/sanity.queries";
 import LightImageGallery from "../_components/Swiper&GaleryComponents/LightImageGallery";
 import SectionBackground from "../_components/UtilityComponents/SectionBackground";
 
-// Generate static params at build time but revalidate every 4 hours
-export const revalidate = 14400; // 4 hours in seconds
+// Generate static params at build time but revalidate every minute
+export const revalidate = 60; // 1 minute in seconds
 
 // Generate metadata for the page
 export async function generateMetadata() {

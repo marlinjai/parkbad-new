@@ -89,16 +89,15 @@ export type GalleryImage = {
       lqip?: string;
       palette?: any;
     };
-    crop?: any;
-    hotspot: {
-      _type: "sanity.imageHotspot";
-      height: number;
-      width: number;
-      x: number;
-      y: number;
-    };
   };
   crop?: any;
+  hotspot?: {
+    _type: "sanity.imageHotspot";
+    height: number;
+    width: number;
+    x: number;
+    y: number;
+  };
   alt: string;
   caption?: string;
   takenAt?: string;

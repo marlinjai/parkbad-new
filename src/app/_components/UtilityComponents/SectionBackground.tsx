@@ -9,7 +9,7 @@ interface SectionBackgroundProps {
 
 export default function SectionBackground({ children, className = "" }: SectionBackgroundProps) {
   return (
-    <section className={`relative w-full bg-gradient-to-br from-gray-800 via-brand-accent-2 via-brand-accent-2/90 to-gray-900 ${className}`}>
+    <section className={`relative w-full bg-gradient-to-br from-gray-800 via-brand-accent-2 to-gray-900 ${className}`}>
       {children}
     </section>
   );

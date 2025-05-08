@@ -149,6 +149,7 @@ body::-webkit-scrollbar {
 
   /* Hide scrollbar for Firefox */
   .hide-scrollbar {
+    appearance: none;
     -moz-appearance: none;
     scrollbar-width: none;
   }

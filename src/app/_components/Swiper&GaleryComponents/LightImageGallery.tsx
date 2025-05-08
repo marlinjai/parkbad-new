@@ -224,6 +224,15 @@ export default function LightImageGallery({ images }: LightImageGalleryProps) {
           {processedImages.map(({ image, colSpan, rowSpan, aspectRatio, index }) => {
             const width = image.asset?.metadata?.dimensions?.width || 800;
             const height = image.asset?.metadata?.dimensions?.height || 600;
+
+            // Build the hotspot-aware image URL once
+            const x = image.hotspot?.x ?? 0.5;
+            const y = image.hotspot?.y ?? 0.5;
+            const imageUrl = builder
+              .image(image)
+              .fit('crop')
+              .focalPoint(x, y)
+              .url();
             
             // Calculate column and row span classes with responsive adjustments
             const spanClasses = `${
@@ -243,18 +252,21 @@ export default function LightImageGallery({ images }: LightImageGalleryProps) {
               >
                 <a
                   className="gallery-item block w-full h-full overflow-hidden"
-                  href={builder.image(image).url()}
-                  data-src={builder.image(image).url()}
+                  href={imageUrl}
+                  data-src={imageUrl}
                   data-sub-html={`<h4>${image.alt || ''}</h4><p>${image.caption || ''}</p>`}
                   data-lg-size={`${width}-${height}`}
                 >
                   <div className="relative w-full h-full overflow-hidden">
                     <img
                       alt={image.alt || `Gallery image ${index + 1}`}
-                      src={builder.image(image).url()}
+                      src={imageUrl}
                       className="w-full h-full object-cover"
+                      style={{
+                        objectPosition: `${x * 100}% ${y * 100}%`
+                      }}
                     />
-                    
+
                     {/* Caption overlay that appears on hover */}
                     {(image.caption || image.takenAt) && (
                       <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-1 sm:p-2 text-xs sm:text-sm opacity-0 hover:opacity-100 transition-opacity duration-300">
