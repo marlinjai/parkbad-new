@@ -6,6 +6,7 @@ import Footer from "../Footer_Components/Footer";
 import { Header } from "../Header_Components/Header";
 import AlertBanner from "./AlertBanner";
 import Loading from "./LoadingSpinner";
+import SectionBackground from "./SectionBackground";
 
 export default function SiteLayout({
   children,
@@ -60,7 +61,7 @@ export default function SiteLayout({
         <>
           <Header />
           <AlertBanner preview={preview} />
-          <main className="flex justify-center w-screen flex-col min-h-vh40 bg-brand-accent-2">
+          <main className="flex flex-col w-screen">
             {children}
           </main>
           <Footer openingHours={openingHours} />

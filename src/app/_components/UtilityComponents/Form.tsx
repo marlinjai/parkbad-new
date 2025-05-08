@@ -86,7 +86,7 @@ export default function Form(myFormProps: FormProps) {
                 id="first-name"
                 autoComplete="given-name"
                 required
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-border-orange sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:border-brand-border-orange focus:ring-1 focus:ring-brand-border-orange sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -106,7 +106,7 @@ export default function Form(myFormProps: FormProps) {
                 id="last-name"
                 autoComplete="family-name"
                 required
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-border-orange sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:border-brand-border-orange focus:ring-1 focus:ring-brand-border-orange sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -128,7 +128,7 @@ export default function Form(myFormProps: FormProps) {
                 id="email"
                 autoComplete="email"
                 required
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm placeholder:text-gray-400 focus:ring-brand-border-orange sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:border-brand-border-orange focus:ring-1 focus:ring-brand-border-orange sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -149,7 +149,7 @@ export default function Form(myFormProps: FormProps) {
                 id="phone"
                 autoComplete="tel"
                 required
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-border-orange sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:border-brand-border-orange focus:ring-1 focus:ring-brand-border-orange sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -168,14 +168,14 @@ export default function Form(myFormProps: FormProps) {
                 id="message"
                 rows={4}
                 required
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-border-orange sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:border-brand-border-orange focus:ring-1 focus:ring-brand-border-orange sm:text-sm sm:leading-6"
                 defaultValue={""}
               />
             </div>
           </div>
 
           {/* Submit Button */}
-          <div className="mt-10 sm:col-span-2">
+          <div className="mt-10 flex justify-center sm:col-span-2">
             <SubmitButton></SubmitButton>
           </div>
           <p className=" text-brand-accent-1" aria-live="polite" role="status">

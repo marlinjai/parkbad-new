@@ -16,7 +16,7 @@ export function SubmitButton(props: submitButtonProps) {
     <button
       type="submit"
       aria-disabled={pending}
-      className={`block w-full rounded-md ${
+      className={`mx-auto w-pz50 rounded-full ${
         props.buttonColor
           ? "bg-" + props.buttonColor
           : props.buttonTextColor
@@ -28,7 +28,7 @@ export function SubmitButton(props: submitButtonProps) {
           : " "
       } 
          "bg-brand-colour-main"
-      } bg-brand-border-orange px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-brand-colour-main focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 `}
+      } bg-brand-border-orange hover:border-brand-border-orange border border-brand-border-orange px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-brand-colour-main focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 `}
     >
       {props.buttonText ? props.buttonText : "absenden"}
     </button>

@@ -54,7 +54,7 @@ export default function Menu({
             top-0 
             h-8 w-8 border-b-2 
             border-r-2 border-solid border-brand-border-orange 
-            bg-brand-accent-2 
+            bg-transparent 
             md:h-12 
             md:w-12 
             lg:h-16 
@@ -70,7 +70,7 @@ export default function Menu({
             top-0 
             h-8 w-8 border-b-2 
             border-l-2 border-solid border-brand-border-orange 
-            bg-brand-accent-2 
+            bg-transparent 
             md:h-12 
             md:w-12 
             lg:h-16 

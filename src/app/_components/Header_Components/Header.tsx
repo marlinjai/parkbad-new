@@ -32,23 +32,6 @@ export function OverlayNavigation({ isOpen, onClose }: OverlayNavigationProps) {
     onClose();
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Determine the threshold
-      const threshold = document.documentElement.scrollHeight / 2;
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
-      const backgroundColor =
-        scrollPosition > threshold ? "#333333" : "#fcd539";
-
-      // Apply the background color
-      document.body.style.backgroundColor = backgroundColor;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <div
       ref={overlayRef}

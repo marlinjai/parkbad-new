@@ -19,7 +19,7 @@
       }
 
       .cls-4 {
-        fill: #fcd539;
+        fill: #8F6B4F;
       }
     </style>
     <radialGradient id="radial-gradient" cx="362.2" cy="301.56" fx="362.2" fy="301.56" r="310.6" gradientTransform="translate(-1.29 62.25) rotate(-.31) scale(1 .8)" gradientUnits="userSpaceOnUse">

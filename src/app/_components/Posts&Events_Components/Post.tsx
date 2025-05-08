@@ -15,6 +15,7 @@ import AuthorAvatar from "./AuthorAvatar";
 import { getCroppedImageSrc } from "../UtilityComponents/GetCroppedImageSrc";
 import renderDate from "../Homepage_Components/RenderDate";
 import React from "react";
+import SectionBackground from "../UtilityComponents/SectionBackground";
 
 // Define interfaces for any custom block types
 interface MyImageBlock extends PortableTextBlock {
@@ -190,12 +191,14 @@ export default function Post({ post, customevent, preview }: PostPageProps) {
 
   return (
     <SiteLayout preview={preview}>
-      <article className="flex items-center flex-col">
-        {renderImage(itemToShow)}
-        <div className="m-10 text-brand-colour-light w-pz80 md:w-pz60">
-          {renderContent(itemToShow)}
-        </div>
-      </article>
+      <SectionBackground>
+        <article className="flex items-center flex-col">
+          {renderImage(itemToShow)}
+          <div className="m-10 text-brand-colour-light w-pz80 md:w-pz60">
+            {renderContent(itemToShow)}
+          </div>
+        </article>
+      </SectionBackground>
     </SiteLayout>
   );
 }

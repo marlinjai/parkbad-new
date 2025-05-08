@@ -23,7 +23,7 @@ export default function Button({ href, text, styles, onClick }: ButtonProps) {
     <div className={styles}>
       {/* Add the onClick event handler to the <a> tag */}
       <a href={href} onClick={handleClick}>
-        <div className=" bg-primary-buton-color hover:bg-primary-buton-color-hover hover:text-brand-text-button-hover text-brand-text-button text-center p-4 rounded-full">
+        <div className="  hover:bg-brand-colour-main hover:text-brand-text-button-hover text-brand-colour-light text-center p-4 rounded-full">
           {text}
         </div>
       </a>

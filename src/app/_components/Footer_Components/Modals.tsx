@@ -46,7 +46,7 @@ const Modal: React.FC<ModalProps> = ({ id, onClose }) => {
     >
       <div className="fixed inset-0 bg-black opacity-70"></div>
       <div
-        className={`absolute hide-scrollbar p-pz5 flex gap-pz5 items-center justify-between flex-col sm:pb-pz5 pb-5 -bottom-1 w-vw90 overflow-y-auto rounded-t-3xl bg-brand-accent-2 shadow-lg md:w-vw60 opacity-0`}
+        className={`absolute hide-scrollbar p-pz5 flex gap-pz5 items-center justify-between flex-col sm:pb-pz5 pb-5 -bottom-1 w-vw90 overflow-y-auto rounded-t-3xl bg-gradient-to-br from-gray-800 via-brand-accent-2  to-gray-900 shadow-lg md:w-vw60 opacity-0`}
         style={{ maxHeight: "80vh" }} // limit height to 80% of the view height
         onClick={stopPropagation}
         ref={modalRef}
@@ -73,7 +73,7 @@ const Modal: React.FC<ModalProps> = ({ id, onClose }) => {
             top-0 
             h-8 w-8 border-b-2 
             border-r-2 border-solid border-brand-border-orange 
-            bg-brand-accent-2 
+            bg-none 
             md:h-12 
             md:w-12 
             lg:h-16 
@@ -89,7 +89,7 @@ const Modal: React.FC<ModalProps> = ({ id, onClose }) => {
             top-0 
             h-8 w-8 border-b-2 
             border-l-2 border-solid border-brand-border-orange 
-            bg-brand-accent-2 
+            bg-none 
             md:h-12 
             md:w-12 
             lg:h-16 
@@ -189,7 +189,7 @@ const Modal: React.FC<ModalProps> = ({ id, onClose }) => {
         </div>
 
         <Button
-          styles="w-pz40 mt-pz5"
+          styles="w-pz40 mt-pz5 bg-brand-border-orange hover:bg-brand-accent-2 transition-colors duration-300 rounded-full border border-brand-border-orange"
           onClick={onClose}
           text="Schließen"
         ></Button>
