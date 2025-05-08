@@ -120,14 +120,14 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
                     <Image
                       alt={image.alt}
                       src={builder.image(image).url()}
-                      sizes="(max-width: 640px) 350px, 600px"
+                      sizes="(max-width: 640px) 400px, 600px"
                       width={800}
                       height={600}
                       key={index}
                       priority={true}
                       className={`${
                         isTopPosition ? "mt-24" : ""
-                      } inline-block h-vw30 w-vw30 sm:h-72 sm:w-72 object-cover mx-5 sm:mx-10 rounded-2xl shadow-lg`}
+                      } inline-block h-vw40 w-vw40 sm:h-72 sm:w-72 object-cover mx-3 sm:mx-10 rounded-2xl shadow-lg`}
                     />
                   </a>
                 );

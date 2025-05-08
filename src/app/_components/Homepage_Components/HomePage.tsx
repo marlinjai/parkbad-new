@@ -20,14 +20,14 @@ export default function HomePage({
         <div className="flex flex-col w-full">
           <TrippleIcon />
           <PostCardsSlider posts={posts} customevents={customevents} />
-          <div className="relative -mb-pz5 sm:-mt-pz15 overflow-hidden">
+          <div className="relative -mb-pz5 sm:-mt-pz10 overflow-hidden">
             <Image
               src={"/bg-graphic.svg"}
               alt="background graphic"
               fill={true}
               className="absolute object-cover w-pz100 h-pz80 mx-auto -z-1"
             />
-            <div className="w-screen pb-12 pt-8 sm:pt-60 lg:pt-32">
+            <div className="w-screen pb-12 -mt-pz20 sm:mt-10 sm:pt-20 lg:pt-24">
               <div className="relative w-full lg:shrink-0">
                 <InfiniteImageSlider images={historyImages} />
               </div>

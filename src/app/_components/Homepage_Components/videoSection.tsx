@@ -81,16 +81,7 @@ export default function VideoSection() {
         const sources = [
           // WebM - better compression, modern browsers
           {
-            src: isMobile 
-              ? "/videos/header-480p.webm" 
-              : "/Header_BG_II_big_webm_bigger.mp4", // Fallback to existing video
-            type: "video/webm"
-          },
-          // MP4 - universal fallback
-          {
-            src: isMobile 
-              ? "/videos/header-480p.mp4" 
-              : "/Header_BG_II_big_webm_bigger.mp4",
+            src: "/Header_BG_II_big_webm_bigger.mp4", // Use the same video for all devices
             type: "video/mp4"
           }
         ];
@@ -122,7 +113,7 @@ export default function VideoSection() {
         videoElement.removeEventListener('canplay', handleCanPlay);
       };
     }
-  }, [isInView, isVideoLoaded, isMobile]);
+  }, [isInView, isVideoLoaded]);
 
   return (
     <div className="video-BG relative flex min-h-vidbg flex-col content-center justify-between">
@@ -146,7 +137,7 @@ export default function VideoSection() {
         playsInline
         muted
         loop
-        preload="none" // Don't preload until we're ready
+        preload="auto"
         poster="/video-bg.webp"
         aria-hidden="true"
       />

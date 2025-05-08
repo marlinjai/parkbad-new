@@ -151,7 +151,7 @@ export default function Menu({
               ></div>
 
               <div className="flex justify-center">
-                <div className=" z-20 -mt-5 h-vh60 w-pz80 px-4 overflow-y-auto">
+                <div className=" z-20 mt-5 h-vh60 w-pz80 sm:w-[92%] md:w-[93%] lg:w-[94%] px-4 sm:px-12 overflow-y-auto">
                   {showDrinks ? (
                     <DrinksMenu drinkcategories={drinksCategories} />
                   ) : (

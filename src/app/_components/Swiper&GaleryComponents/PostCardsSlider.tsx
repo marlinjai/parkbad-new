@@ -93,7 +93,7 @@ export default function PostCardSlider({
             Neuigkeiten & Veranstaltungen
           </a>
         </h2>
-        <CardSwiper className="text-center h-vw55 w-vw65 md:w-vw50 md:h-vw35 ">
+        <CardSwiper className="text-center h-vw55 w-vw80 md:w-vw50 md:h-vw35">
           {items.map(
             (item) => (
               <SwiperSlide style={{ borderRadius: "1rem" }} key={item._id}>

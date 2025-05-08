@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dev:network": "cross-env HOST=0.0.0.0 PORT=3000 next dev"
   },
   "dependencies": {
     "@portabletext/react": "^3.0.11",
@@ -46,6 +47,7 @@
     "@types/react-dom": "^18",
     "@types/react-lottie": "^1.2.10",
     "autoprefixer": "^10",
+    "cross-env": "^7.0.3",
     "eslint": "^8",
     "eslint-config-next": "^14.0.3",
     "node-fetch": "^2.7.0",

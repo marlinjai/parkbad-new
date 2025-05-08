@@ -40,7 +40,7 @@ export function OverlayNavigation({ isOpen, onClose }: OverlayNavigationProps) {
       }`}
       onClick={handleOverlayClick}
     >
-      <div className="flex flex-col justify-center gap-8 ">
+      <div className="flex flex-col justify-center gap-8 menu-scrollable">
         <Link href="/" className="hover:text-brand-accent-2">
           Startseite
         </Link>
