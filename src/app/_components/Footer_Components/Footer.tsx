@@ -16,6 +16,8 @@ import BusinessHours from "./BusinessHours";
 export default function Footer({ openingHours }: FooterProps) {
   const [activeModal, setActiveModal] = useState<string | null>(null);
 
+  console.log(openingHours);
+
   const openModal = (id: string) => {
     setActiveModal(id);
   };

@@ -19,8 +19,10 @@ async function fetchOpeningHours(): Promise<OpeningHour[]> {
     // Use the cached API endpoint instead of direct Google API calls
     const response = await fetch(`${baseUrl}/api/openingHours`, {
       next: { revalidate: 86400 }, // Revalidate once per day
-      cache: 'no-store' // Temporarily disable cache to diagnose production issues
+      //cache: 'no-store' // Temporarily disable cache to diagnose production issues
     });
+
+    console.log(" fetchOpeningHours response: ", response );
     
     if (!response.ok) {
       const errorText = await response.text();
