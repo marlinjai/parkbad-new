@@ -72,8 +72,6 @@ export default function PostCardSlider({
     }
   });
 
-  console.log(items.map((item) => getItemDate(item)));
-
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
