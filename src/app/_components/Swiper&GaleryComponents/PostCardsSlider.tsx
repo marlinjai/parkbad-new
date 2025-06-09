@@ -40,20 +40,6 @@ function getItemDate(item: PostorEventItem): Date {
   return now;
 }
 
-// Calculate the "proximity score" to today's date
-// Lower score = closer to today (future dates preferred over past dates)
-function getDateProximityScore(date: Date): number {
-  const today = new Date();
-  const timeDiff = date.getTime() - today.getTime();
-  
-  // For past dates, we increase the score to push them down in priority
-  if (timeDiff < 0) {
-    return Math.abs(timeDiff) + 1000000000; // Add large number to push past events lower
-  }
-  
-  // For future dates, score is directly proportional to how far in the future
-  return timeDiff;
-}
 
 export default function PostCardSlider({
   posts,
@@ -62,14 +48,31 @@ export default function PostCardSlider({
   posts: PostType[];
   customevents: CustomEvent[];
 }) {
-  // Combine and sort items by date proximity to current date
+  // Combine and sort items by date - future events first, chronologically ordered
   const items: PostorEventItem[] = [...customevents, ...posts].sort((a, b) => {
     const dateA = getItemDate(a);
     const dateB = getItemDate(b);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Normalize to start of day
     
-    // First prioritize by date proximity (closest to now, future preferred)
-    return getDateProximityScore(dateA) - getDateProximityScore(dateB);
+    const isAFuture = dateA >= today;
+    const isBFuture = dateB >= today;
+    
+    // If one is future and one is past, future comes first
+    if (isAFuture && !isBFuture) return -1;
+    if (!isAFuture && isBFuture) return 1;
+    
+    // If both are future or both are past, sort chronologically
+    if (isAFuture && isBFuture) {
+      // For future events: earliest first (June 9 before June 15)
+      return dateA.getTime() - dateB.getTime();
+    } else {
+      // For past events: most recent first
+      return dateB.getTime() - dateA.getTime();
+    }
   });
+
+  console.log(items.map((item) => getItemDate(item)));
 
   const [isReady, setIsReady] = useState(false);
 
