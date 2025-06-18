@@ -41,7 +41,8 @@ export default defineType({
             hotspot: true, 
             metadata: ["palette", "lqip"],
             storeOriginalFilename: true,
-            accept: 'image/*'
+            accept: 'image/*',
+            multiple: true
           },
           fields: [
             {
@@ -70,7 +71,13 @@ export default defineType({
         studioLayout: {
           images: {
             directUploads: true,
-            sources: ['filesystem', 'url', 'unsplash']
+            sources: ['filesystem', 'url', 'unsplash'],
+            multiple: true,
+            batchUpload: {
+              enabled: true,
+              folderSelect: true,
+              maxFiles: 50
+            }
           }
         }
       }

@@ -25,10 +25,17 @@ const config = defineConfig({
   schema: { types: schemas },
   form: {
     image: {
-      directUploads: true
+      directUploads: true,
+      multiple: true,
+      batchUpload: {
+        enabled: true,
+        folderSelect: true,
+        maxFiles: 50
+      }
     },
     file: {
-      directUploads: true
+      directUploads: true,
+      multiple: true
     }
   },
   plugins: [
