@@ -23,6 +23,14 @@ const config = defineConfig({
   basePath: "/admin",
   icon: StudioIcon,
   schema: { types: schemas },
+  form: {
+    image: {
+      directUploads: true
+    },
+    file: {
+      directUploads: true
+    }
+  },
   plugins: [
     structureTool({
       structure: (S: StructureBuilder, context) => {
@@ -40,7 +48,6 @@ const config = defineConfig({
               type: "foodCategories",
               title: "Speise Kategorien",
               icon: PiPizzaDuotone,
-
               S,
               context,
             }),
@@ -49,23 +56,16 @@ const config = defineConfig({
               type: "drinkCategories",
               title: "Getränke Kategorien",
               icon: BiSolidDrink,
-
               S,
               context,
             }),
-
             S.documentTypeListItem("drinks").title("alle Getränke"),
             S.documentTypeListItem("gallery").title("Gallerien"),
-            // S.documentTypeListItem("media.tag").title("Media Tags"),
           ]);
       },
     }),
-
     media(),
-    // Add an image asset source for Unsplash
     unsplashImageAsset(),
-    // Vision lets you query your content with GROQ in the studio
-    // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
   ],
   studio: {

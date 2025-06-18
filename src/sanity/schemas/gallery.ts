@@ -37,7 +37,12 @@ export default defineType({
       of: [
         {
           type: "image",
-          options: { hotspot: true, metadata: ["palette", "dimensions", "lqip"] },
+          options: { 
+            hotspot: true, 
+            metadata: ["palette", "lqip"],
+            storeOriginalFilename: true,
+            accept: 'image/*'
+          },
           fields: [
             {
               name: "alt",
@@ -61,7 +66,13 @@ export default defineType({
         },
       ],
       options: {
-        layout: 'grid'
+        layout: 'grid',
+        studioLayout: {
+          images: {
+            directUploads: true,
+            sources: ['filesystem', 'url', 'unsplash']
+          }
+        }
       }
     }),
   ],
