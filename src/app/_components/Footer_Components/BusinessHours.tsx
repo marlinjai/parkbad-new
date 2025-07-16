@@ -20,43 +20,54 @@ export default function BusinessHours({
     return dayTranslation[day] || day;
   }
 
-  function convertTo24Hour(time: any, modifier = "") {
-    let [hours, minutes] = time.split(":");
-
-    hours = parseInt(hours, 10); // Ensure 'hours' is treated as a number initially for logic checks
-
-    if (!modifier && hours < 12) {
-      modifier = "AM"; // Default to PM if no modifier is provided and hours < 12
+  // Convert 12-hour format time to 24-hour format
+  function convertTo24Hour(timeString: string): string {
+    // Remove any extra spaces and extract time and period
+    const cleanTime = timeString.trim();
+    
+    // Check if time already has AM/PM
+    const periodMatch = cleanTime.match(/\b(AM|PM)\b/i);
+    
+    if (periodMatch) {
+      // Time has AM/PM - convert to 24-hour format
+      const period = periodMatch[0].toUpperCase();
+      const timeWithoutPeriod = cleanTime.replace(/\b(AM|PM)\b/i, "").trim();
+      let [hours, minutes] = timeWithoutPeriod.split(":").map(part => parseInt(part, 10));
+      
+      if (period === "PM" && hours !== 12) {
+        hours += 12; // Add 12 hours for PM times (except 12 PM)
+      } else if (period === "AM" && hours === 12) {
+        hours = 0; // 12 AM becomes 00:00
+      }
+      
+      return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+    } else {
+      // Time is already in 24-hour format or doesn't have AM/PM
+      // Just ensure proper formatting
+      const [hours, minutes] = cleanTime.split(":").map(part => parseInt(part, 10));
+      return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
     }
-
-    if (hours === 12 && modifier === "AM") {
-      hours = 0; // Midnight is 00 in 24-hour time
-    } else if (modifier === "PM" && hours < 12) {
-      hours += 12; // Convert PM hours to 24-hour format
-    }
-
-    // Ensure 'hours' is converted back to a string with 'padStart' applied
-    return `${hours.toString().padStart(2, "0")}:${minutes}`;
   }
 
   function translateHours(hoursString: string) {
     if (hoursString.toLowerCase() === "closed") {
       return "geschlossen";
     } else {
-      // Detect if the string includes AM or PM and capture the period for conversion
-      const periodMatch = hoursString.match(/\b(AM|PM)\b/i);
-      const period = periodMatch ? periodMatch[0] : "";
-
-      let [start, end] = hoursString
-        .split(" – ")
-        .map((s) => s.replace(/\b(AM|PM)\b/i, "").trim());
-
-      // Convert start and end times to 24-hour format
-      const startTime = convertTo24Hour(start, period);
-      const endTime = convertTo24Hour(end, period);
-
-      // Directly return the converted times without appending AM/PM
-      return `${startTime} – ${endTime}`;
+      // Split the hours string into start and end times
+      const timeRange = hoursString.split("–").map(time => time.trim());
+      
+      if (timeRange.length !== 2) {
+        // If we can't parse the format, return as-is
+        return hoursString;
+      }
+      
+      const [startTime, endTime] = timeRange;
+      
+      // Convert both times to 24-hour format
+      const startTime24 = convertTo24Hour(startTime);
+      const endTime24 = convertTo24Hour(endTime);
+      
+      return `${startTime24} – ${endTime24}`;
     }
   }
 
