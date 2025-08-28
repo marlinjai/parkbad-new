@@ -12,14 +12,22 @@ import PreviewProvider from "@/app/_components/UtilityComponents/PreviewProvider
 import { CustomEvent, Gallery, PostType } from "@/types/sanityTypes";
 
 export default async function Home() {
-  const posts = await sanityFetch<PostType[]>({ query: homePostsQuery });
+  const posts = await sanityFetch<PostType[]>({ 
+    query: homePostsQuery,
+    tags: ['post'],
+    revalidate: 1800 // 30 minutes
+  });
 
   const customevents = await sanityFetch<CustomEvent[]>({
     query: homepageEventsQuery,
+    tags: ['customevent'],
+    revalidate: 1800 // 30 minutes
   });
 
   const historyImages = await sanityFetch<Gallery[]>({
     query: homeImageQuery,
+    tags: ['gallery'],
+    revalidate: 7200 // 2 hours (images change less frequently)
   });
 
   const draft = await draftMode();

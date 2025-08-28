@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 import LightGallery from "lightgallery/react";
 
 // import styles
@@ -258,10 +259,12 @@ export default function LightImageGallery({ images }: LightImageGalleryProps) {
                   data-lg-size={`${width}-${height}`}
                 >
                   <div className="relative w-full h-full overflow-hidden">
-                    <img
+                    <Image
                       alt={image.alt || `Gallery image ${index + 1}`}
                       src={imageUrl}
-                      className="w-full h-full object-cover"
+                      fill={true}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover"
                       style={{
                         objectPosition: `${x * 100}% ${y * 100}%`
                       }}

@@ -29,7 +29,15 @@ export async function sanityFetch<QueryResponse>({
     );
   }
 
-  return client.fetch<QueryResponse>(query, params, {
-    ...(revalidate !== undefined ? { next: { revalidate } } : { cache: "no-store" }),
-  });
+  // Smart caching strategy
+  const cacheConfig = isDraftMode 
+    ? { cache: "no-store" as const } 
+    : {
+        next: { 
+          revalidate: revalidate ?? 3600, // Default 1 hour cache
+          tags: tags.length > 0 ? tags : ['sanity']
+        }
+      };
+
+  return client.fetch<QueryResponse>(query, params, cacheConfig);
 }

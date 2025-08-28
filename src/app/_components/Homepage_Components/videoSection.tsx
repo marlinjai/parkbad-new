@@ -41,13 +41,14 @@ export default function VideoSection() {
       { threshold: 0.1 } // Trigger when at least 10% of the video is visible
     );
 
-    if (videoRef.current) {
-      observer.observe(videoRef.current);
+    const currentVideo = videoRef.current;
+    if (currentVideo) {
+      observer.observe(currentVideo);
     }
 
     return () => {
-      if (videoRef.current) {
-        observer.unobserve(videoRef.current);
+      if (currentVideo) {
+        observer.unobserve(currentVideo);
       }
     };
   }, []);

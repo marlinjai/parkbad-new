@@ -10,12 +10,20 @@ import PreviewEssenUndTrinkenPage from "../_components/Food&Drinks_Components/Pr
 import EssenUndTrinkenPage from "../_components/Food&Drinks_Components/EssenUndTrinkenPage";
 
 export default async function EssenUndTrinken() {
-  const foods = await sanityFetch<Food[]>({ query: foodQuery });
+  const foods = await sanityFetch<Food[]>({ 
+    query: foodQuery,
+    tags: ['food'],
+    revalidate: 3600 // 1 hour (menu changes less frequently)
+  });
   const drinkcategories = await sanityFetch<DrinkCategory[]>({
     query: drinkCategoriesQuery,
+    tags: ['drinkCategories'],
+    revalidate: 7200 // 2 hours (categories change rarely)
   });
   const foodCategories = await sanityFetch<FoodCategory[]>({
     query: foodCategoriesQuery,
+    tags: ['foodCategories'],
+    revalidate: 7200 // 2 hours (categories change rarely)
   });
 
   const draft = await draftMode();

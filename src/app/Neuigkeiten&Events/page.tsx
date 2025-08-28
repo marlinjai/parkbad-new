@@ -7,8 +7,16 @@ import { draftMode } from "next/headers";
 import PreviewArchive from "../_components/Posts&Events_Components/PreviewArchive";
 
 export default async function NeuigkeitenUndEvents() {
-  const posts = await sanityFetch<PostType[]>({ query: postsQuery });
-  const events = await sanityFetch<CustomEvent[]>({ query: eventsQuery });
+  const posts = await sanityFetch<PostType[]>({ 
+    query: postsQuery,
+    tags: ['post'],
+    revalidate: 900 // 15 minutes (news should be fresher)
+  });
+  const events = await sanityFetch<CustomEvent[]>({ 
+    query: eventsQuery,
+    tags: ['customevent'],
+    revalidate: 900 // 15 minutes
+  });
 
   const draft = await draftMode();
   const isDraftMode = draft.isEnabled;
