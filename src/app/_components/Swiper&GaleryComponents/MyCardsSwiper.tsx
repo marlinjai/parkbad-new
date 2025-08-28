@@ -1,5 +1,5 @@
-import { ReactNode, useEffect, useRef } from "react";
-import { register } from "swiper/element/bundle";
+import { ReactNode } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import {
   Autoplay,
   EffectCards,
@@ -7,7 +7,13 @@ import {
   Navigation,
   Pagination,
 } from "swiper/modules";
-import { Swiper } from "swiper/types";
+
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-cards";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 type CardSwiperProps = {
   children: ReactNode;
@@ -15,57 +21,33 @@ type CardSwiperProps = {
 };
 
 export function CardSwiper(props: CardSwiperProps) {
-  const swiperRef = useRef<
-    HTMLElement & { swiper: Swiper; initialize: () => void }
-  >(null);
   const { children, ...rest } = props;
-
-  useEffect(() => {
-    if (swiperRef.current) {
-      const swiperEl = swiperRef.current;
-
-      // Register Swiper web component
-      register();
-
-      // pass component props to parameters
-      const params = {
-        ...rest,
-        speed: 1200,
-        effect: "cards",
-        modules: [EffectCards, Navigation, Pagination, Autoplay, Keyboard],
-        navigation: {
-          nextEl: ".my-swiper-button-next",
-          prevEl: ".my-swiper-button-prev",
-        },
-
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
-        loop: true,
-
-        keyboard: {
-          enabled: true,
-          onlyInViewport: false,
-        },
-        a11y: {
-          prevSlideMessage: 'Previous slide',
-          nextSlideMessage: 'Next slide',
-        }
-      };
-
-      // Assign it to swiper element
-      Object.assign(swiperEl, params);
-
-      // initialize swiper
-      swiperRef.current.initialize();
-    }
-  }, [rest]);
 
   return (
     <div>
-      {/* @ts-ignore - Swiper custom element */}
-      <swiper-container init={false} ref={swiperRef}>
+      <Swiper
+        {...rest}
+        speed={1200}
+        effect="cards"
+        modules={[EffectCards, Navigation, Pagination, Autoplay, Keyboard]}
+        navigation={{
+          nextEl: ".my-swiper-button-next",
+          prevEl: ".my-swiper-button-prev",
+        }}
+        pagination={{
+          el: ".swiper-pagination",
+          clickable: true,
+        }}
+        loop={true}
+        keyboard={{
+          enabled: true,
+          onlyInViewport: false,
+        }}
+        a11y={{
+          prevSlideMessage: 'Previous slide',
+          nextSlideMessage: 'Next slide',
+        }}
+      >
         {children}
 
         <div className="swiper-controls">
@@ -115,14 +97,10 @@ export function CardSwiper(props: CardSwiperProps) {
           </button>
           <div className="swiper-pagination"></div>
         </div>
-        {/* @ts-ignore - Swiper custom element */}
-      </swiper-container>
+      </Swiper>
     </div>
   );
 }
 
-// SwiperSlide component
-export function SwiperSlide(props: { [x: string]: any }) {
-  // @ts-ignore - Swiper custom element
-  return <swiper-slide {...props}></swiper-slide>;
-}
+// Export the official SwiperSlide component
+export { SwiperSlide };
