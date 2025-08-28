@@ -1,9 +1,20 @@
 // src/types/swiper.d.ts
-// Global type declarations for Swiper custom elements
+// Official Swiper TypeScript declarations for custom elements
 
-declare namespace JSX {
-  interface IntrinsicElements {
-    'swiper-container': any;
-    'swiper-slide': any;
+import React from "react";
+import type { SwiperSlideProps, SwiperProps } from 'swiper/react';
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "swiper-container": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & SwiperProps,
+        HTMLElement
+      >;
+      "swiper-slide": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & SwiperSlideProps,
+        HTMLElement
+      >;
+    }
   }
 }
