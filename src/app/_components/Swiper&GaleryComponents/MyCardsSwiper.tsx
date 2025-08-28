@@ -64,6 +64,7 @@ export function CardSwiper(props: CardSwiperProps) {
 
   return (
     <div>
+      {/* @ts-ignore - Swiper custom element */}
       <swiper-container init={false} ref={swiperRef}>
         {children}
 
@@ -114,6 +115,7 @@ export function CardSwiper(props: CardSwiperProps) {
           </button>
           <div className="swiper-pagination"></div>
         </div>
+        {/* @ts-ignore - Swiper custom element */}
       </swiper-container>
     </div>
   );
@@ -121,5 +123,6 @@ export function CardSwiper(props: CardSwiperProps) {
 
 // SwiperSlide component
 export function SwiperSlide(props: { [x: string]: any }) {
+  // @ts-ignore - Swiper custom element
   return <swiper-slide {...props}></swiper-slide>;
 }

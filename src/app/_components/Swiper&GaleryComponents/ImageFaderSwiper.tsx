@@ -56,6 +56,7 @@ export function ImageFaderSwiper(props: {
 
   return (
     <div className="my-pz10 px-pz10 md:px-pz20">
+      {/* @ts-ignore - Swiper custom element */}
       <swiper-container
         className="swiper-container"
         init={false}
@@ -63,6 +64,7 @@ export function ImageFaderSwiper(props: {
       >
         {children}
         <div className="swiper-pagination"></div>
+        {/* @ts-ignore - Swiper custom element */}
       </swiper-container>
     </div>
   );
@@ -90,9 +92,11 @@ export function ImageFaderSwiper(props: {
 // SwiperSlide component
 export function SwiperSlide(props: { [x: string]: any }) {
   return (
+    // @ts-ignore - Swiper custom element
     <swiper-slide
       className="flex flex-col justify-center items-center w-vw60 h-vw40"
       {...props}
+      // @ts-ignore - Swiper custom element
     ></swiper-slide>
   );
 }
