@@ -1,6 +1,6 @@
 "use client";
 
-import { Key, ReactNode, useEffect, useRef } from "react";
+import React, { Key, ReactNode, useEffect, useRef } from "react";
 import { register } from "swiper/element/bundle";
 import { Autoplay, EffectFade, Keyboard } from "swiper/modules";
 import Image from "next/image";
@@ -50,6 +50,7 @@ export function FeiernFaderSwiper(props: {
 
   return (
     <div>
+      {/* @ts-ignore - Custom swiper element */}
       <swiper-container
         className="swiper-container"
         init="false"
