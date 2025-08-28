@@ -1,5 +1,7 @@
 "use client";
 
+/// <reference path="../../globals.d.ts" />
+
 import React, { Key, ReactNode, useEffect, useRef } from "react";
 import { register } from "swiper/element/bundle";
 import { Autoplay, EffectFade, Keyboard } from "swiper/modules";
@@ -50,6 +52,7 @@ export function FeiernFaderSwiper(props: {
 
   return (
     <div>
+      {/* @ts-ignore - Swiper custom element */}
       <swiper-container
         className="swiper-container"
         init={false}
