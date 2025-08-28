@@ -30,7 +30,7 @@ export default async function RootLayout({
         <link rel="preload" as="image" href="/video-bg.png" fetchPriority="high" />
       </head>
       <body className="no-scrollbar overflow-x-hidden disable-scrolling-horizontal w-screen bg-black ${inter.className}">
-        {draftMode().isEnabled ? (
+        {(await draftMode()).isEnabled ? (
           <>
             <PreviewProvider token={token}>{children}</PreviewProvider>
           </>

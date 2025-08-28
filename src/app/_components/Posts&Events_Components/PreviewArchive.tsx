@@ -1,10 +1,11 @@
+// src/app/_components/Posts&Events_Components/PreviewArchive.tsx
+
 "use client";
 
-import { eventsQuery, postsQuery } from "@/sanity/lib/sanity.queries";
 import { CustomEvent, PostType } from "@/types/sanityTypes";
-import { useLiveQuery } from "next-sanity/preview";
 import Archive from "./Archive";
 
+// Temporarily disabled preview functionality for Next.js 15 compatibility
 export default function PreviewArchive({
   posts = [],
   events = [],
@@ -12,8 +13,6 @@ export default function PreviewArchive({
   posts: PostType[];
   events: CustomEvent[];
 }) {
-  const [postData] = useLiveQuery(posts, postsQuery);
-  const [eventData] = useLiveQuery(events, eventsQuery);
-
-  return <Archive posts={postData} events={eventData} />;
+  // TODO: Re-implement preview functionality when next-sanity preview is compatible
+  return <Archive posts={posts} events={events} />;
 }

@@ -22,7 +22,8 @@ export default async function Home() {
     query: homeImageQuery,
   });
 
-  const isDraftMode = draftMode().isEnabled;
+  const draft = await draftMode();
+  const isDraftMode = draft.isEnabled;
 
   if (isDraftMode && token) {
     return (

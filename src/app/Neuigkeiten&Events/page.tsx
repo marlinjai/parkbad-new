@@ -10,7 +10,8 @@ export default async function NeuigkeitenUndEvents() {
   const posts = await sanityFetch<PostType[]>({ query: postsQuery });
   const events = await sanityFetch<CustomEvent[]>({ query: eventsQuery });
 
-  const isDraftMode = draftMode().isEnabled;
+  const draft = await draftMode();
+  const isDraftMode = draft.isEnabled;
 
   if (isDraftMode) {
     return <PreviewArchive posts={posts} events={events} />;

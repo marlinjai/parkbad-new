@@ -19,23 +19,15 @@ const config = defineConfig({
   projectId,
   dataset,
   title,
-  apiVersion,
   basePath: "/admin",
   icon: StudioIcon,
   schema: { types: schemas },
   form: {
     image: {
       directUploads: true,
-      multiple: true,
-      batchUpload: {
-        enabled: true,
-        folderSelect: true,
-        maxFiles: 50
-      }
     },
     file: {
       directUploads: true,
-      multiple: true
     }
   },
   plugins: [

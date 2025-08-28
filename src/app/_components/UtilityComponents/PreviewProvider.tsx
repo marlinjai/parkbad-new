@@ -1,13 +1,8 @@
+// src/app/_components/UtilityComponents/PreviewProvider.tsx
+
 "use client";
 
-import dynamic from "next/dynamic";
-import { suspend } from "suspend-react";
-
-const LiveQueryProvider = dynamic(() => import("next-sanity/preview"));
-
-// suspend-react cache is global, so we use a unique key to avoid collisions
-const UniqueKey = Symbol("lib/sanity.client");
-
+// Temporarily disabled preview functionality for Next.js 15 compatibility
 export default function PreviewProvider({
   children,
   token,
@@ -15,14 +10,7 @@ export default function PreviewProvider({
   children: React.ReactNode;
   token?: string;
 }) {
-  const { client } = suspend(
-    () => import("@/sanity/lib/sanity.client"),
-    [UniqueKey]
-  );
-  if (!token) throw new TypeError("Missing token");
-  return (
-    <LiveQueryProvider client={client} token={token} logger={console}>
-      {children}
-    </LiveQueryProvider>
-  );
+  // TODO: Re-implement preview functionality when next-sanity preview is compatible
+  // For now, just render children without preview functionality
+  return <>{children}</>;
 }

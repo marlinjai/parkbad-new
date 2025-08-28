@@ -244,7 +244,7 @@ export default function LightImageGallery({ images }: LightImageGalleryProps) {
             return (
               <div
                 key={index}
-                ref={el => imageRefs.current[index] = el}
+                ref={el => { imageRefs.current[index] = el; }}
                 className={`${spanClasses} overflow-hidden rounded-lg shadow-lg transform transition-all duration-500 hover:scale-[1.02] opacity-0`}
                 style={{
                   transform: 'translateY(20px)'

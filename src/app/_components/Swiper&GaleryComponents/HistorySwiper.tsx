@@ -35,7 +35,7 @@ export default function HistorySwiper(props: {
               )
               <Image
                 src={image.src}
-                alt={image.alt}
+                alt={image.alt || "History image"}
                 fill={true}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 style={{

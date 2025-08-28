@@ -553,7 +553,7 @@ export default function Archive({
             return (
               <div 
                 key={item._id} 
-                ref={el => itemRefs.current[item._id || ''] = el}
+                ref={el => { itemRefs.current[item._id || ''] = el; }}
                 data-id={item._id}
                 style={{ 
                   transitionProperty: 'opacity, transform',
@@ -568,7 +568,7 @@ export default function Archive({
                 <a href={`/${item.slug}`} className="block overflow-hidden rounded-t-lg">
                   <div 
                     className="relative h-48 w-full bg-brand-accent-2 overflow-hidden"
-                    ref={el => imageRefs.current[item._id || ''] = el}
+                                         ref={el => { imageRefs.current[item._id || ''] = el; }}
                     data-id={item._id}
                   >
                     {(imagesLoaded[item._id || ''] || preloadFirstBatch(index)) && item.coverImage && (
@@ -576,12 +576,12 @@ export default function Archive({
                         <div 
                           className="absolute inset-0 bg-cover bg-center blur-md transform scale-110"
                           style={{ 
-                            backgroundImage: `url(${builder.image(item.coverImage).width(10).url()})` 
+                            backgroundImage: `url(${urlForImage(item.coverImage).width(10).url()})` 
                           }}
                         />
                         
                         <Image
-                          src={builder.image(item.coverImage).width(500).url()}
+                          src={urlForImage(item.coverImage).width(500).url()}
                           alt={item.title}
                           fill={true}
                           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"

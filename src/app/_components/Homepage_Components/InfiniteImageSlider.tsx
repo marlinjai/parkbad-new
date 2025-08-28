@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { Gallery, GalleryImage } from "@/types/sanityTypes";
 import { urlForImage } from "@/sanity/lib/sanity.image";
 import { client } from "@/sanity/lib/sanity.client";
 import LightGallery from "lightgallery/react";
+import { getImageAltText } from "../UtilityComponents/ImageUtils";
 
 // import styles
 import "lightgallery/css/lightgallery.css";
@@ -98,9 +100,9 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
       <div className="mt-36 mb-8">
         <style>{keyframes}</style>
         <h2 className="text-center text-brand-colour-light mb-16 sm:mb-24 text-2sc sm:text-5sc">
-          <a href="/Bildgalerie" className="inline-block transform transition-transform duration-500 hover:scale-105">
+          <Link href="/Bildgalerie" className="inline-block transform transition-transform duration-500 hover:scale-105">
             Impressionen aus dem Parkbad
-          </a>
+          </Link>
         </h2>
         <div className="relative overflow-hidden mb-pz15 ">
           <div
@@ -116,10 +118,10 @@ const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
                 const isTopPosition = originalIndex % 2 === 0;
                 
                 return (
-                  <a href={builder.image(image).url()} key={index}>
+                  <a href={urlForImage(image).url()} key={index}>
                     <Image
-                      alt={image.alt}
-                      src={builder.image(image).url()}
+                      alt={getImageAltText(image.alt, 'gallery')}
+                      src={urlForImage(image).url()}
                       sizes="(max-width: 640px) 400px, 600px"
                       width={800}
                       height={600}

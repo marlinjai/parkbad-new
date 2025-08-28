@@ -96,7 +96,7 @@ export default function FeiernFader(props: { images: any }) {
                 className=" rounded-none"
                 key={index}
                 src={image.src}
-                alt={image.alt}
+                alt={image.alt || "Celebration image"}
               />
             )
           )

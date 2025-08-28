@@ -5,7 +5,7 @@ import { urlForImage } from "@/sanity/lib/sanity.image";
 import { client } from "@/sanity/lib/sanity.client";
 import Image from "next/image";
 
-const builder = urlForImage(client);
+// Use urlForImage utility instead of creating builder
 
 interface CelebratingHeroProps {
   heroImages: Gallery[];
@@ -19,7 +19,7 @@ const RentingFormNoSSR = dynamic(
 
 export default function CelebratingHero(props: CelebratingHeroProps) {
   const heroImages = props.heroImages[0].images.map((image) => ({
-    src: builder.image(image).url(),
+    src: urlForImage(image).url(),
     alt: image.alt,
   }));
 
@@ -30,7 +30,7 @@ export default function CelebratingHero(props: CelebratingHeroProps) {
         {/* <FeiernFader images={heroImages} /> */}
         <Image
           src={heroImages[0].src}
-          alt={heroImages[0].alt}
+          alt={heroImages[0].alt || "Hero image"}
           fill={true}
           priority={true}
           className="object-cover w-screen h-screen md:h-screen"

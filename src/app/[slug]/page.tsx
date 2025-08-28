@@ -21,10 +21,12 @@ export async function generateStaticParams() {
   return posts && events;
 }
 
-export default async function Page({ params }: { params: any }) {
-  const post = await sanityFetch<PostType>({ query: postQuery, params });
-  const event = await sanityFetch<CustomEvent>({ query: eventQuery, params });
-  const isDraftMode = draftMode().isEnabled;
+export default async function Page({ params }: { params: Promise<any> }) {
+  const resolvedParams = await params;
+  const post = await sanityFetch<PostType>({ query: postQuery, params: resolvedParams });
+  const event = await sanityFetch<CustomEvent>({ query: eventQuery, params: resolvedParams });
+  const draft = await draftMode();
+  const isDraftMode = draft.isEnabled;
 
   if (isDraftMode && token) {
     return (

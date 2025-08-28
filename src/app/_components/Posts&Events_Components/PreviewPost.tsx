@@ -1,13 +1,12 @@
 // ./nextjs-app/app/components/PreviewPost.tsx
+// src/app/_components/Posts&Events_Components/PreviewPost.tsx
 
 "use client";
 
-import { useParams } from "next/navigation";
-import { useLiveQuery } from "@sanity/preview-kit";
-import { eventsQuery, postQuery } from "@/sanity/lib/sanity.queries";
 import Post from "@/app/_components/Posts&Events_Components/Post";
 import { CustomEvent, PostType } from "@/types/sanityTypes";
 
+// Temporarily disabled preview functionality for Next.js 15 compatibility
 export default function PreviewPost({
   post,
   customevent,
@@ -17,10 +16,6 @@ export default function PreviewPost({
   customevent: CustomEvent;
   preview: boolean;
 }) {
-  const params = useParams();
-
-  const [postData] = useLiveQuery(post, postQuery, params);
-  const [eventData] = useLiveQuery(customevent, eventsQuery, params);
-
-  return <Post preview={preview} post={postData} customevent={eventData} />;
+  // TODO: Re-implement preview functionality when next-sanity preview is compatible
+  return <Post preview={preview} post={post} customevent={customevent} />;
 }

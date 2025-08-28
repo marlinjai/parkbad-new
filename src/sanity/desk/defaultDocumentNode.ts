@@ -1,6 +1,6 @@
 // ./nextjs-app/sanity/desk/defaultDocumentNode.ts
 
-import Iframe from "sanity-plugin-iframe-pane";
+import { Iframe } from "sanity-plugin-iframe-pane";
 import { StructureBuilder } from "sanity/structure";
 
 // Create a function to generate the URL based on the document slug

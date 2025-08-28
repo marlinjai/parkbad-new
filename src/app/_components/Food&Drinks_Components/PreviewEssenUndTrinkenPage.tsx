@@ -1,15 +1,11 @@
+// src/app/_components/Food&Drinks_Components/PreviewEssenUndTrinkenPage.tsx
+
 "use client";
 
-import { useLiveQuery } from "@sanity/preview-kit";
-import {
-  drinkCategoriesQuery,
-  foodCategoriesQuery,
-  foodQuery,
-} from "../../../sanity/lib/sanity.queries";
 import { DrinkCategory, Food, FoodCategory } from "@/types/sanityTypes";
-
 import EssenTrinkenPage from "./EssenUndTrinkenPage";
 
+// Temporarily disabled preview functionality for Next.js 15 compatibility
 export default function PreviewEssenUndTrinkenPage({
   food = [],
   drinksCategories = [],
@@ -19,22 +15,12 @@ export default function PreviewEssenUndTrinkenPage({
   drinksCategories: DrinkCategory[];
   foodCategories: FoodCategory[];
 }) {
-  const [foodData] = useLiveQuery(food, foodQuery);
-  const [foodCategoriesData] = useLiveQuery(
-    foodCategories,
-    foodCategoriesQuery
-  );
-
-  const [drinksCategoriesData] = useLiveQuery(
-    drinksCategories,
-    drinkCategoriesQuery
-  );
-
+  // TODO: Re-implement preview functionality when next-sanity preview is compatible
   return (
     <EssenTrinkenPage
-      food={foodData}
-      foodCategories={foodCategoriesData}
-      drinksCategories={drinksCategoriesData}
+      food={food}
+      foodCategories={foodCategories}
+      drinksCategories={drinksCategories}
     />
   );
 }

@@ -18,7 +18,8 @@ export default async function EssenUndTrinken() {
     query: foodCategoriesQuery,
   });
 
-  const isDraftMode = draftMode().isEnabled;
+  const draft = await draftMode();
+  const isDraftMode = draft.isEnabled;
 
   if (isDraftMode) {
     return (

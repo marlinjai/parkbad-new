@@ -6,6 +6,7 @@ import { urlForImage } from "@/sanity/lib/sanity.image";
 import { PostorEventItem } from "@/types/componentTypes";
 import { CustomEvent, PostType } from "@/types/sanityTypes";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/autoplay";
@@ -90,9 +91,9 @@ export default function PostCardSlider({
         }
       >
         <h2 id="news" className="text-center text-brand-colour-light pt-16 mb-16 sm:my-24 text-2sc sm:text-5sc">
-          <a href="/Neuigkeiten&Events" className="inline-block transform transition-transform duration-500 hover:scale-105">
+          <Link href="/Neuigkeiten&Events" className="inline-block transform transition-transform duration-500 hover:scale-105">
             Neuigkeiten & Veranstaltungen
-          </a>
+          </Link>
         </h2>
         <CardSwiper className="text-center h-vw55 w-vw80 md:w-vw50 md:h-vw35">
           {items.map(

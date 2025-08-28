@@ -125,10 +125,10 @@ export default async function Historie() {
                     <Image
                       src={
                         historyImages[0].images
-                          ? builder.image(historyImages[0].images[0]).url()
+                          ? urlForImage(historyImages[0].images[0]).url()
                           : ""
                       }
-                      alt={historyImages[0].images[0].alt}
+                      alt={historyImages[0].images[0].alt || "Historic image"}
                       width={250}
                       height={600}
                       className=" w-full rounded-xl bg-gray-900/5 object-cover object-top shadow-lg"
@@ -145,10 +145,10 @@ export default async function Historie() {
                     <Image
                       src={
                         historyImages[0].images
-                          ? builder.image(historyImages[0].images[1]).url()
+                          ? urlForImage(historyImages[0].images[1]).url()
                           : ""
                       }
-                      alt={historyImages[0].images[1].alt}
+                      alt={historyImages[0].images[1].alt || "Historic image"}
                       width={200}
                       height={600}
                       className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -163,10 +163,10 @@ export default async function Historie() {
                     <Image
                       src={
                         historyImages[0].images
-                          ? builder.image(historyImages[0].images[2]).url()
+                          ? urlForImage(historyImages[0].images[2]).url()
                           : ""
                       }
-                      alt={historyImages[0].images[2].alt}
+                      alt={historyImages[0].images[2].alt || "Historic image"}
                       width={200}
                       height={600}
                       className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover  shadow-lg"
@@ -183,10 +183,10 @@ export default async function Historie() {
                     <Image
                       src={
                         historyImages[0].images
-                          ? builder.image(historyImages[0].images[3]).url()
+                          ? urlForImage(historyImages[0].images[3]).url()
                           : ""
                       }
-                      alt={historyImages[0].images[3].alt}
+                      alt={historyImages[0].images[3].alt || "Historic image"}
                       width={200}
                       height={600}
                       className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -201,10 +201,10 @@ export default async function Historie() {
                     <Image
                       src={
                         historyImages[0].images
-                          ? builder.image(historyImages[0].images[4]).url()
+                          ? urlForImage(historyImages[0].images[4]).url()
                           : ""
                       }
-                      alt={historyImages[0].images[4].alt}
+                      alt={historyImages[0].images[4].alt || "Historic image"}
                       width={200}
                       height={600}
                       className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
