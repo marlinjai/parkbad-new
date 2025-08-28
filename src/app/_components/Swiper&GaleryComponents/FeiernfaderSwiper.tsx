@@ -60,6 +60,7 @@ export function FeiernFaderSwiper(props: {
       >
         {children}
         <div className="swiper-pagination"></div>
+        {/* @ts-ignore - Swiper custom element */}
       </swiper-container>
     </div>
   );
@@ -69,6 +70,7 @@ export function SwiperSlide(props: { [x: string]: any }) {
   const { src, alt, ...rest } = props;
 
   return (
+    // @ts-ignore - Swiper custom element
     <swiper-slide {...rest}>
       <div className="relative h-screen md:h-screen w-screen ">
         <Image
@@ -81,6 +83,7 @@ export function SwiperSlide(props: { [x: string]: any }) {
           }}
         />
       </div>
+      {/* @ts-ignore - Swiper custom element */}
     </swiper-slide>
   );
 }
