@@ -29,7 +29,7 @@ export default function HistorySwiper(props: {
   return (
     <>
       <div className={isReady ? "opacity-100 mb-pz5" : " opacity-0"}>
-        <ImageFaderSwiper className="text-center h-vw60 w-vw75 md:w-vw60 md:h-vw40">
+        <ImageFaderSwiper className="text-center h-vw60 w-vw75 md:w-vw60 md:h-vw40 rounded-xl">
           {images.map((image, index) => (
             <SwiperSlide key={index}>
               )
