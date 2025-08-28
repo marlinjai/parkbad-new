@@ -71,7 +71,7 @@ export function SwiperSlide(props: { [x: string]: any }) {
       <div className="relative h-screen md:h-screen w-screen ">
         <Image
           src={src}
-          alt={alt}
+          alt={alt || "Celebration image"}
           fill={true}
           sizes="100vw"
           style={{
