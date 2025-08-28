@@ -5,6 +5,8 @@ import { register } from "swiper/element/bundle";
 import { Autoplay, EffectFade, Keyboard } from "swiper/modules";
 import Image from "next/image";
 import Swiper from "swiper";
+// Import types to ensure they're loaded
+import '@/types/custom-elements';
 
 export function FeiernFaderSwiper(props: {
   [x: string]: any;
@@ -50,7 +52,7 @@ export function FeiernFaderSwiper(props: {
 
   return (
     <div>
-      {/* @ts-ignore - Custom swiper element */}
+      {/* @ts-ignore Custom swiper element */}
       <swiper-container
         className="swiper-container"
         init="false"
