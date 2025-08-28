@@ -58,7 +58,7 @@ export function ImageFaderSwiper(props: {
     <div className="my-pz10 px-pz10 md:px-pz20">
       <swiper-container
         className="swiper-container"
-        init="false"
+        init={false}
         ref={swiperRef}
       >
         {children}

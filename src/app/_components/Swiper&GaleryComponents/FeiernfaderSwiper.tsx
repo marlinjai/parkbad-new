@@ -52,7 +52,7 @@ export function FeiernFaderSwiper(props: {
     <div>
       <swiper-container
         className="swiper-container"
-        init="false"
+        init={false}
         ref={swiperRef}
       >
         {children}

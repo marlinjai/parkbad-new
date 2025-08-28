@@ -64,7 +64,7 @@ export function CardSwiper(props: CardSwiperProps) {
 
   return (
     <div>
-      <swiper-container init="false" ref={swiperRef}>
+      <swiper-container init={false} ref={swiperRef}>
         {children}
 
         <div className="swiper-controls">
