@@ -120,31 +120,36 @@ export default function PostCardSlider({
                       sizes="(max-width: 768px) 50, (max-width: 1200px) 70vw, 100vw"
                       priority={true}
                     />
-                    <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-black/70 to-transparent opacity-95"></div>
-                    <div className="absolute bottom-4 xs:bottom-8 md:bottom-10 z-50 w-full">
-                      <div className="flex flex-col items-center justify-center  text-brand-colour-light text-3sc">
-                        <svg
-                          id="Layer_1"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 92 5"
-                          className=" mb-2 h-1 w-12  stroke-brand-colour-light"
-                        >
-                          {/* <line
-                        x1="2.5"
-                        y1="2.5"
-                        x2="89.5"
-                        y2="2.5"
-                        strokeLinecap="round"
-                        strokeMiterlimit="10"
-                        strokeWidth="5"
-                      /> */}
-                        </svg>
-                        <h3 className=" mt-2 my-2 px-6 md:my-4 xs:text-2xl md:text-4xl">
-                          {item.title ? item.title : item.eventTitle}
-                        </h3>
-                        {renderDate(item)}
-                      </div>
-                    </div>
+                    {/* Conditionally render gradient overlay and text based on hideOverlay setting */}
+                    {!item.hideOverlay && (
+                      <>
+                        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-black/70 to-transparent opacity-95"></div>
+                        <div className="absolute bottom-4 xs:bottom-8 md:bottom-10 z-50 w-full">
+                          <div className="flex flex-col items-center justify-center  text-brand-colour-light text-3sc">
+                            <svg
+                              id="Layer_1"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 92 5"
+                              className=" mb-2 h-1 w-12  stroke-brand-colour-light"
+                            >
+                              {/* <line
+                            x1="2.5"
+                            y1="2.5"
+                            x2="89.5"
+                            y2="2.5"
+                            strokeLinecap="round"
+                            strokeMiterlimit="10"
+                            strokeWidth="5"
+                          /> */}
+                            </svg>
+                            <h3 className=" mt-2 my-2 px-6 md:my-4 xs:text-2xl md:text-4xl">
+                              {item.title ? item.title : item.eventTitle}
+                            </h3>
+                            {renderDate(item)}
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </a>
                 </div>
               </SwiperSlide>

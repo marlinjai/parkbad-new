@@ -134,6 +134,13 @@ export default defineType({
       ],
     }),
     defineField({
+      name: "hideOverlay",
+      title: "Nur Bild anzeigen (ohne Text-Overlay)",
+      type: "boolean",
+      description: "Aktivieren Sie diese Option, wenn das Eventbild bereits alle Informationen enthält und kein Text-Overlay angezeigt werden soll.",
+      initialValue: false,
+    }),
+    defineField({
       name: "eventDays",
       title: "Veranstaltungstage",
       type: "array",

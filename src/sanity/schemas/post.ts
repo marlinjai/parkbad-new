@@ -140,6 +140,13 @@ export default defineType({
       ],
     }),
     defineField({
+      name: "hideOverlay",
+      title: "Nur Bild anzeigen (ohne Text-Overlay)",
+      type: "boolean",
+      description: "Aktivieren Sie diese Option, wenn das Bild bereits alle Informationen enthält und kein Text-Overlay angezeigt werden soll.",
+      initialValue: false,
+    }),
+    defineField({
       name: "date",
       title: "Veröffentlichungsdatum",
       type: "datetime",

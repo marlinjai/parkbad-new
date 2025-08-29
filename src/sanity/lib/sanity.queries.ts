@@ -21,6 +21,7 @@ const postFields = groq`
     hotspot,
     alt
   },
+  hideOverlay,
   "slug": slug.current,
   "author": author->{name, picture},
 `;
@@ -48,6 +49,7 @@ const eventFields = groq`
   eventEnd,
   eventDays,
   showUntilDate,
+  hideOverlay,
   "slug": slug.current,
   "author": author->{name, picture},
 `;

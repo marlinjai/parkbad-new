@@ -22,6 +22,7 @@ export type PostType = {
   author?: Author;
   slug: string;
   content?: any;
+  hideOverlay?: boolean;
 };
 
 export type CustomEvent = {
@@ -35,6 +36,7 @@ export type CustomEvent = {
   slug: string;
   content?: any;
   eventDays?: EventDay[];
+  hideOverlay?: boolean;
 };
 
 export type Food = {

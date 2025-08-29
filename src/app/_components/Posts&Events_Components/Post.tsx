@@ -60,25 +60,30 @@ function renderImage(item: PostorEventItem) {
         className="object-cover"
         priority={true}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-      <div className="absolute inset-0 flex top-pz45 flex-col justify-center items-center gap-2 text-white text-center">
-        <div className="flex gap-2 flex-col justify-center items-center max-w-3xl px-6 mx-auto">
-          <h1 className="text-center text-4sc font-bold leading-tight tracking-tighter md:text-5xl md:leading-tight max-w-3xl">
-            <span
-              dangerouslySetInnerHTML={{ __html: formattedTitle }}
-            />
-          </h1>
-          {item.author && (
-            <AuthorAvatar
-              name={item.author.name}
-              picture={item.author.picture}
-            />
-          )}
-          <div className="text-date text-center mb-1 leading-tight tracking-tighter">
-            {renderDate(item)}
+      {/* Conditionally render gradient overlay and text based on hideOverlay setting */}
+      {!item.hideOverlay && (
+        <>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div className="absolute inset-0 flex top-pz45 flex-col justify-center items-center gap-2 text-white text-center">
+            <div className="flex gap-2 flex-col justify-center items-center max-w-3xl px-6 mx-auto">
+              <h1 className="text-center text-4sc font-bold leading-tight tracking-tighter md:text-5xl md:leading-tight max-w-3xl">
+                <span
+                  dangerouslySetInnerHTML={{ __html: formattedTitle }}
+                />
+              </h1>
+              {item.author && (
+                <AuthorAvatar
+                  name={item.author.name}
+                  picture={item.author.picture}
+                />
+              )}
+              <div className="text-date text-center mb-1 leading-tight tracking-tighter">
+                {renderDate(item)}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   ) : null;
 }
