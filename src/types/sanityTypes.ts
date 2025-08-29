@@ -15,6 +15,7 @@ export type PostType = {
   _id: string;
   title: string;
   coverImage?: any;
+  detailsImage?: any;
   date: string;
   showUntilDate?: string;
   _updatedAt: string;
@@ -30,6 +31,7 @@ export type CustomEvent = {
   eventTitle: string;
   excerpt?: string;
   eventImage?: any;
+  detailsImage?: any;
   eventStart: string;
   eventEnd: string;
   author?: Author;

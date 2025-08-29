@@ -41,7 +41,8 @@ interface MyImageProps {
 const builder = imageUrlBuilder(client);
 
 function renderImage(item: PostorEventItem) {
-  const image = item.coverImage || item.eventImage;
+  // Use detailsImage if available, otherwise fallback to coverImage or eventImage
+  const image = item.detailsImage || item.coverImage || item.eventImage;
   
   // Get the title and format for proper display
   const rawTitle = item.title || item.eventTitle || "No title";
@@ -52,12 +53,12 @@ function renderImage(item: PostorEventItem) {
   console.log("Title with formatted line breaks:", formattedTitle);
 
   return image ? (
-    <div className="relative mx-auto w-full h-vh45 md:min-h-vh70 p-4 sm:p-0">
+    <div className="relative mx-auto w-full h-vh55 md:h-vh60 p-4 sm:p-0">
       <Image
         src={getCroppedImageSrc(image)}
         alt={image?.alt || "Image"}
         layout="fill"
-        className="object-conver"
+        className="object-cover object-top"
         priority={true}
       />
       {/* Conditionally render gradient overlay and text based on hideOverlay setting */}

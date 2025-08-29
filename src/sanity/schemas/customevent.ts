@@ -125,6 +125,23 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      description: "Hauptbild für Karten und Vorschau auf der Homepage",
+      fields: [
+        {
+          name: "alt",
+          type: "string",
+          title: "Alternative Text",
+        },
+      ],
+    }),
+    defineField({
+      name: "detailsImage",
+      title: "Detailseiten-Bild",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+      description: "Optionales separates Bild für die Detailseite. Falls nicht angegeben, wird das Eventbild verwendet.",
       fields: [
         {
           name: "alt",

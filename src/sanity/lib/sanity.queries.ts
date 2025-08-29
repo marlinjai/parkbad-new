@@ -21,6 +21,12 @@ const postFields = groq`
     hotspot,
     alt
   },
+  detailsImage{
+    asset->{url, _ref, _id,metadata},
+    crop,
+    hotspot,
+    alt
+  },
   hideOverlay,
   "slug": slug.current,
   "author": author->{name, picture},
@@ -40,6 +46,12 @@ const eventFields = groq`
   },
   excerpt,
   eventImage{
+    asset->{url, _ref, _id,metadata},
+    crop,
+    hotspot,
+    alt
+  },
+  detailsImage{
     asset->{url, _ref, _id,metadata},
     crop,
     hotspot,

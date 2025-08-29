@@ -93,6 +93,7 @@ export type PostorEventItem = {
   eventEnd?: string;
   eventDays?: EventDay[];
   hideOverlay?: boolean;
+  detailsImage?: SanityImageQueryResult;
 };
 
 export type OpeningHour = {
