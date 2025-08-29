@@ -95,8 +95,8 @@ export function CardSwiper(props: CardSwiperProps) {
               </svg>
             </div>
           </button>
-          <div className="swiper-pagination"></div>
         </div>
+        <div className="swiper-pagination"></div>
       </Swiper>
     </div>
   );

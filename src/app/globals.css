@@ -213,8 +213,28 @@ body::-webkit-scrollbar {
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  gap: 54vw;
+  gap: 57vw;
   position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.swiper-controls button {
+  pointer-events: all;
+}
+
+/* Responsive adjustments for swiper controls */
+@media (max-width: 768px) {
+  .swiper-controls {
+    padding: 0 1rem;
+  }
+  
+  .slider-arrow {
+    width: 45px !important;
+    height: 45px !important;
+  }
 }
 
 swiper-container {
@@ -236,6 +256,9 @@ swiper-container {
 
 .swiper-pagination-bullets.swiper-pagination-horizontal {
   bottom: -50px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
 }
 
 .image-container {
