@@ -57,6 +57,10 @@ export async function POST(req: NextRequest) {
       revalidateTag(`${body._type}:${body.slug}`);
     }
     
+    // Also revalidate the general sanity tag as fallback
+    console.log("🏷️ Revalidating general sanity tag");
+    revalidateTag('sanity');
+    
     const response = {
       status: 200,
       revalidated: true,
