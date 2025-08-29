@@ -54,8 +54,8 @@ export default async function Historie() {
   });
 
   const Faderformatted = faderImages[0].images.map((image) => ({
-    src: builder.image(image).url(),
-    alt: image.alt,
+    src: urlForImage(image).url(),
+    alt: image.alt || "Historic image",
   }));
 
   return (
@@ -123,11 +123,7 @@ export default async function Historie() {
                 <div className="ml-auto w-vw30 sm:w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
                   <div className="relative">
                     <Image
-                      src={
-                        historyImages[0].images
-                          ? urlForImage(historyImages[0].images[0]).url()
-                          : ""
-                      }
+                      src={urlForImage(historyImages[0].images[0]).url()}
                       alt={historyImages[0].images[0].alt || "Historic image"}
                       width={250}
                       height={600}
@@ -143,11 +139,7 @@ export default async function Historie() {
                 <div className="mr-auto w-vw30 sm:w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
                   <div className="relative">
                     <Image
-                      src={
-                        historyImages[0].images
-                          ? urlForImage(historyImages[0].images[1]).url()
-                          : ""
-                      }
+                      src={urlForImage(historyImages[0].images[1]).url()}
                       alt={historyImages[0].images[1].alt || "Historic image"}
                       width={200}
                       height={600}
@@ -161,11 +153,7 @@ export default async function Historie() {
                   </div>
                   <div className="relative">
                     <Image
-                      src={
-                        historyImages[0].images
-                          ? urlForImage(historyImages[0].images[2]).url()
-                          : ""
-                      }
+                      src={urlForImage(historyImages[0].images[2]).url()}
                       alt={historyImages[0].images[2].alt || "Historic image"}
                       width={200}
                       height={600}
@@ -181,11 +169,7 @@ export default async function Historie() {
                 <div className="w-vw30 sm:w-44 flex-none space-y-8 pt-32 sm:pt-0">
                   <div className="relative">
                     <Image
-                      src={
-                        historyImages[0].images
-                          ? urlForImage(historyImages[0].images[3]).url()
-                          : ""
-                      }
+                      src={urlForImage(historyImages[0].images[3]).url()}
                       alt={historyImages[0].images[3].alt || "Historic image"}
                       width={200}
                       height={600}

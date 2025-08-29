@@ -30,6 +30,8 @@ const revalidateSecret = process.env.SANITY_REVALIDATE_SECRET;
 
 export async function POST(req: NextRequest) {
   try {
+    console.log("revalidating");
+
     const { body, isValidSignature } = await parseBody<{
       _type: string;
       slug?: string | undefined;
