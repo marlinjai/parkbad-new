@@ -92,6 +92,7 @@ export type PostorEventItem = {
   eventStart?: string;
   eventEnd?: string;
   eventDays?: EventDay[];
+  hideOverlay?: boolean;
 };
 
 export type OpeningHour = {
