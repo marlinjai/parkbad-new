@@ -30,12 +30,15 @@ const revalidateSecret = process.env.SANITY_REVALIDATE_SECRET;
 
 export async function POST(req: NextRequest) {
   try {
-    console.log("revalidating");
+    console.log("🔄 Webhook received at:", new Date().toISOString());
 
     const { body, isValidSignature } = await parseBody<{
       _type: string;
       slug?: string | undefined;
     }>(req, revalidateSecret);
+    
+    console.log("📦 Webhook body:", JSON.stringify(body, null, 2));
+    console.log("✅ Signature valid:", isValidSignature);
     if (!isValidSignature) {
       const message = "Invalid signature";
       return new Response(message, { status: 401 });
@@ -45,16 +48,23 @@ export async function POST(req: NextRequest) {
       return new Response("Bad Request", { status: 400 });
     }
 
+    console.log("🏷️ Revalidating tag:", body._type);
     revalidateTag(body._type);
+    
     if (body.slug) {
+      console.log("🏷️ Revalidating slug tag:", `${body._type}:${body.slug}`);
       revalidateTag(`${body._type}:${body.slug}`);
     }
-    return NextResponse.json({
+    
+    const response = {
       status: 200,
       revalidated: true,
       now: Date.now(),
       body,
-    });
+    };
+    
+    console.log("✅ Revalidation successful:", response);
+    return NextResponse.json(response);
   } catch (err: any) {
     console.error(err);
     return new Response(err.message, { status: 500 });
