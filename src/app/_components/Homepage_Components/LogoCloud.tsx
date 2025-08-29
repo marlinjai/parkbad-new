@@ -10,7 +10,7 @@ const LogoCloud = () => {
   return (
     <>
       {/* Logo cloud */}
-      <section id="Partner">
+      <section id="Partner" className="bg-gradient-to-br from-gray-800 via-brand-accent-2 to-gray-900">
         <div className="relative isolate mt-pz25">
           <div className="absolute inset-x-0 top-1/4 -z-10 mt-pz15 flex -translate-y-1/2 scale-75 justify-center overflow-hidden [mask-image:radial-gradient(50%_45%_at_50%_55%,white,transparent)] sm:mt-pz10 md:scale-100 ">
             <svg
