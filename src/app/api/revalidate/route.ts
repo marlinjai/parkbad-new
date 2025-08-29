@@ -31,6 +31,7 @@ const revalidateSecret = process.env.SANITY_REVALIDATE_SECRET;
 export async function POST(req: NextRequest) {
   try {
     console.log("🔄 Webhook received at:", new Date().toISOString());
+    console.log("🔑 Using secret:", revalidateSecret ? "SECRET_SET" : "SECRET_MISSING");
 
     const { body, isValidSignature } = await parseBody<{
       _type: string;
