@@ -53,12 +53,12 @@ function renderImage(item: PostorEventItem) {
   console.log("Title with formatted line breaks:", formattedTitle);
 
   return image ? (
-    <div className="relative mx-auto w-full h-vh55 md:h-vh60 p-4 sm:p-0">
+    <div className="relative mx-auto w-full h-vh55 md:h-vh70 p-4 sm:p-0">
       <Image
         src={getCroppedImageSrc(image)}
         alt={image?.alt || "Image"}
         layout="fill"
-        className="object-cover object-top"
+        className="object-cover object-center"
         priority={true}
       />
       {/* Conditionally render gradient overlay and text based on hideOverlay setting */}
