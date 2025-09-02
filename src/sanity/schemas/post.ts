@@ -172,7 +172,13 @@ export default defineType({
       name: "showUntilDate",
       title: "Ende der Anzeige auf der Homepage",
       type: "datetime",
-      initialValue: () => new Date().toISOString(),
+      description: "Standardmäßig 30 Tage ab heute. Beiträge werden nach diesem Datum nicht mehr auf der Homepage angezeigt.",
+      initialValue: () => {
+        // Default: 30 days from now
+        const defaultDate = new Date();
+        defaultDate.setDate(defaultDate.getDate() + 30);
+        return defaultDate.toISOString();
+      },
     }),
     defineField({
       name: "author",

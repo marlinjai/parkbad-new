@@ -245,7 +245,28 @@ export default defineType({
       name: "showUntilDate",
       title: "Ende der Anzeige auf der Homepage",
       type: "datetime",
-      initialValue: () => new Date().toISOString(),
+      description: "Wird automatisch auf den letzten Veranstaltungstag gesetzt, falls Veranstaltungstage definiert sind.",
+      initialValue: (_, context) => {
+        // Try to get the last event day from eventDays
+        const document = context?.document;
+        if (document?.eventDays && Array.isArray(document.eventDays) && document.eventDays.length > 0) {
+          // Sort eventDays by date and get the last one
+          const sortedDays = [...document.eventDays].sort((a, b) => 
+            new Date(a.date).getTime() - new Date(b.date).getTime()
+          );
+          const lastDay = sortedDays[sortedDays.length - 1];
+          if (lastDay?.date) {
+            // Set to end of the last event day (23:59:59)
+            const lastDate = new Date(lastDay.date);
+            lastDate.setHours(23, 59, 59, 999);
+            return lastDate.toISOString();
+          }
+        }
+        // Fallback: 30 days from now if no event days are set
+        const fallbackDate = new Date();
+        fallbackDate.setDate(fallbackDate.getDate() + 30);
+        return fallbackDate.toISOString();
+      },
     }),
     defineField({
       name: "author",
