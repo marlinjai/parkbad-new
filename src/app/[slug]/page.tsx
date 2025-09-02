@@ -23,8 +23,18 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: { params: Promise<any> }) {
   const resolvedParams = await params;
-  const post = await sanityFetch<PostType>({ query: postQuery, params: resolvedParams });
-  const event = await sanityFetch<CustomEvent>({ query: eventQuery, params: resolvedParams });
+  const post = await sanityFetch<PostType>({ 
+    query: postQuery, 
+    params: resolvedParams,
+    tags: ['post', `post:${resolvedParams.slug}`],
+    revalidate: 3600 // 1 hour
+  });
+  const event = await sanityFetch<CustomEvent>({ 
+    query: eventQuery, 
+    params: resolvedParams,
+    tags: ['customevent', `customevent:${resolvedParams.slug}`],
+    revalidate: 3600 // 1 hour
+  });
   const draft = await draftMode();
   const isDraftMode = draft.isEnabled;
 
