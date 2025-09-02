@@ -13,17 +13,17 @@ export default async function EssenUndTrinken() {
   const foods = await sanityFetch<Food[]>({ 
     query: foodQuery,
     tags: ['food'],
-    revalidate: 3600 // 1 hour (menu changes less frequently)
+    revalidate: false // Rely on webhook-based revalidation only
   });
   const drinkcategories = await sanityFetch<DrinkCategory[]>({
     query: drinkCategoriesQuery,
     tags: ['drinkCategories'],
-    revalidate: 7200 // 2 hours (categories change rarely)
+    revalidate: false // Rely on webhook-based revalidation only
   });
   const foodCategories = await sanityFetch<FoodCategory[]>({
     query: foodCategoriesQuery,
     tags: ['foodCategories'],
-    revalidate: 7200 // 2 hours (categories change rarely)
+    revalidate: false // Rely on webhook-based revalidation only
   });
 
   const draft = await draftMode();

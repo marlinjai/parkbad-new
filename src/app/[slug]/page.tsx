@@ -27,13 +27,13 @@ export default async function Page({ params }: { params: Promise<any> }) {
     query: postQuery, 
     params: resolvedParams,
     tags: ['post', `post:${resolvedParams.slug}`],
-    revalidate: 3600 // 1 hour
+    revalidate: false // Rely on webhook-based revalidation only
   });
   const event = await sanityFetch<CustomEvent>({ 
     query: eventQuery, 
     params: resolvedParams,
     tags: ['customevent', `customevent:${resolvedParams.slug}`],
-    revalidate: 3600 // 1 hour
+    revalidate: false // Rely on webhook-based revalidation only
   });
   const draft = await draftMode();
   const isDraftMode = draft.isEnabled;

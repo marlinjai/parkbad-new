@@ -10,12 +10,10 @@ export default async function NeuigkeitenUndEvents() {
   const posts = await sanityFetch<PostType[]>({ 
     query: postsQuery,
     tags: ['post'],
-    revalidate: 900 // 15 minutes (news should be fresher)
   });
   const events = await sanityFetch<CustomEvent[]>({ 
     query: eventsQuery,
     tags: ['customevent'],
-    revalidate: 900 // 15 minutes
   });
 
   const draft = await draftMode();

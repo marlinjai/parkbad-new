@@ -14,20 +14,17 @@ import { CustomEvent, Gallery, PostType } from "@/types/sanityTypes";
 export default async function Home() {
   const posts = await sanityFetch<PostType[]>({ 
     query: homePostsQuery,
-    tags: ['post'],
-    revalidate: 1800 // 30 minutes
+    tags: ['post'],// Rely on webhook-based revalidation only
   });
 
   const customevents = await sanityFetch<CustomEvent[]>({
     query: homepageEventsQuery,
-    tags: ['customevent'],
-    revalidate: 1800 // 30 minutes
+    tags: ['customevent'],// Rely on webhook-based revalidation only
   });
 
   const historyImages = await sanityFetch<Gallery[]>({
     query: homeImageQuery,
-    tags: ['gallery'],
-    revalidate: 7200 // 2 hours (images change less frequently)
+    tags: ['gallery'],// Rely on webhook-based revalidation only
   });
 
   const draft = await draftMode();
