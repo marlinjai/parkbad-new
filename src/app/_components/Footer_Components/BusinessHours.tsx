@@ -71,13 +71,11 @@ export default function BusinessHours({
       let [startTime, endTime] = timeRange;
       
       // Handle Google's format where start time might be missing AM/PM
-      // If end time has PM and start time doesn't have AM/PM, assume start time is also PM
+      // If end time has PM and start time doesn't have AM/PM, default to PM unless it's clearly AM
       if (endTime.includes("PM") && !startTime.includes("AM") && !startTime.includes("PM")) {
-        // Check if start time is likely PM (afternoon/evening hours)
-        const startHour = parseInt(startTime.split(":")[0]);
-        if (startHour >= 12 || startHour <= 11) {
-          startTime = startTime + " PM";
-        }
+        // Simple rule: if closing time is PM, opening time is also PM unless it has AM explicitly
+        // This matches your observation about the Google API behavior
+        startTime = startTime + " PM";
       }
       // Similar logic for AM
       else if (endTime.includes("AM") && !startTime.includes("AM") && !startTime.includes("PM")) {
