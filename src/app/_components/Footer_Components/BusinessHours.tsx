@@ -16,6 +16,8 @@ export default function BusinessHours({
 }: {
   openingHours: OpeningHour[];
 }) {
+  // Debug logging
+  console.log("🕐 BusinessHours received data:", openingHours);
   function translateDay(day: string): string {
     return dayTranslation[day] || day;
   }
@@ -50,14 +52,19 @@ export default function BusinessHours({
   }
 
   function translateHours(hoursString: string) {
+    console.log("🕐 Translating hours:", hoursString);
+    
     if (hoursString.toLowerCase() === "closed") {
       return "geschlossen";
     } else {
       // Split the hours string into start and end times
       const timeRange = hoursString.split("–").map(time => time.trim());
       
+      console.log("🕐 Time range split:", timeRange);
+      
       if (timeRange.length !== 2) {
         // If we can't parse the format, return as-is
+        console.log("🕐 Could not parse time range, returning as-is");
         return hoursString;
       }
       
@@ -66,6 +73,8 @@ export default function BusinessHours({
       // Convert both times to 24-hour format
       const startTime24 = convertTo24Hour(startTime);
       const endTime24 = convertTo24Hour(endTime);
+      
+      console.log("🕐 Converted times:", startTime, "->", startTime24, "|", endTime, "->", endTime24);
       
       return `${startTime24} – ${endTime24}`;
     }
