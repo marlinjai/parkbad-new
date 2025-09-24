@@ -68,7 +68,21 @@ export default function BusinessHours({
         return hoursString;
       }
       
-      const [startTime, endTime] = timeRange;
+      let [startTime, endTime] = timeRange;
+      
+      // Handle Google's format where start time might be missing AM/PM
+      // If end time has PM and start time doesn't have AM/PM, assume start time is also PM
+      if (endTime.includes("PM") && !startTime.includes("AM") && !startTime.includes("PM")) {
+        // Check if start time is likely PM (afternoon/evening hours)
+        const startHour = parseInt(startTime.split(":")[0]);
+        if (startHour >= 12 || startHour <= 11) {
+          startTime = startTime + " PM";
+        }
+      }
+      // Similar logic for AM
+      else if (endTime.includes("AM") && !startTime.includes("AM") && !startTime.includes("PM")) {
+        startTime = startTime + " AM";
+      }
       
       // Convert both times to 24-hour format
       const startTime24 = convertTo24Hour(startTime);
