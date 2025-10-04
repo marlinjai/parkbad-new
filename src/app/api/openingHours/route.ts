@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-// Enable ISR - Revalidate at most once per day, but allow on-demand revalidation
-export const revalidate = 86400; // Cache for 24 hours (in seconds)
+// Temporarily disable caching to force fresh data after code changes
+// export const revalidate = 86400; // Cache for 24 hours (in seconds)
 
 export async function GET() {
   const businessName = "Parkbad Gütersloh"; // Hardcoded since this is always the same
