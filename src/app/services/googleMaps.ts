@@ -42,22 +42,8 @@ async function fetchOpeningHours(): Promise<OpeningHour[]> {
   } catch (error) {
     console.error("Error fetching opening hours:", error);
     
-    // For debugging in production - return a test array if API fails
-    if (process.env.NODE_ENV === 'production') {
-      console.log("Using fallback opening hours data for production");
-      
-      // Return some test data to prevent "Derzeit geschlossen" from showing
-      return [
-        { dayName: 'Monday', hours: '15:00 – 22:00' },
-        { dayName: 'Tuesday', hours: '15:00 – 22:00' },
-        { dayName: 'Wednesday', hours: '15:00 – 22:00' },
-        { dayName: 'Thursday', hours: '15:00 – 22:00' },
-        { dayName: 'Friday', hours: '15:00 – 22:00' },
-        { dayName: 'Saturday', hours: '12:00 – 22:00' },
-      ];
-    }
-    
-    return []; // Return empty array on error in development
+    // Return empty array to trigger "Derzeit geschlossen" display
+    return [];
   }
 }
 

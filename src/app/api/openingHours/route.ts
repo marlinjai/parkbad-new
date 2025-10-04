@@ -15,15 +15,8 @@ export async function GET() {
         error: "API key not configured",
         environment: process.env.NODE_ENV || 'unknown',
         lastUpdated: new Date().toISOString(),
-        // Return mock data in production to prevent display issues
-        openingHours: process.env.NODE_ENV === 'production' ? [
-          { dayName: 'Monday', hours: '15:00 – 22:00' },
-          { dayName: 'Tuesday', hours: '15:00 – 22:00' },
-          { dayName: 'Wednesday', hours: '15:00 – 22:00' },
-          { dayName: 'Thursday', hours: '15:00 – 22:00' },
-          { dayName: 'Friday', hours: '15:00 – 22:00' },
-          { dayName: 'Saturday', hours: '12:00 – 22:00' },
-        ] : []
+        openingHours: [], // Return empty array to show "Derzeit geschlossen"
+        status: 'api-key-missing'
       },
       { status: 500 }
     );
@@ -87,24 +80,16 @@ export async function GET() {
     console.log("Details Data:", JSON.stringify(detailsData));
 
     if (!detailsData.result?.opening_hours?.weekday_text) {
-      console.warn("No opening hours found in Google API response:", detailsData);
+      console.log("No opening hours found in Google API response:", detailsData);
       
-      // Return mock data in production to prevent display issues
-      if (process.env.NODE_ENV === 'production') {
-        return NextResponse.json({ 
-          openingHours: [
-            { dayName: 'Monday', hours: '15:00 – 22:00' },
-            { dayName: 'Tuesday', hours: '15:00 – 22:00' },
-            { dayName: 'Wednesday', hours: '15:00 – 22:00' },
-            { dayName: 'Thursday', hours: '15:00 – 22:00' },
-            { dayName: 'Friday', hours: '15:00 – 23:00' },
-            { dayName: 'Saturday', hours: '15:00 – 23:00' },
-            { dayName: 'Sunday', hours: '14:00 – 22:00' }
-          ],
-          usingMockData: true,
-          lastUpdated: new Date().toISOString() 
-        });
-      }
+      // Return empty array to trigger "Derzeit geschlossen" display
+      return NextResponse.json({ 
+        openingHours: [],
+        lastUpdated: new Date().toISOString(),
+        cacheStrategy: '24h-with-manual-revalidation',
+        source: 'google-places-api',
+        status: 'closed-no-hours-available'
+      });
     }
 
     let weekday_text = detailsData.result.opening_hours?.weekday_text;
@@ -129,32 +114,13 @@ export async function GET() {
   } catch (error) {
     console.error("Error encountered:", error);
     
-    // Return mock data in production to prevent display issues
-    if (process.env.NODE_ENV === 'production') {
-      return NextResponse.json({ 
-        error: "Failed to fetch data from Google Maps API",
-        errorDetails: error instanceof Error ? error.message : String(error),
-        openingHours: [
-          { dayName: 'Monday', hours: '15:00 – 22:00' },
-          { dayName: 'Tuesday', hours: '15:00 – 22:00' },
-          { dayName: 'Wednesday', hours: '15:00 – 22:00' },
-          { dayName: 'Thursday', hours: '15:00 – 22:00' },
-          { dayName: 'Friday', hours: '15:00 – 23:00' },
-          { dayName: 'Saturday', hours: '15:00 – 23:00' },
-          { dayName: 'Sunday', hours: '14:00 – 22:00' }
-        ],
-        usingMockData: true,
-        lastUpdated: new Date().toISOString() 
-      });
-    }
-    
-    return NextResponse.json(
-      { 
-        error: "Failed to fetch data from Google Maps API",
-        errorDetails: error instanceof Error ? error.message : String(error),
-        lastUpdated: new Date().toISOString() 
-      },
-      { status: 500 }
-    );
+    // Return empty array to show "Derzeit geschlossen" when API fails
+    return NextResponse.json({ 
+      error: "Failed to fetch data from Google Maps API",
+      errorDetails: error instanceof Error ? error.message : String(error),
+      openingHours: [],
+      lastUpdated: new Date().toISOString(),
+      status: 'api-error'
+    });
   }
 } 
