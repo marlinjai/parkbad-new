@@ -101,7 +101,7 @@ export default function EmptyStatePlaceholder({ onNewsletterSignup }: EmptyState
         {message && (
           <p
             className={`mt-4 text-sm font-medium ${
-              message.includes("Vielen Dank") ? "text-green-600" : "text-red-600"
+              message.includes("versendet") ? "text-green-400" : "text-red-400"
             }`}
           >
             {message}

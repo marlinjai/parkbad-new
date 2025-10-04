@@ -59,11 +59,11 @@ export default function HomePage({
             </div>
           </div>
         </div>
-      </SectionBackground>
       {/* Newsletter Section - Only show when there are posts/events */}
       {hasContent && (
         <NewsletterSection onNewsletterSignup={handleNewsletterSignup} />
       )}
+      </SectionBackground>
     </SiteLayout>
   );
 }

@@ -39,7 +39,7 @@ export default function NewsletterSection({ onNewsletterSignup }: NewsletterSect
   };
 
   return (
-    <section className="bg-transparent py-16 px-6 relative">
+    <section className="bg-transparent py-16 mb-32 px-6 relative">
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 "></div>
       
@@ -63,7 +63,7 @@ export default function NewsletterSection({ onNewsletterSignup }: NewsletterSect
 
         {/* Heading - High contrast white text with shadow */}
         <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-lg">
-          Bleiben Sie informiert!
+          Abonnieren Sie unseren Newsletter
         </h3>
         
         {/* Description - Improved contrast */}
@@ -119,7 +119,7 @@ export default function NewsletterSection({ onNewsletterSignup }: NewsletterSect
           </form>
           
           {message && (
-            <p className={`text-sm font-medium drop-shadow-md mt-3 ${message.includes("Vielen Dank") ? "text-green-200" : "text-red-200"}`}>
+            <p className={`text-sm font-medium drop-shadow-md mt-3 ${message.includes("versendet") ? "text-green-400" : "text-red-400"}`}>
               {message}
             </p>
           )}
