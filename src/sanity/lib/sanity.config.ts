@@ -38,6 +38,7 @@ const config = defineConfig({
         return S.list()
           .title("Content")
           .items([
+            S.documentTypeListItem("contactSettings").title("Kontakt Einstellungen"),
             S.documentTypeListItem("subBusiness").title(
               "Unternehmen im Parkbad"
             ),

@@ -15,6 +15,7 @@ import "swiper/css/pagination";
 import renderDate from "../Homepage_Components/RenderDate";
 import { getCroppedImageSrc } from "../UtilityComponents/GetCroppedImageSrc";
 import { CardSwiper, SwiperSlide } from "./MyCardsSwiper";
+import EmptyStatePlaceholder from "../Homepage_Components/EmptyStatePlaceholder";
 
 const builder = urlForImage(client);
 
@@ -82,6 +83,33 @@ export default function PostCardSlider({
 
     return () => clearTimeout(timer); // Cleanup the timer
   }, []); // Empty dependency array to run only once on mount
+
+  // Newsletter signup handler
+  const handleNewsletterSignup = async (email: string) => {
+    const response = await fetch('/api/newsletter', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Newsletter signup failed');
+    }
+
+    return response.json();
+  };
+
+  // Show empty state if no items available
+  if (items.length === 0) {
+    return (
+      <div className={isReady ? "opacity-100 mb-vh10" : "opacity-0"}>
+        <EmptyStatePlaceholder onNewsletterSignup={handleNewsletterSignup} />
+      </div>
+    );
+  }
 
   return (
     <>

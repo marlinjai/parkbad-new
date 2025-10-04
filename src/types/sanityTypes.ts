@@ -120,3 +120,13 @@ export type Gallery = {
 export type GalleryPageProps = {
   galleryData: Gallery;
 };
+
+export type ContactSettings = {
+  _id: string;
+  isWinterBreak: boolean;
+  winterBreakMessage: string;
+  normalMessage: string;
+  contactPhone: string;
+  contactEmail: string;
+  lastUpdated: string;
+};

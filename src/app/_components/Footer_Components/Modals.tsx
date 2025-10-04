@@ -177,6 +177,8 @@ const Modal: React.FC<ModalProps> = ({ id, onClose }) => {
                         <Impressum></Impressum>
                       ) : id === "modal-2-1" ? (
                         <Datenschutzerklaerung />
+                      ) : id === "newsletter-privacy" ? (
+                        <Datenschutzerklaerung />
                       ) : (
                         <Hausordnung></Hausordnung>
                       )}

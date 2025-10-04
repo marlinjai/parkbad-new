@@ -241,3 +241,15 @@ export const celebrationFaderQuery = groq`
 *[_type == 'gallery' && galleryTitle == "Feiern & Tagen" ] | order(imageTitle asc){
   ${galleryFields}
 }`;
+
+// Contact settings query
+export const contactSettingsQuery = groq`
+*[_type == "contactSettings"][0]{
+  _id,
+  isWinterBreak,
+  winterBreakMessage,
+  normalMessage,
+  contactPhone,
+  contactEmail,
+  lastUpdated
+}`;

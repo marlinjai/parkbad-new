@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-// Enable ISR - Revalidate at most once per day
+// Enable ISR - Revalidate at most once per day, but allow on-demand revalidation
 export const revalidate = 86400; // Cache for 24 hours (in seconds)
 
 export async function GET() {
@@ -38,8 +38,10 @@ export async function GET() {
     )}&inputtype=textquery&fields=place_id&key=${apiKey}`;
 
     console.log("Making request to Google API (Find Place)");
-    // Don't specify cache option here, let Next.js handle caching with revalidate
-    const searchResponse = await fetch(searchURL);
+    // Add cache tags for on-demand revalidation
+    const searchResponse = await fetch(searchURL, {
+      next: { tags: ['opening-hours'] }
+    });
     
     if (!searchResponse.ok) {
       const errorText = await searchResponse.text();
@@ -69,8 +71,10 @@ export async function GET() {
     const detailsURL = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=opening_hours&key=${apiKey}`;
 
     console.log("Making request to Google API (Place Details)");
-    // Don't specify cache option here, let Next.js handle caching with revalidate
-    const detailsResponse = await fetch(detailsURL);
+    // Add cache tags for on-demand revalidation
+    const detailsResponse = await fetch(detailsURL, {
+      next: { tags: ['opening-hours'] }
+    });
     
     if (!detailsResponse.ok) {
       const errorText = await detailsResponse.text();
@@ -111,11 +115,17 @@ export async function GET() {
         })
       : [];
 
-    // Include last updated timestamp for debugging
-    return NextResponse.json({ 
+    // Include metadata for debugging and change detection
+    const response = {
       openingHours, 
-      lastUpdated: new Date().toISOString() 
-    });
+      lastUpdated: new Date().toISOString(),
+      cacheStrategy: '24h-with-manual-revalidation',
+      source: 'google-places-api'
+    };
+
+    console.log('Opening hours updated:', JSON.stringify(response, null, 2));
+
+    return NextResponse.json(response);
   } catch (error) {
     console.error("Error encountered:", error);
     

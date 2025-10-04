@@ -1,3 +1,5 @@
+"use client";
+
 import SiteLayout from "../UtilityComponents/SiteLayout";
 import { HomePageProps } from "@/types/componentTypes";
 import VideoSection from "./videoSection";
@@ -6,6 +8,8 @@ import PostCardsSlider from "../Swiper&GaleryComponents/PostCardsSlider";
 import Image from "next/image";
 import InfiniteImageSlider from "./InfiniteImageSlider";
 import SectionBackground from "../UtilityComponents/SectionBackground";
+import NewsletterSection from "./NewsletterSection";
+
 
 export default function HomePage({
   preview,
@@ -13,6 +17,27 @@ export default function HomePage({
   customevents,
   historyImages,
 }: HomePageProps) {
+  // Check if there are any posts or events
+  const hasContent = posts.length > 0 || customevents.length > 0;
+
+  // Newsletter signup handler
+  const handleNewsletterSignup = async (email: string) => {
+    const response = await fetch('/api/newsletter', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Newsletter signup failed');
+    }
+
+    return response.json();
+  };
+
   return (
     <SiteLayout preview={preview}>
       <VideoSection />
@@ -35,6 +60,10 @@ export default function HomePage({
           </div>
         </div>
       </SectionBackground>
+      {/* Newsletter Section - Only show when there are posts/events */}
+      {hasContent && (
+        <NewsletterSection onNewsletterSignup={handleNewsletterSignup} />
+      )}
     </SiteLayout>
   );
 }
