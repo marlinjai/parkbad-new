@@ -6,7 +6,6 @@ import Footer from "../Footer_Components/Footer";
 import { Header } from "../Header_Components/Header";
 import AlertBanner from "./AlertBanner";
 import Loading from "./LoadingSpinner";
-import SectionBackground from "./SectionBackground";
 
 export default function SiteLayout({
   children,
