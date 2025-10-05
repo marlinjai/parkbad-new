@@ -266,6 +266,8 @@ const footerLinks = {
 const logo = {
   marginLeft: 'auto',
   marginRight: 'auto',
+  width: '150px',
+  height: '150px',
 };
 
 const link = {
