@@ -66,7 +66,7 @@ export const NewsletterTemplate = ({
         <Container style={container}>
           {/* Header */}
           <Section style={header}>
-            <Img style={logo} src={`${baseUrl}/Logo_redo_origclolours.png`} alt="Parkbad Gütersloh" width="100" height="100" />
+            <Img style={logo} src={`${baseUrl}/Logo_redo_origclolours.png`} alt="Parkbad Gütersloh" width="80" height="80" />
             <Heading style={headerTitle}>Parkbad Gütersloh</Heading>
             <Text style={headerSubtitle}>
               {type === 'post' ? 'Neuer Beitrag' : 'Neue Veranstaltung'}
@@ -266,8 +266,8 @@ const footerLinks = {
 const logo = {
   marginLeft: 'auto',
   marginRight: 'auto',
-  width: '150px',
-  height: '150px',
+  width: '80px',
+  height: '80px',
 };
 
 const link = {

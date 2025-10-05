@@ -34,7 +34,7 @@ export const WelcomeTemplate = ({
         <Container style={container}>
           {/* Header */}
           <Section style={header}>
-          <Img style={logo} src="https://www.parkbad-gt.de/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo_redo_origclolours.51065b50.png&w=256&q=75" alt="Parkbad Gütersloh" width="100" height="100" />
+          <Img style={logo} src={`${baseUrl}/Logo_redo_origclolours.png`} alt="Parkbad Gütersloh" width="100" height="100" />
             <Heading style={headerTitle}>Parkbad Gütersloh</Heading>
             <Text style={headerSubtitle}>
               Newsletter Anmeldung bestätigen
