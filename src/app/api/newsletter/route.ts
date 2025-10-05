@@ -96,14 +96,14 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email with dark mode support and logo using retry logic
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const logoUrl = `${baseUrl}/parkbad-logo-filtered.svg`;
+    const logoUrl = `${baseUrl}/Logo_redo_origclolours.png`;
     
     console.log('Sending email to:', email);
     
     const { data: emailData, error: emailError } = await retryWithBackoff(
       async () => {
         return await resend.emails.send({
-          from: 'no-reply@parkbad-gt.de',
+          from: 'newsletter@parkbad-gt.de',
           to: [email],
           subject: 'Parkbad Gütersloh Newsletter - Anmeldung bestätigen',
           html: `

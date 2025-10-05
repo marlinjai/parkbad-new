@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
     // Send notification email to Parkbad team
     const teamNotification = await resend.emails.send({
-      from: "no-reply@parkbad-gt.de",
+      from: "kontakt@parkbad-gt.de",
       to: ["verwaltung@parkbad-gt.de"],
       subject: `Neue Nachricht von ${requestBody.firstName} ${requestBody.lastName}`,
       react: React.createElement('div', {}, [
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
 
       // Send auto-reply to customer
       const autoReply = await resend.emails.send({
-        from: "no-reply@parkbad-gt.de",
+        from: "kontakt@parkbad-gt.de",
         to: [requestBody.email],
         subject: settings.isWinterBreak 
           ? "Ihre Nachricht ist eingegangen - Winterpause"

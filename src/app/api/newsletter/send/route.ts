@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
 
     // Step 1: Create the broadcast
     const createResponse = await resend.broadcasts.create({
-      from: 'no-reply@parkbad-gt.de',
+      from: 'newsletter@parkbad-gt.de',
       audienceId: audienceId,
       subject,
       html: emailHtml,
