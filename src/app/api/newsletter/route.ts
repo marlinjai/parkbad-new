@@ -115,7 +115,7 @@ export async function POST(request: NextRequest) {
         return await resend.emails.send({
           from: 'Parkbad Gütersloh <newsletter@parkbad-gt.de>',
           to: [email],
-          subject: 'Parkbad Gütersloh Newsletter - Anmeldung bestätigen',
+          subject: 'Bestätigung erforderlich - Parkbad Gütersloh',
           replyTo: 'verwaltung@parkbad-gt.de',
           headers: {
             'X-Mailer': 'Parkbad Gütersloh Newsletter System',
@@ -123,7 +123,11 @@ export async function POST(request: NextRequest) {
             'List-Id': 'Parkbad Gütersloh Newsletter <newsletter.parkbad-gt.de>',
             'X-Entity-Ref-ID': confirmationToken,
             'Message-ID': `<${confirmationToken}@parkbad-gt.de>`,
-            'Return-Path': 'newsletter@parkbad-gt.de'
+            'Return-Path': 'newsletter@parkbad-gt.de',
+            'X-MS-Exchange-CrossTenant-AuthAs': 'Internal',
+            'X-MS-Exchange-CrossTenant-AuthSource': 'parkbad-gt.de',
+            'X-Auto-Response-Suppress': 'All',
+            'Precedence': 'bulk'
           },
           tags: [
             {
