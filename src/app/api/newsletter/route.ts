@@ -103,9 +103,28 @@ export async function POST(request: NextRequest) {
     const { data: emailData, error: emailError } = await retryWithBackoff(
       async () => {
         return await resend.emails.send({
-          from: 'newsletter@parkbad-gt.de',
+          from: 'Parkbad Gütersloh <newsletter@parkbad-gt.de>',
           to: [email],
           subject: 'Parkbad Gütersloh Newsletter - Anmeldung bestätigen',
+          replyTo: 'verwaltung@parkbad-gt.de',
+          headers: {
+            'X-Mailer': 'Parkbad Gütersloh Newsletter System',
+            'List-Unsubscribe': `<${baseUrl}/api/newsletter/unsubscribe?email=${encodeURIComponent(email)}>`,
+            'List-Id': 'Parkbad Gütersloh Newsletter <newsletter.parkbad-gt.de>',
+            'X-Entity-Ref-ID': confirmationToken,
+            'Message-ID': `<${confirmationToken}@parkbad-gt.de>`,
+            'Return-Path': 'newsletter@parkbad-gt.de'
+          },
+          tags: [
+            {
+              name: 'category',
+              value: 'newsletter-confirmation'
+            },
+            {
+              name: 'environment',
+              value: process.env.NODE_ENV || 'development'
+            }
+          ],
           html: `
             <!DOCTYPE html>
             <html>

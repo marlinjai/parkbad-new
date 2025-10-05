@@ -69,11 +69,12 @@ export async function POST(request: NextRequest) {
       })
     );
 
-    // Step 1: Create the broadcast
+    // Create the broadcast with enhanced authentication
     const createResponse = await resend.broadcasts.create({
-      from: 'newsletter@parkbad-gt.de',
+      from: 'Parkbad Gütersloh <newsletter@parkbad-gt.de>',
       audienceId: audienceId,
       subject,
+      replyTo: 'verwaltung@parkbad-gt.de',
       html: emailHtml,
       text: `
         ${type === 'post' ? 'Neue Neuigkeit' : 'Neue Veranstaltung'}: ${title}
