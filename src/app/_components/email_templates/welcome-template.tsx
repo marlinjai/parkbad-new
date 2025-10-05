@@ -162,7 +162,7 @@ const content = {
 };
 
 const contentTitle = {
-  color: '#1f2937',
+  color: '#ffffff',
   fontSize: '20px',
   fontWeight: 'bold',
   marginBottom: '15px',

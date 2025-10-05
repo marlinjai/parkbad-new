@@ -60,13 +60,29 @@ export const NewsletterTemplate = ({
 
   return (
     <Html>
-      <Head />
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
+        {/* Outlook-specific styles */}
+        <style>{`
+          @media screen and (max-width: 600px) {
+            .mobile-center { text-align: center !important; }
+            .mobile-padding { padding: 10px !important; }
+          }
+        `}</style>
+      </Head>
       <Preview>{previewText}</Preview>
       <Body style={main}>
         <Container style={container}>
-          {/* Header */}
+          {/* Header - Pure React Email Components */}
           <Section style={header}>
-            <Img style={logo} src={`${baseUrl}/Logo_redo_origclolours.png`} alt="Parkbad Gütersloh" width="80" height="80" />
+            <Img 
+              style={logo} 
+              src={`${baseUrl}/Logo_redo_origclolours.png`} 
+              alt="Parkbad Gütersloh" 
+              width="80" 
+              height="80" 
+            />
             <Heading style={headerTitle}>Parkbad Gütersloh</Heading>
             <Text style={headerSubtitle}>
               {type === 'post' ? 'Neuer Beitrag' : 'Neue Veranstaltung'}
@@ -102,6 +118,7 @@ export const NewsletterTemplate = ({
             )}
 
             <Section style={buttonSection}>
+              {/* Pure React Email Button */}
               <Button style={button} href={postUrl}>
                 {type === 'post' ? 'Beitrag lesen' : 'Veranstaltung ansehen'}
               </Button>
@@ -134,18 +151,22 @@ export const NewsletterTemplate = ({
 // Styles
 const main = {
   backgroundColor: '#ffffff',
-  fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
+  fontFamily: 'Arial, sans-serif', // Simplified for better compatibility
+  margin: '0',
+  padding: '0',
 };
 
 const container = {
   margin: '0 auto',
   padding: '20px 0 48px',
   maxWidth: '600px',
+  width: '100%', // Better mobile support
 };
 
 const header = {
-    background: 'linear-gradient(to bottom right, #202A39, #1A6576, #187D8C)',
-    borderRadius: '8px 8px 0 0',
+  backgroundColor: '#1A6576', // Fallback for gradient
+  background: 'linear-gradient(to bottom right, #202A39, #1A6576, #187D8C)',
+  borderRadius: '8px 8px 0 0',
   marginLeft: 'auto',
   marginRight: 'auto',
   padding: '20px',
@@ -228,6 +249,7 @@ const buttonSection = {
 };
 
 const button = {
+  backgroundColor: '#1A6576', // Solid fallback for gradient
   background: 'linear-gradient(to bottom right, #1A5E6F, #1A6576, #187D8C)',
   borderRadius: '6px',
   color: '#ffffff',
@@ -237,6 +259,8 @@ const button = {
   textAlign: 'center' as const,
   display: 'inline-block',
   padding: '12px 24px',
+  border: 'none',
+  lineHeight: '1.4',
 };
 
 const hr = {
@@ -264,10 +288,12 @@ const footerLinks = {
 };
 
 const logo = {
-  marginLeft: 'auto',
-  marginRight: 'auto',
+  display: 'block',
+  margin: '0 auto 15px auto',
   width: '80px',
   height: '80px',
+  borderRadius: '8px',
+  border: '0', // Remove border for email clients
 };
 
 const link = {
