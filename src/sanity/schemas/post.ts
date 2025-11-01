@@ -4,6 +4,7 @@ import { format, parseISO } from "date-fns";
 import { defineField, defineType } from "sanity";
 
 import authorType from "./author";
+import NewsletterTestButton from "@/app/_components/Sanity_Components/NewsletterTestButton";
 
 /**
  * This file is the schema definition for a post.
@@ -192,6 +193,16 @@ export default defineType({
       type: "boolean",
       description: "Aktivieren Sie diese Option, um beim Veröffentlichen automatisch einen Newsletter zu versenden. Deaktivieren Sie diese Option, wenn Sie nur Änderungen vornehmen möchten, ohne einen Newsletter zu versenden.",
       initialValue: false,
+    }),
+    defineField({
+      name: "newsletterTest",
+      title: "Newsletter Test",
+      type: "object",
+      components: {
+        input: NewsletterTestButton,
+      },
+      fields: [],
+      description: "Versenden Sie eine Test-E-Mail bevor Sie den Newsletter an alle Abonnenten senden.",
     }),
   ],
   preview: {
