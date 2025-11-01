@@ -149,11 +149,12 @@ export default function PostCardSlider({
                       priority={true}
                     />
                     {/* Conditionally render gradient overlay and text based on hideOverlay setting */}
-                    {!item.hideOverlay && (
+                    {/* Custom overlay always shows if provided, even if hideOverlay is true */}
+                    {(!item.hideOverlay || item.customOverlayText) && (
                       <>
                         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-black/70 to-transparent opacity-95"></div>
                         <div className="absolute bottom-4 xs:bottom-8 md:bottom-10 z-50 w-full">
-                          <div className="flex flex-col items-center justify-center text-brand-colour-light text-3sc">
+                          <div className="flex flex-col items-center justify-center text-brand-colour-light text-3sc font-light">
                             {/* Custom overlay text for events (e.g., Christmas market) */}
                             {item.customOverlayText ? (
                               <>

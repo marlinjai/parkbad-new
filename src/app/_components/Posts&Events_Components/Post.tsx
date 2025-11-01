@@ -62,25 +62,45 @@ function renderImage(item: PostorEventItem) {
         priority={true}
       />
       {/* Conditionally render gradient overlay and text based on hideOverlay setting */}
-      {!item.hideOverlay && (
+      {/* Custom overlay always shows if provided, even if hideOverlay is true */}
+      {(!item.hideOverlay || item.customOverlayText) && (
         <>
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
           <div className="absolute inset-0 flex top-pz45 flex-col justify-center items-center gap-2 text-white text-center">
-            <div className="flex gap-2 flex-col justify-center items-center max-w-3xl px-6 mx-auto">
-              <h1 className="text-center text-4sc font-bold leading-tight tracking-tighter md:text-5xl md:leading-tight max-w-3xl">
-                <span
-                  dangerouslySetInnerHTML={{ __html: formattedTitle }}
-                />
-              </h1>
-              {item.author && (
-                <AuthorAvatar
-                  name={item.author.name}
-                  picture={item.author.picture}
-                />
+            <div className="flex gap-2 flex-col justify-center items-center w-full px-6 mx-12">
+              {/* Custom overlay text for events (e.g., Christmas market) */}
+              {item.customOverlayText ? (
+                <>
+                  <h1 
+                    className="text-center text-4sc font-bold leading-tight tracking-tighter md:text-5xl md:leading-tight w-full whitespace-pre-line"
+                    dangerouslySetInnerHTML={{ __html: item.customOverlayText }}
+                  />
+                  {item.customOverlaySubtext && (
+                    <div 
+                      className="mt-2 text-center text-lg md:text-xl w-full"
+                      style={{ color: '#d4af37' }}
+                      dangerouslySetInnerHTML={{ __html: item.customOverlaySubtext }}
+                    />
+                  )}
+                </>
+              ) : (
+                <>
+                  <h1 className="text-center text-4sc font-bold leading-tight tracking-tighter md:text-5xl md:leading-tight w-full">
+                    <span
+                      dangerouslySetInnerHTML={{ __html: formattedTitle }}
+                    />
+                  </h1>
+                  {item.author && (
+                    <AuthorAvatar
+                      name={item.author.name}
+                      picture={item.author.picture}
+                    />
+                  )}
+                  <div className="text-date text-center mb-1 leading-tight tracking-tighter">
+                    {renderDate(item)}
+                  </div>
+                </>
               )}
-              <div className="text-date text-center mb-1 leading-tight tracking-tighter">
-                {renderDate(item)}
-              </div>
             </div>
           </div>
         </>
