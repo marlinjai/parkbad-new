@@ -197,12 +197,13 @@ export default defineType({
     defineField({
       name: "newsletterTest",
       title: "Newsletter Test",
-      type: "object",
+      type: "string",
       components: {
         input: NewsletterTestButton,
       },
-      fields: [],
       description: "Versenden Sie eine Test-E-Mail bevor Sie den Newsletter an alle Abonnenten senden.",
+      readOnly: true,
+      initialValue: "",
     }),
   ],
   preview: {

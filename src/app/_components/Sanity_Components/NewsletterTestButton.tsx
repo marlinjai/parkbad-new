@@ -1,9 +1,8 @@
 // src/app/_components/Sanity_Components/NewsletterTestButton.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Stack, TextInput, Text, Card, Box } from '@sanity/ui';
-import { useFormValue } from 'sanity/form';
 
 interface NewsletterTestButtonProps {
   documentId?: string;
@@ -12,14 +11,23 @@ interface NewsletterTestButtonProps {
 }
 
 export default function NewsletterTestButton(props: NewsletterTestButtonProps) {
-  // Get the current document from Sanity form context
-  const document = useFormValue(['_id']) as string;
-  const documentType = useFormValue(['_type']) as string;
-  const title = useFormValue(['title']) as string | undefined;
-  const eventTitle = useFormValue(['eventTitle']) as string | undefined;
+  const [documentId, setDocumentId] = useState<string | null>(null);
+  const [documentType, setDocumentType] = useState<string | null>(null);
   const [testEmail, setTestEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  // Extract document ID and type from URL (Sanity Studio URL pattern: /admin/structure/{type};{id})
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlPath = window.location.pathname;
+      const match = urlPath.match(/\/structure\/(\w+);([^;]+)/);
+      if (match) {
+        setDocumentType(match[1]);
+        setDocumentId(match[2]);
+      }
+    }
+  }, []);
 
   const handleSendTest = async () => {
     if (!testEmail || !testEmail.includes('@')) {
@@ -30,8 +38,15 @@ export default function NewsletterTestButton(props: NewsletterTestButtonProps) {
     setLoading(true);
     setMessage(null);
 
-    if (!document || !documentType) {
-      setMessage({ type: 'error', text: 'Dokument-Informationen nicht verfügbar.' });
+    if (!documentId || !documentType) {
+      setMessage({ type: 'error', text: 'Dokument-Informationen nicht verfügbar. Bitte speichern Sie das Dokument zuerst, bevor Sie eine Test-E-Mail senden.' });
+      setLoading(false);
+      return;
+    }
+
+    // Validate document type
+    if (documentType !== 'post' && documentType !== 'customevent') {
+      setMessage({ type: 'error', text: 'Test-E-Mail ist nur für Beiträge und Veranstaltungen verfügbar.' });
       setLoading(false);
       return;
     }
@@ -44,8 +59,8 @@ export default function NewsletterTestButton(props: NewsletterTestButtonProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          documentId: document,
-          documentType: documentType,
+          documentId: documentId,
+          documentType: documentType as 'post' | 'customevent',
           testEmail: testEmail,
         }),
       });
@@ -75,7 +90,6 @@ export default function NewsletterTestButton(props: NewsletterTestButtonProps) {
     }
   };
 
-  const displayTitle = title || eventTitle || 'Unbenannt';
   const type = documentType === 'post' ? 'Beitrag' : 'Veranstaltung';
 
   return (
