@@ -15,6 +15,23 @@ interface TestNewsletterRequest {
   testEmail: string;
 }
 
+interface SanityDocument {
+  _type: string;
+  _id: string;
+  slug?: string | { current?: string };
+  title?: string;
+  eventTitle?: string;
+  excerpt?: string;
+  coverImage?: any;
+  eventImage?: any;
+  eventDays?: Array<{
+    date: string;
+    startTime: string;
+    endTime: string;
+    description?: string;
+  }>;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body: TestNewsletterRequest = await request.json();
@@ -73,7 +90,7 @@ export async function POST(request: NextRequest) {
       }
     }`;
 
-    const document = await sanityFetch({
+    const document = await sanityFetch<SanityDocument>({
       query: documentQuery,
       params: { id: documentId }
     });
@@ -92,7 +109,15 @@ export async function POST(request: NextRequest) {
     const newsletterImageUrl = document.coverImage 
       ? urlForImage(document.coverImage).url() 
       : (document.eventImage ? urlForImage(document.eventImage).url() : undefined);
-    const newsletterSlug = document.slug;
+    const newsletterSlug = typeof document.slug === 'string' ? document.slug : document.slug?.current || '';
+    
+    if (!newsletterSlug) {
+      return NextResponse.json(
+        { error: 'Document slug is missing' },
+        { status: 404 }
+      );
+    }
+    
     const newsletterEventDays = document.eventDays;
 
     // Create email subject with TEST prefix
