@@ -15,6 +15,7 @@ interface SanityDocument {
   coverImage?: any;
   eventImage?: any;
   date?: string;
+  sendNewsletter?: boolean;
   eventDays?: Array<{
     date: string;
     startTime: string;
@@ -99,6 +100,7 @@ export async function POST(request: NextRequest) {
       title,
       excerpt,
       date,
+      sendNewsletter,
       coverImage{
         asset->{_id, url},
         crop,
@@ -134,6 +136,18 @@ export async function POST(request: NextRequest) {
     }
 
     console.log(`📄 Document found: ${document.title || document.eventTitle}`);
+    console.log(`📧 Send newsletter flag: ${document.sendNewsletter}`);
+
+    // Check if newsletter should be sent
+    if (!document.sendNewsletter) {
+      console.log(`ℹ️ Newsletter sending disabled for this document. Skipping newsletter.`);
+      return NextResponse.json({ 
+        message: 'Newsletter sending disabled for this document',
+        skipped: true,
+        documentId: body._id,
+        documentType: body._type
+      });
+    }
 
     // Prepare newsletter data
     const newsletterType = document._type === 'post' ? 'post' : 'event';

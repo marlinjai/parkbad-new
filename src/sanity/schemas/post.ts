@@ -186,6 +186,13 @@ export default defineType({
       type: "reference",
       to: [{ type: authorType.name }],
     }),
+    defineField({
+      name: "sendNewsletter",
+      title: "Newsletter senden",
+      type: "boolean",
+      description: "Aktivieren Sie diese Option, um beim Veröffentlichen automatisch einen Newsletter zu versenden. Deaktivieren Sie diese Option, wenn Sie nur Änderungen vornehmen möchten, ohne einen Newsletter zu versenden.",
+      initialValue: false,
+    }),
   ],
   preview: {
     select: {
