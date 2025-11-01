@@ -159,6 +159,18 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
+      name: "customOverlayText",
+      title: "Custom Overlay Text (für Slider)",
+      type: "text",
+      description: "Optional: Überschreibt den Standard-Titel im Slider-Overlay. Unterstützt HTML und Emoji. Beispiel: ✨ 28–30 NOV · 5–7 DEZ ✨",
+    }),
+    defineField({
+      name: "customOverlaySubtext",
+      title: "Custom Overlay Untertitel (für Slider)",
+      type: "text",
+      description: "Optional: Zeigt einen Untertitel unter dem Custom Overlay Text an. Wird in Gold angezeigt. Beispiel: Fr 16–22 Uhr · Sa/So 14–22 Uhr",
+    }),
+    defineField({
       name: "eventDays",
       title: "Veranstaltungstage",
       type: "array",

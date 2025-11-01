@@ -39,6 +39,8 @@ export type CustomEvent = {
   content?: any;
   eventDays?: EventDay[];
   hideOverlay?: boolean;
+  customOverlayText?: string;
+  customOverlaySubtext?: string;
 };
 
 export type Food = {

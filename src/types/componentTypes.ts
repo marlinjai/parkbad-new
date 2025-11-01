@@ -94,6 +94,8 @@ export type PostorEventItem = {
   eventDays?: EventDay[];
   hideOverlay?: boolean;
   detailsImage?: SanityImageQueryResult;
+  customOverlayText?: string;
+  customOverlaySubtext?: string;
 };
 
 export type OpeningHour = {

@@ -62,6 +62,8 @@ const eventFields = groq`
   eventDays,
   showUntilDate,
   hideOverlay,
+  customOverlayText,
+  customOverlaySubtext,
   "slug": slug.current,
   "author": author->{name, picture},
 `;
