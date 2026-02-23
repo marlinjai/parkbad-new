@@ -30,7 +30,7 @@
     "gsap": "^3.12.5",
     "lightgallery": "^2.7.2",
     "lottie-web": "^5.13.0",
-    "next": "^15.5.2",
+    "next": "15.5.9",
     "next-sanity": "^10.0.15",
     "nodemailer": "^6.9.7",
     "react": "^19.1.1",
