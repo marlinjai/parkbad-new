@@ -33,7 +33,7 @@ This project supports multiple deployment environments with different Sanity dat
 NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
 NEXT_PUBLIC_SANITY_DATASET=development
 NEXT_PUBLIC_SANITY_API_VERSION=2023-07-03
-SANITY_REVALIDATE_SECRET=hvqw4k29k2te0q1o39yla9
+SANITY_REVALIDATE_SECRET=your_sanity_revalidate_secret
 ```
 
 ### For Production Environment:
@@ -44,7 +44,7 @@ Add these variables for **Production** deployments:
 NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
 NEXT_PUBLIC_SANITY_DATASET=production
 NEXT_PUBLIC_SANITY_API_VERSION=2023-07-03
-SANITY_REVALIDATE_SECRET=hvqw4k29k2te0q1o39yla9
+SANITY_REVALIDATE_SECRET=your_sanity_revalidate_secret
 ```
 
 ## Sanity Datasets
@@ -99,12 +99,12 @@ Set up separate webhooks for each environment:
 
 ### Staging Webhook:
 - URL: `https://your-staging-domain.vercel.app/api/revalidate`
-- Secret: `hvqw4k29k2te0q1o39yla9`
+- Secret: (use SANITY_REVALIDATE_SECRET from Infisical)
 - Trigger: On publish/unpublish in `development` dataset
 
 ### Production Webhook:
 - URL: `https://your-production-domain.com/api/revalidate`
-- Secret: `hvqw4k29k2te0q1o39yla9`
+- Secret: (use SANITY_REVALIDATE_SECRET from Infisical)
 - Trigger: On publish/unpublish in `production` dataset
 
 ## Environment Variables Reference

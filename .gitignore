@@ -24,10 +24,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
-.env*.local
-.env.staging
-.env.production
+# env files (secrets managed in Infisical)
+.env
+.env.*
+!.env.example
 
 # vercel
 .vercel
