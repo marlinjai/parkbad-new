@@ -6,6 +6,7 @@ import authorType from "./author";
 import { BsFillSunFill } from "react-icons/bs";
 import NewsletterTestButton from "@/app/_components/Sanity_Components/NewsletterTestButton";
 import NewsletterStatusPanel from "@/app/_components/Sanity_Components/NewsletterStatusPanel";
+import NewsletterSendButton from "@/app/_components/Sanity_Components/NewsletterSendButton";
 
 /**
  * This file is the schema definition for a post.
@@ -331,6 +332,14 @@ export default defineType({
         input: NewsletterTestButton,
       },
       description: "Versenden Sie eine Test-E-Mail bevor Sie den Newsletter an alle Abonnenten senden.",
+      readOnly: true,
+      initialValue: "",
+    }),
+    defineField({
+      name: "newsletterSend",
+      title: "Newsletter senden",
+      type: "string",
+      components: { input: NewsletterSendButton },
       readOnly: true,
       initialValue: "",
     }),
