@@ -8,6 +8,13 @@ import NewsletterTestButton from "@/app/_components/Sanity_Components/Newsletter
 import NewsletterStatusPanel from "@/app/_components/Sanity_Components/NewsletterStatusPanel";
 import NewsletterSendButton from "@/app/_components/Sanity_Components/NewsletterSendButton";
 
+const HALF_HOUR_LIST = Array.from({ length: 48 }, (_, i) => {
+  const hour = Math.floor(i / 2);
+  const minute = i % 2 === 0 ? "00" : "30";
+  const value = `${hour.toString().padStart(2, "0")}:${minute}`;
+  return { title: value, value };
+});
+
 /**
  * This file is the schema definition for a post.
  *
@@ -176,73 +183,89 @@ export default defineType({
       name: "eventDays",
       title: "Veranstaltungstage",
       type: "array",
+      validation: (rule) => rule.required().min(1),
       of: [
         {
           type: "object",
           fields: [
-            {
+            defineField({
               name: "date",
               title: "Datum",
               type: "date",
               validation: (rule) => rule.required(),
-            },
-            {
-              name: "startTime",
-              title: "Startzeit",
-              type: "string",
-              options: {
-                list: Array.from({ length: 48 }, (_, i) => {
-                  const hour = Math.floor(i / 2);
-                  const minute = i % 2 === 0 ? "00" : "30";
-                  return {
-                    title: `${hour.toString().padStart(2, "0")}:${minute}`,
-                    value: `${hour.toString().padStart(2, "0")}:${minute}`,
-                  };
-                }),
-              },
-              validation: (rule) => rule.required(),
-            },
-            {
-              name: "endTime",
-              title: "Endzeit",
-              type: "string",
-              options: {
-                list: Array.from({ length: 48 }, (_, i) => {
-                  const hour = Math.floor(i / 2);
-                  const minute = i % 2 === 0 ? "00" : "30";
-                  return {
-                    title: `${hour.toString().padStart(2, "0")}:${minute}`,
-                    value: `${hour.toString().padStart(2, "0")}:${minute}`,
-                  };
-                }),
-              },
-              validation: (rule) => rule.required(),
-            },
-            {
-              name: "description",
-              title: "Tagesbeschreibung (optional)",
-              type: "text",
-            },
+            }),
+            defineField({
+              name: "slots",
+              title: "Zeitfenster",
+              type: "array",
+              validation: (rule) => rule.required().min(1),
+              of: [
+                {
+                  type: "object",
+                  fields: [
+                    defineField({
+                      name: "startTime",
+                      title: "Startzeit",
+                      type: "string",
+                      options: { list: HALF_HOUR_LIST },
+                      validation: (rule) => rule.required(),
+                    }),
+                    defineField({
+                      name: "endTime",
+                      title: "Endzeit",
+                      type: "string",
+                      options: { list: HALF_HOUR_LIST },
+                      validation: (rule) => rule.required(),
+                    }),
+                    defineField({
+                      name: "label",
+                      title: "Bezeichnung (Pflicht bei mehreren Zeitfenstern)",
+                      type: "string",
+                      validation: (rule) =>
+                        rule.custom((label, context) => {
+                          // context.parent is the slot object; we need the parent day's slots array.
+                          // Walk context.path which looks like ['eventDays', dayIdx, 'slots', slotIdx, 'label']
+                          const path = context.path;
+                          const dayIdx = path[1];
+                          if (typeof dayIdx !== "number") return true;
+                          const doc = context.document as any;
+                          const slots = doc?.eventDays?.[dayIdx]?.slots ?? [];
+                          if (slots.length > 1 && !label?.trim()) {
+                            return "Bei mehreren Zeitfenstern ist eine Bezeichnung erforderlich.";
+                          }
+                          return true;
+                        }),
+                    }),
+                  ],
+                  preview: {
+                    select: { startTime: "startTime", endTime: "endTime", label: "label" },
+                    prepare: ({ startTime, endTime, label }) => ({
+                      title: `${startTime} - ${endTime}`,
+                      subtitle: label || "ohne Bezeichnung",
+                    }),
+                  },
+                },
+              ],
+            }),
           ],
           preview: {
-            select: {
-              date: "date",
-              startTime: "startTime",
-              endTime: "endTime",
-              description: "description",
-            },
-            prepare({ date, startTime, endTime, description }) {
-              return {
-                title: `${new Date(date).toLocaleDateString(
-                  "de-DE"
-                )} | ${startTime} - ${endTime}`,
-                subtitle: description || "Keine Beschreibung",
-              };
+            select: { date: "date", slots: "slots" },
+            prepare: ({ date, slots }) => {
+              const dateStr = date ? new Date(date).toLocaleDateString("de-DE") : "kein Datum";
+              const slotCount = (slots ?? []).length;
+              if (slotCount === 0) {
+                return { title: dateStr, subtitle: "keine Zeitfenster" };
+              }
+              if (slotCount === 1) {
+                const s = slots[0];
+                const labelPart = s.label ? ` · ${s.label}` : "";
+                return { title: dateStr, subtitle: `${s.startTime} - ${s.endTime}${labelPart}` };
+              }
+              return { title: dateStr, subtitle: `${slotCount} Zeitfenster` };
             },
           },
         },
       ],
-      validation: (rule) => rule.required().min(1),
     }),
     defineField({
       name: "eventStart",
@@ -262,22 +285,31 @@ export default defineType({
       type: "datetime",
       description: "Wird automatisch auf den letzten Veranstaltungstag gesetzt, falls Veranstaltungstage definiert sind.",
       initialValue: (_, context) => {
-        // Try to get the last event day from eventDays
         const document = context?.document;
-        if (document?.eventDays && Array.isArray(document.eventDays) && document.eventDays.length > 0) {
-          // Sort eventDays by date and get the last one
-          const sortedDays = [...document.eventDays].sort((a, b) => 
-            new Date(a.date).getTime() - new Date(b.date).getTime()
+        const days = (document?.eventDays as Array<{ date?: string; slots?: Array<{ endTime?: string }> }>) ?? [];
+        if (days.length > 0) {
+          const sortedDays = [...days].sort(
+            (a, b) => new Date(a.date ?? 0).getTime() - new Date(b.date ?? 0).getTime()
           );
           const lastDay = sortedDays[sortedDays.length - 1];
           if (lastDay?.date) {
-            // Set to end of the last event day (23:59:59)
             const lastDate = new Date(lastDay.date);
-            lastDate.setHours(23, 59, 59, 999);
+            // Find latest endTime among slots; fall back to end of day
+            const slots = lastDay.slots ?? [];
+            const latestEnd = slots.reduce<string | null>((acc, s) => {
+              if (!s.endTime) return acc;
+              if (!acc || s.endTime.localeCompare(acc) > 0) return s.endTime;
+              return acc;
+            }, null);
+            if (latestEnd) {
+              const [hh, mm] = latestEnd.split(":").map(Number);
+              lastDate.setHours(hh, mm, 0, 0);
+            } else {
+              lastDate.setHours(23, 59, 59, 999);
+            }
             return lastDate.toISOString();
           }
         }
-        // Fallback: 30 days from now if no event days are set
         const fallbackDate = new Date();
         fallbackDate.setDate(fallbackDate.getDate() + 30);
         return fallbackDate.toISOString();
