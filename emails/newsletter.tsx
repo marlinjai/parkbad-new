@@ -26,15 +26,14 @@ export function EventNewsletter() {
       eventDays={[
         {
           date: '2024-07-15',
-          startTime: '14:00',
-          endTime: '22:00',
-          description: 'Hauptveranstaltung'
+          slots: [{ startTime: '14:00', endTime: '22:00', label: 'Hauptveranstaltung' }]
         },
         {
           date: '2024-07-16',
-          startTime: '10:00',
-          endTime: '18:00',
-          description: 'Familien-Tag'
+          slots: [
+            { startTime: '10:00', endTime: '14:00', label: 'Familien-Vormittag' },
+            { startTime: '14:00', endTime: '18:00', label: 'Familien-Tag' },
+          ]
         }
       ]}
     />

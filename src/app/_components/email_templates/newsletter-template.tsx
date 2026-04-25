@@ -14,6 +14,7 @@ import {
   Text,
 } from '@react-email/components';
 import * as React from 'react';
+import { normalizeEventDays } from '@/lib/events/eventDays';
 
 interface NewsletterTemplateProps {
   type: 'post' | 'event';
@@ -23,9 +24,11 @@ interface NewsletterTemplateProps {
   slug: string;
   eventDays?: Array<{
     date: string;
-    startTime: string;
-    endTime: string;
-    description?: string;
+    slots: Array<{
+      startTime: string;
+      endTime: string;
+      label?: string;
+    }>;
   }>;
 }
 
@@ -40,18 +43,41 @@ export const NewsletterTemplate = ({
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://parkbad-gt.de';
   const postUrl = `${baseUrl}/${slug}`;
   
-  const formatEventDays = () => {
-    if (!eventDays || eventDays.length === 0) return '';
-    
-    return eventDays.map(day => {
-      const date = new Date(day.date).toLocaleDateString('de-DE', {
+  const renderEventDays = () => {
+    const normalized = normalizeEventDays(eventDays);
+    if (normalized.length === 0) return null;
+
+    return normalized.map((day, dayIndex) => {
+      const dateStr = new Date(day.date).toLocaleDateString('de-DE', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
       });
-      return `${date}, ${day.startTime} - ${day.endTime}`;
-    }).join('\n');
+
+      if (!day.isMultiSlot) {
+        const slot = day.slots[0];
+        const timeStr = slot ? `${slot.startTime} - ${slot.endTime}` : '';
+        return (
+          <Text key={dayIndex} style={eventDates}>
+            {dateStr}{timeStr ? `, ${timeStr}` : ''}
+          </Text>
+        );
+      }
+
+      return (
+        <Section key={dayIndex} style={{ marginBottom: '8px' }}>
+          <Text style={{ ...eventDates, fontWeight: 'bold', margin: '0 0 4px 0' }}>
+            {dateStr}:
+          </Text>
+          {day.slots.map((slot, slotIndex) => (
+            <Text key={slotIndex} style={{ ...eventDates, margin: '0 0 0 16px' }}>
+              {slot.startTime} - {slot.endTime}{slot.label ? `  ${slot.label}` : ''}
+            </Text>
+          ))}
+        </Section>
+      );
+    });
   };
 
   const previewText = type === 'post' 
@@ -111,9 +137,7 @@ export const NewsletterTemplate = ({
             {type === 'event' && eventDays && eventDays.length > 0 && (
               <Section style={eventSection}>
                 <Heading style={eventSectionTitle}>Termine:</Heading>
-                <Text style={eventDates}>
-                  {formatEventDays()}
-                </Text>
+                {renderEventDays()}
               </Section>
             )}
 
