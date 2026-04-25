@@ -71,11 +71,15 @@ export type SanityImageQueryResult = {
   alt: string;
 };
 // Define a type alias for the item
-export type EventDay = {
-  date: string;
+export type Slot = {
   startTime: string;
   endTime: string;
-  description?: string;
+  label?: string;
+};
+
+export type EventDay = {
+  date: string;
+  slots: Slot[];
 };
 
 export type PostorEventItem = {
