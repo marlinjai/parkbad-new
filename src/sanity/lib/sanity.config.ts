@@ -12,6 +12,7 @@ import CustomToolMenu from "@/app/_components/Sanity_Components/CustomToolMenu";
 import { media } from "sanity-plugin-media";
 import { BiSolidDrink } from "react-icons/bi";
 import { PiPizzaDuotone } from "react-icons/pi";
+import { EnvelopeIcon } from "@sanity/icons";
 
 import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 
@@ -38,6 +39,48 @@ const config = defineConfig({
         return S.list()
           .title("Content")
           .items([
+            S.listItem()
+              .title("Kontakt-Anfragen")
+              .icon(EnvelopeIcon)
+              .child(
+                S.list()
+                  .title("Kontakt-Anfragen")
+                  .items([
+                    S.listItem()
+                      .title("Offen")
+                      .child(
+                        S.documentList()
+                          .title("Offen")
+                          .filter('_type == "contactSubmission" && status == "offen"')
+                          .defaultOrdering([{ field: "receivedAt", direction: "desc" }])
+                      ),
+                    S.listItem()
+                      .title("In Bearbeitung")
+                      .child(
+                        S.documentList()
+                          .title("In Bearbeitung")
+                          .filter('_type == "contactSubmission" && status == "inBearbeitung"')
+                          .defaultOrdering([{ field: "receivedAt", direction: "desc" }])
+                      ),
+                    S.listItem()
+                      .title("Erledigt")
+                      .child(
+                        S.documentList()
+                          .title("Erledigt")
+                          .filter('_type == "contactSubmission" && status == "erledigt"')
+                          .defaultOrdering([{ field: "receivedAt", direction: "desc" }])
+                      ),
+                    S.listItem()
+                      .title("Alle")
+                      .child(
+                        S.documentList()
+                          .title("Alle Kontakt-Anfragen")
+                          .filter('_type == "contactSubmission"')
+                          .defaultOrdering([{ field: "receivedAt", direction: "desc" }])
+                      ),
+                  ])
+              ),
+            S.divider(),
             S.documentTypeListItem("contactSettings").title("Kontakt Einstellungen"),
             S.documentTypeListItem("subBusiness").title(
               "Unternehmen im Parkbad"
