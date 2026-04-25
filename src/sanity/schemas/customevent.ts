@@ -5,6 +5,7 @@ import { defineField, defineType } from "sanity";
 import authorType from "./author";
 import { BsFillSunFill } from "react-icons/bs";
 import NewsletterTestButton from "@/app/_components/Sanity_Components/NewsletterTestButton";
+import NewsletterStatusPanel from "@/app/_components/Sanity_Components/NewsletterStatusPanel";
 
 /**
  * This file is the schema definition for a post.
@@ -292,6 +293,7 @@ export default defineType({
       title: "Newsletter Status",
       type: "object",
       readOnly: true,
+      components: { input: NewsletterStatusPanel },
       fields: [
         defineField({ name: "lastSentAt", title: "Zuletzt versendet", type: "datetime" }),
         defineField({
