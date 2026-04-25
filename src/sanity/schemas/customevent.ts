@@ -223,13 +223,21 @@ export default defineType({
                       type: "string",
                       validation: (rule) =>
                         rule.custom((label, context) => {
-                          // context.parent is the slot object; we need the parent day's slots array.
-                          // Walk context.path which looks like ['eventDays', dayIdx, 'slots', slotIdx, 'label']
                           const path = context.path;
-                          const dayIdx = path[1];
-                          if (typeof dayIdx !== "number") return true;
+                          // path shape: ['eventDays', {_key: 'dayKey'}, 'slots', {_key: 'slotKey'}, 'label']
+                          const daySegment = path[1];
                           const doc = context.document as any;
-                          const slots = doc?.eventDays?.[dayIdx]?.slots ?? [];
+                          const days: Array<{ _key?: string; slots?: unknown[] }> =
+                            doc?.eventDays ?? [];
+
+                          let slots: unknown[] = [];
+                          if (typeof daySegment === "number") {
+                            slots = days[daySegment]?.slots ?? [];
+                          } else if (daySegment && typeof daySegment === "object" && "_key" in daySegment) {
+                            const day = days.find((d) => d._key === (daySegment as { _key: string })._key);
+                            slots = day?.slots ?? [];
+                          }
+
                           if (slots.length > 1 && !label?.trim()) {
                             return "Bei mehreren Zeitfenstern ist eine Bezeichnung erforderlich.";
                           }
