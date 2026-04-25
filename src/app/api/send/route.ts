@@ -6,6 +6,8 @@ import { ContactAutoReplyTemplate } from "../../_components/email_templates/cont
 import { sanityFetch } from "../../../sanity/lib/sanity.fetch";
 import { contactSettingsQuery } from "../../../sanity/lib/sanity.queries";
 import { ContactSettings } from "../../../types/sanityTypes";
+import { writeClient } from "../../../sanity/lib/sanity.write";
+import { randomUUID } from "crypto";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -23,10 +25,12 @@ export async function POST(request: Request) {
     const requestBody: EmailRequestBody = await request.json();
 
     // Send notification email to Parkbad team
+    const messageId = `<${randomUUID()}@parkbad-gt.de>`;
     const teamNotification = await resend.emails.send({
       from: "kontakt@parkbad-gt.de",
       to: ["verwaltung@parkbad-gt.de"],
       subject: `Neue Nachricht von ${requestBody.firstName} ${requestBody.lastName}`,
+      headers: { 'Message-ID': messageId },
       react: React.createElement('div', {}, [
         React.createElement('h1', { key: 'title' }, [
           'Hallo Parkbad Team!',
@@ -52,6 +56,7 @@ export async function POST(request: Request) {
     });
 
     // Get contact settings from Sanity and send auto-reply to customer
+    let autoReply: any = null;
     try {
       const contactSettings: ContactSettings = await sanityFetch({
         query: contactSettingsQuery,
@@ -80,7 +85,7 @@ export async function POST(request: Request) {
       );
 
       // Send auto-reply to customer
-      const autoReply = await resend.emails.send({
+      autoReply = await resend.emails.send({
         from: "kontakt@parkbad-gt.de",
         to: [requestBody.email],
         subject: settings.isWinterBreak 
@@ -114,7 +119,25 @@ ${settings.contactPhone} | ${settings.contactEmail}
       // Don't fail the main request if auto-reply fails
     }
 
-    return Response.json({ 
+    try {
+      await writeClient.create({
+        _type: 'contactSubmission',
+        firstName: requestBody.firstName,
+        lastName: requestBody.lastName,
+        email: requestBody.email,
+        phone: requestBody.phone,
+        message: requestBody.message,
+        receivedAt: new Date().toISOString(),
+        autoReplyEmailId: (autoReply as any)?.data?.id ?? null,
+        originalMessageId: messageId,
+        status: 'offen',
+      });
+    } catch (persistErr) {
+      console.error('Failed to persist contact submission:', persistErr);
+      // Do not fail the request: email already sent, that's the user-facing success
+    }
+
+    return Response.json({
       success: true,
       teamNotificationId: (teamNotification as any).id,
       message: 'Nachricht erfolgreich gesendet'

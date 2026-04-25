@@ -9,6 +9,7 @@ import zoomgallery from "./gallery";
 import drinkCategories from "./drinkCategories";
 import foodCategories from "./foodCategories";
 import contactSettings from "./contactSettings";
+import contactSubmission from "./contactSubmission";
 
 const schemas = [
   subBusiness,
@@ -21,6 +22,7 @@ const schemas = [
   foodCategories,
   zoomgallery,
   contactSettings,
+  contactSubmission,
 ];
 
 export default schemas;
