@@ -4,7 +4,10 @@ interface CustomEventDoc {
   excerpt?: string;
   eventImage?: { asset?: { _ref?: string } };
   slug?: { current?: string } | string;
-  eventDays?: Array<{ date?: string; startTime?: string; endTime?: string }>;
+  eventDays?: Array<{
+    date?: string;
+    slots?: Array<{ startTime?: string; endTime?: string; label?: string }>;
+  }>;
 }
 
 interface PostDoc {
@@ -23,7 +26,10 @@ export interface HashableFields {
   excerpt?: string;
   imageRef?: string;
   slug?: string;
-  eventDays?: Array<{ date?: string; startTime?: string; endTime?: string }>;
+  eventDays?: Array<{
+    date?: string;
+    slots?: Array<{ startTime?: string; endTime?: string; label?: string }>;
+  }>;
 }
 
 function getSlug(slug?: { current?: string } | string): string | undefined {
@@ -42,8 +48,11 @@ export function extractHashableFields(doc: SourceDoc): HashableFields {
       slug: getSlug(doc.slug),
       eventDays: doc.eventDays?.map(d => ({
         date: d.date,
-        startTime: d.startTime,
-        endTime: d.endTime,
+        slots: d.slots?.map(s => ({
+          startTime: s.startTime,
+          endTime: s.endTime,
+          label: s.label,
+        })),
       })),
     };
   }
