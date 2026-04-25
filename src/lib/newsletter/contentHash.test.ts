@@ -26,7 +26,7 @@ describe('computeContentHash', () => {
 describe('extractHashableFields', () => {
   it('extracts customevent fields', () => {
     const doc = {
-      _type: 'customevent',
+      _type: 'customevent' as const,
       eventTitle: 'Foo',
       excerpt: 'bar',
       eventImage: { asset: { _ref: 'image-abc' } },
@@ -48,7 +48,7 @@ describe('extractHashableFields', () => {
 
   it('extracts post fields', () => {
     const doc = {
-      _type: 'post',
+      _type: 'post' as const,
       title: 'Foo',
       excerpt: 'bar',
       coverImage: { asset: { _ref: 'image-xyz' } },
