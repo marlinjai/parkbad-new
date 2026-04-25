@@ -55,4 +55,32 @@ describe('normalizeEventDays', () => {
     normalizeEventDays(input);
     expect(JSON.stringify(input)).toBe(before);
   });
+
+  it('merges multiple rows with the same date into one multi-slot day', () => {
+    const out = normalizeEventDays([
+      { date: '2026-05-01', slots: [{ startTime: '12:00', endTime: '22:00' }] },
+      { date: '2026-05-01', slots: [{ startTime: '19:00', endTime: '22:00', label: 'Live: Band' }] },
+    ]);
+    expect(out).toHaveLength(1);
+    expect(out[0].date).toBe('2026-05-01');
+    expect(out[0].isMultiSlot).toBe(true);
+    expect(out[0].slots).toEqual([
+      { startTime: '12:00', endTime: '22:00' },
+      { startTime: '19:00', endTime: '22:00', label: 'Live: Band' },
+    ]);
+  });
+
+  it('keeps distinct dates separate while merging same-date rows', () => {
+    const out = normalizeEventDays([
+      { date: '2026-05-01', slots: [{ startTime: '12:00', endTime: '22:00' }] },
+      { date: '2026-05-02', slots: [{ startTime: '15:00', endTime: '20:00' }] },
+      { date: '2026-05-01', slots: [{ startTime: '19:00', endTime: '22:00', label: 'Band' }] },
+    ]);
+    expect(out).toHaveLength(2);
+    expect(out[0].date).toBe('2026-05-01');
+    expect(out[0].isMultiSlot).toBe(true);
+    expect(out[0].slots.map(s => s.startTime)).toEqual(['12:00', '19:00']);
+    expect(out[1].date).toBe('2026-05-02');
+    expect(out[1].isMultiSlot).toBe(false);
+  });
 });
