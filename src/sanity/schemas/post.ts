@@ -188,11 +188,38 @@ export default defineType({
       to: [{ type: authorType.name }],
     }),
     defineField({
-      name: "sendNewsletter",
-      title: "Newsletter senden",
-      type: "boolean",
-      description: "Aktivieren Sie diese Option, um beim Veröffentlichen automatisch einen Newsletter zu versenden. Deaktivieren Sie diese Option, wenn Sie nur Änderungen vornehmen möchten, ohne einen Newsletter zu versenden.",
-      initialValue: false,
+      name: "newsletterStatus",
+      title: "Newsletter Status",
+      type: "object",
+      readOnly: true,
+      fields: [
+        defineField({ name: "lastSentAt", title: "Zuletzt versendet", type: "datetime" }),
+        defineField({
+          name: "lastSentTrigger",
+          title: "Auslöser",
+          type: "string",
+          options: { list: [{ title: "Manuell", value: "manual" }] },
+        }),
+        defineField({ name: "lastSentBroadcastId", title: "Broadcast-ID", type: "string" }),
+        defineField({ name: "lastSentRecipientCount", title: "Empfänger", type: "number" }),
+        defineField({ name: "lastSentContentHash", title: "Inhalts-Hash beim Senden", type: "string" }),
+        defineField({ name: "lastTestSentAt", title: "Letzter Test", type: "datetime" }),
+        defineField({ name: "lastTestContentHash", title: "Inhalts-Hash beim Test", type: "string" }),
+        defineField({
+          name: "sendHistory",
+          title: "Verlauf",
+          type: "array",
+          of: [{
+            type: "object",
+            fields: [
+              defineField({ name: "sentAt", type: "datetime" }),
+              defineField({ name: "trigger", type: "string" }),
+              defineField({ name: "broadcastId", type: "string" }),
+              defineField({ name: "recipientCount", type: "number" }),
+            ],
+          }],
+        }),
+      ],
     }),
     defineField({
       name: "newsletterTest",
