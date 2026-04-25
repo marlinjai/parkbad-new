@@ -21,7 +21,7 @@ const DOC_QUERY = `*[_id == $id][0]{
   _type, _id, "slug": slug.current, title, excerpt, date,
   coverImage{ asset->{_id, url}, crop, hotspot, alt },
   eventTitle,
-  eventDays[]{ date, startTime, endTime, description },
+  eventDays[]{ date, slots[]{ startTime, endTime, label } },
   eventImage{ asset->{_id, url}, crop, hotspot, alt }
 }`;
 
