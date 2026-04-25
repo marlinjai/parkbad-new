@@ -1,95 +1,44 @@
 import { PostorEventItem } from "@/types/componentTypes";
-import { isSameDay, addDays, isEqual } from "date-fns";
+import { isSameDay } from "date-fns";
 import { zonedTimeToUtc, utcToZonedTime, format } from "date-fns-tz";
 import { de } from "date-fns/locale";
-
-function findDateRanges(days: { date: string }[]) {
-  const ranges: { start: Date; end: Date }[] = [];
-  if (!days.length) return ranges;
-
-  let rangeStart = new Date(days[0].date);
-  let prevDate = new Date(days[0].date);
-
-  for (let i = 1; i <= days.length; i++) {
-    const currentDate = i < days.length ? new Date(days[i].date) : null;
-
-    if (!currentDate || !isEqual(addDays(prevDate, 1), currentDate)) {
-      ranges.push({
-        start: rangeStart,
-        end: prevDate,
-      });
-      if (currentDate) {
-        rangeStart = currentDate;
-      }
-    }
-    if (currentDate) {
-      prevDate = currentDate;
-    }
-  }
-
-  return ranges;
-}
+import { normalizeEventDays } from '@/lib/events/eventDays';
 
 export default function renderDate(event: PostorEventItem) {
   const timeZone = "Europe/Berlin";
 
   // Handle new multi-day events
   if (event.eventDays && event.eventDays.length > 0) {
-    const days = event.eventDays;
-
-    // Group days by time
-    const timeGroups: { [key: string]: { date: string }[] } = {};
-
-    days.forEach((day) => {
-      const timeKey = `${day.startTime}-${day.endTime}`;
-      if (!timeGroups[timeKey]) {
-        timeGroups[timeKey] = [];
-      }
-      timeGroups[timeKey].push(day);
-    });
-
-    // If only one time group, use the range display
-    if (Object.keys(timeGroups).length === 1) {
-      const dateRanges = findDateRanges(days);
-      return (
-        <p className="xs:text-lg text-sm">
-          {dateRanges.map((range, index) => (
-            <span key={index}>
-              {format(range.start, "dd.MM.yyyy", { locale: de })}
-              {!isEqual(range.start, range.end) &&
-                ` - ${format(range.end, "dd.MM.yyyy", { locale: de })}`}
-              {index < dateRanges.length - 1 && <br />}
-            </span>
-          ))}
-          <br />
-          {`${days[0].startTime} - ${days[0].endTime} Uhr`}
-        </p>
-      );
-    }
-
-    // For multiple time groups, display by group
+    const normalized = normalizeEventDays(event.eventDays);
     return (
-      <p className="xs:text-lg text-sm">
-        {Object.entries(timeGroups).map(([timeKey, daysInGroup], groupIndex) => {
-          const [startTime, endTime] = timeKey.split("-");
-          const dateRanges = findDateRanges(daysInGroup);
-
+      <div className="xs:text-lg text-sm">
+        {normalized.map((day, dayIndex) => {
+          const dateStr = format(new Date(day.date), 'dd.MM.yyyy', { locale: de });
+          if (!day.isMultiSlot) {
+            const slot = day.slots[0];
+            return (
+              <p key={dayIndex} className="m-0">
+                {dateStr}
+                {slot ? <><br />{`${slot.startTime} - ${slot.endTime} Uhr`}</> : null}
+                {dayIndex < normalized.length - 1 && <br />}
+              </p>
+            );
+          }
           return (
-            <span key={groupIndex}>
-              {dateRanges.map((range, rangeIndex) => (
-                <span key={`${groupIndex}-${rangeIndex}`}>
-                  {format(range.start, "dd.MM.yyyy", { locale: de })}
-                  {!isEqual(range.start, range.end) &&
-                    ` - ${format(range.end, "dd.MM.yyyy", { locale: de })}`}
-                  <br />
-                </span>
-              ))}
-              {`${startTime} - ${endTime} Uhr`}
-              {groupIndex < Object.keys(timeGroups).length - 1 && <br />}
-            </span>
+            <div key={dayIndex} className="m-0 mb-2">
+              <div className="font-semibold">{dateStr}</div>
+              <ul className="list-none m-0 pl-3">
+                {day.slots.map((slot, slotIndex) => (
+                  <li key={slotIndex} className="m-0">
+                    {`${slot.startTime} - ${slot.endTime} Uhr`}
+                    {slot.label ? ` · ${slot.label}` : ''}
+                  </li>
+                ))}
+              </ul>
+            </div>
           );
         })}
-      </p>
+      </div>
     );
   }
 
