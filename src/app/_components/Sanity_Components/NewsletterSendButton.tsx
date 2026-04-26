@@ -61,7 +61,6 @@ export default function NewsletterSendButton() {
 
   const buttonState = useMemo(() => {
     if (!status.lastTestSentAt) return 'locked-no-test';
-    if (status.lastTestContentHash !== currentHash) return 'locked-stale';
     if (status.lastSentContentHash === currentHash) return 'already-sent';
     return 'armed';
   }, [status, currentHash]);
@@ -85,7 +84,8 @@ export default function NewsletterSendButton() {
         body: JSON.stringify({
           documentId: cleanDocId,
           documentType: cleanDocType,
-          expectedHash: currentHash,
+          // Use the test-confirmed hash; server re-validates against current content.
+          expectedHash: status.lastTestContentHash ?? currentHash,
           force,
         }),
       });
@@ -93,7 +93,11 @@ export default function NewsletterSendButton() {
       if (res.ok) {
         setMessage({ tone: 'success', text: `Newsletter an ${data.recipientCount} Abonnenten gesendet.` });
       } else {
-        setMessage({ tone: 'critical', text: data.error ?? 'Unbekannter Fehler' });
+        if (data.error?.includes('Content hash mismatch')) {
+          setMessage({ tone: 'caution', text: 'Inhalt seit letztem Test geändert. Bitte erneut Test-E-Mail senden.' });
+        } else {
+          setMessage({ tone: 'critical', text: data.error ?? 'Unbekannter Fehler' });
+        }
       }
     } catch (e) {
       setMessage({ tone: 'critical', text: 'Netzwerkfehler beim Senden.' });
@@ -106,13 +110,12 @@ export default function NewsletterSendButton() {
   const buttonLabel = (() => {
     switch (buttonState) {
       case 'locked-no-test': return 'Bitte erst eine Test-E-Mail senden';
-      case 'locked-stale': return 'Inhalt seit Test geändert, bitte erneut testen';
       case 'already-sent': return `Bereits versendet, erneut senden? (${recipientCount ?? '?'} Empfänger)`;
       case 'armed': return `An ca. ${recipientCount ?? '?'} Abonnenten senden`;
     }
   })();
 
-  const buttonDisabled = buttonState === 'locked-no-test' || buttonState === 'locked-stale' || loading;
+  const buttonDisabled = buttonState === 'locked-no-test' || loading;
   const buttonTone = buttonState === 'already-sent' ? 'caution' : 'critical';
 
   return (
