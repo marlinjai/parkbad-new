@@ -9,9 +9,11 @@ import { urlForImage } from '../../../../sanity/lib/sanity.image';
 import { apiVersion, dataset, projectId } from '../../../../sanity/env';
 import { computeContentHash, extractHashableFields } from '@/lib/newsletter/contentHash';
 import { sendBroadcast } from '@/lib/newsletter/sendBroadcast';
+import { portableTextToPlainText } from '@/lib/newsletter/plainText';
 
 const DOC_QUERY = `*[_id == $id][0]{
   _type, _id, "slug": slug.current, title, excerpt, date,
+  eventContent,
   coverImage{ asset->{_id, url}, crop, hotspot, alt },
   eventTitle,
   eventDays[]{ date, slots[]{ startTime, endTime, label } },
@@ -89,17 +91,18 @@ export async function POST(request: NextRequest) {
     const newsletterType = document._type === 'post' ? 'post' : 'event';
     const title = document.title ?? document.eventTitle ?? 'Newsletter';
     const slug = typeof document.slug === 'string' ? document.slug : document.slug?.current;
+    const description = document.excerpt || portableTextToPlainText(document.eventContent);
     const imageUrl = document.coverImage
       ? urlForImage(document.coverImage).url()
       : (document.eventImage ? urlForImage(document.eventImage).url() : undefined);
 
     const htmlBody = await render(React.createElement(NewsletterTemplate, {
-      type: newsletterType, title, excerpt: document.excerpt, imageUrl, slug,
+      type: newsletterType, title, excerpt: description, imageUrl, slug,
       eventDays: document.eventDays,
     }));
 
     const { broadcastId, recipientCount } = await sendBroadcast({
-      type: newsletterType, title, excerpt: document.excerpt, slug, imageUrl,
+      type: newsletterType, title, excerpt: description, slug, imageUrl,
       eventDays: document.eventDays, audienceId, htmlBody,
     });
 

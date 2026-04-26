@@ -23,6 +23,7 @@ export default function NewsletterSendButton() {
   const slug = useFormValue(['slug']);
   const coverImage = useFormValue(['coverImage']);
   const eventImage = useFormValue(['eventImage']);
+  const eventContent = useFormValue(['eventContent']);
   const eventDays = useFormValue(['eventDays']);
 
   const sanityClient = useClient({ apiVersion: '2024-01-01' });
@@ -39,12 +40,13 @@ export default function NewsletterSendButton() {
     const hashable = extractHashableFields({
       _type: documentType as 'post' | 'customevent',
       eventTitle, title, excerpt,
+      eventContent,
       coverImage, eventImage,
       slug,
       eventDays,
     } as any);
     computeContentHash(hashable).then(setCurrentHash);
-  }, [documentType, eventTitle, title, excerpt, slug, coverImage, eventImage, eventDays]);
+  }, [documentType, eventTitle, title, excerpt, eventContent, slug, coverImage, eventImage, eventDays]);
 
   // Fetch recipient count once
   useEffect(() => {

@@ -2,7 +2,8 @@ interface CustomEventDoc {
   _type: 'customevent';
   eventTitle?: string;
   excerpt?: string;
-  eventImage?: { asset?: { _ref?: string } };
+  eventContent?: unknown;
+  eventImage?: { asset?: { _ref?: string; _id?: string } };
   slug?: { current?: string } | string;
   eventDays?: Array<{
     date?: string;
@@ -14,7 +15,7 @@ interface PostDoc {
   _type: 'post';
   title?: string;
   excerpt?: string;
-  coverImage?: { asset?: { _ref?: string } };
+  coverImage?: { asset?: { _ref?: string; _id?: string } };
   slug?: { current?: string } | string;
 }
 
@@ -24,6 +25,7 @@ export interface HashableFields {
   type: 'customevent' | 'post';
   title?: string;
   excerpt?: string;
+  eventContent?: unknown;
   imageRef?: string;
   slug?: string;
   eventDays?: Array<{
@@ -38,14 +40,20 @@ function getSlug(slug?: { current?: string } | string): string | undefined {
   return slug.current;
 }
 
+function getImageRef(asset?: { _ref?: string; _id?: string }): string | undefined {
+  // Studio docs usually provide _ref, while fetched expanded assets provide _id.
+  return asset?._ref ?? asset?._id;
+}
+
 export function extractHashableFields(doc: SourceDoc): HashableFields {
   if (doc._type === 'customevent') {
     return {
       type: 'customevent',
       title: doc.eventTitle,
       excerpt: doc.excerpt,
-      imageRef: doc.eventImage?.asset?._ref,
+      imageRef: getImageRef(doc.eventImage?.asset),
       slug: getSlug(doc.slug),
+      ...(doc.eventContent ? { eventContent: doc.eventContent } : {}),
       eventDays: doc.eventDays?.map(d => ({
         date: d.date,
         slots: d.slots?.map(s => ({
@@ -60,7 +68,7 @@ export function extractHashableFields(doc: SourceDoc): HashableFields {
     type: 'post',
     title: doc.title,
     excerpt: doc.excerpt,
-    imageRef: doc.coverImage?.asset?._ref,
+    imageRef: getImageRef(doc.coverImage?.asset),
     slug: getSlug(doc.slug),
   };
 }

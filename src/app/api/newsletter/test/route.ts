@@ -8,6 +8,7 @@ import { sanityFetch } from '../../../../sanity/lib/sanity.fetch';
 import { writeClient } from '../../../../sanity/lib/sanity.write';
 import { urlForImage } from '../../../../sanity/lib/sanity.image';
 import { computeContentHash, extractHashableFields } from '@/lib/newsletter/contentHash';
+import { portableTextToPlainText } from '@/lib/newsletter/plainText';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -19,6 +20,7 @@ interface TestNewsletterRequest {
 
 const DOC_QUERY = `*[_id == $id][0]{
   _type, _id, "slug": slug.current, title, excerpt, date,
+  eventContent,
   coverImage{ asset->{_id, url}, crop, hotspot, alt },
   eventTitle,
   eventDays[]{ date, slots[]{ startTime, endTime, label } },
@@ -44,13 +46,14 @@ export async function POST(request: NextRequest) {
     const newsletterType = document._type === 'post' ? 'post' : 'event';
     const title = document.title ?? document.eventTitle ?? 'Test Newsletter';
     const slug = typeof document.slug === 'string' ? document.slug : document.slug?.current;
+    const description = document.excerpt || portableTextToPlainText(document.eventContent);
     const imageUrl = document.coverImage
       ? urlForImage(document.coverImage).url()
       : (document.eventImage ? urlForImage(document.eventImage).url() : undefined);
 
     const html = await render(React.createElement(NewsletterTemplate, {
       type: newsletterType,
-      title, excerpt: document.excerpt, imageUrl, slug,
+      title, excerpt: description, imageUrl, slug,
       eventDays: document.eventDays,
     }));
 
@@ -64,7 +67,7 @@ export async function POST(request: NextRequest) {
       subject,
       replyTo: 'verwaltung@parkbad-gt.de',
       html,
-      text: `[TEST] ${title}\n\n${document.excerpt ?? ''}\n\nMehr: ${process.env.NEXT_PUBLIC_BASE_URL}/${slug}`,
+      text: `[TEST] ${title}\n\n${description}\n\nMehr: ${process.env.NEXT_PUBLIC_BASE_URL}/${slug}`,
     });
 
     if (error) {
