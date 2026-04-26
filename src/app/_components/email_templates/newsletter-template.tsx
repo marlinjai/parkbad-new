@@ -20,6 +20,7 @@ interface NewsletterTemplateProps {
   type: 'post' | 'event';
   title: string;
   excerpt?: string;
+  excerptHtml?: string;
   imageUrl?: string;
   slug: string;
   eventDays?: Array<{
@@ -36,6 +37,7 @@ export const NewsletterTemplate = ({
   type,
   title,
   excerpt,
+  excerptHtml,
   imageUrl,
   slug,
   eventDays,
@@ -130,7 +132,12 @@ export const NewsletterTemplate = ({
 
             <Heading style={contentTitle}>{title}</Heading>
 
-            {excerpt && (
+            {excerptHtml ? (
+              <Section
+                style={excerptHtmlSection}
+                dangerouslySetInnerHTML={{ __html: excerptHtml }}
+              />
+            ) : excerpt && (
               <Text style={excerpt_style}>{excerpt}</Text>
             )}
 
@@ -241,6 +248,13 @@ const excerpt_style = {
   color: '#4b5563',
   fontSize: '16px',
   lineHeight: '1.5',
+  marginBottom: '20px',
+};
+
+const excerptHtmlSection = {
+  color: '#4b5563',
+  fontSize: '16px',
+  lineHeight: '1.6',
   marginBottom: '20px',
 };
 
