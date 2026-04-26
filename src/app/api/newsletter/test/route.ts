@@ -8,7 +8,7 @@ import { sanityFetch } from '../../../../sanity/lib/sanity.fetch';
 import { writeClient } from '../../../../sanity/lib/sanity.write';
 import { urlForImage } from '../../../../sanity/lib/sanity.image';
 import { computeContentHash, extractHashableFields } from '@/lib/newsletter/contentHash';
-import { portableTextToHtml, portableTextToPlainText } from '@/lib/newsletter/portableText';
+import { portableTextToPlainText } from '@/lib/newsletter/portableText';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -46,7 +46,6 @@ export async function POST(request: NextRequest) {
     const newsletterType = document._type === 'post' ? 'post' : 'event';
     const title = document.title ?? document.eventTitle ?? 'Test Newsletter';
     const slug = typeof document.slug === 'string' ? document.slug : document.slug?.current;
-    const excerptHtml = !document.excerpt ? portableTextToHtml(document.eventContent) : undefined;
     const description = document.excerpt || portableTextToPlainText(document.eventContent);
     const imageUrl = document.coverImage
       ? urlForImage(document.coverImage).url()
@@ -54,7 +53,7 @@ export async function POST(request: NextRequest) {
 
     const html = await render(React.createElement(NewsletterTemplate, {
       type: newsletterType,
-      title, excerpt: description, excerptHtml, imageUrl, slug,
+      title, excerpt: description, eventContent: document.eventContent, imageUrl, slug,
       eventDays: document.eventDays,
     }));
 

@@ -20,7 +20,7 @@ interface NewsletterTemplateProps {
   type: 'post' | 'event';
   title: string;
   excerpt?: string;
-  excerptHtml?: string;
+  eventContent?: unknown;
   imageUrl?: string;
   slug: string;
   eventDays?: Array<{
@@ -37,7 +37,7 @@ export const NewsletterTemplate = ({
   type,
   title,
   excerpt,
-  excerptHtml,
+  eventContent,
   imageUrl,
   slug,
   eventDays,
@@ -45,6 +45,71 @@ export const NewsletterTemplate = ({
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://parkbad-gt.de';
   const postUrl = `${baseUrl}/${slug}`;
   
+  const normalizeTypography = (value: string) => value.replace(/—/g, '-');
+
+  const renderEventContent = () => {
+    if (!Array.isArray(eventContent)) return null;
+
+    type MarkDef = { _key?: string; _type?: string; href?: string };
+    type Span = { _type?: string; text?: string; marks?: string[] };
+    type Block = {
+      _type?: string;
+      style?: string;
+      listItem?: 'bullet' | 'number';
+      children?: Span[];
+      markDefs?: MarkDef[];
+    };
+
+    let numberIndex = 1;
+
+    return (eventContent as Block[]).map((block, blockIndex) => {
+      if (block?._type !== 'block' || !Array.isArray(block.children)) return null;
+
+      const markDefs = block.markDefs ?? [];
+      const content = block.children.map((child, childIndex) => {
+        if (child?._type !== 'span' || typeof child.text !== 'string') return null;
+        const rawText = normalizeTypography(child.text);
+        let node: React.ReactNode = rawText;
+
+        for (const mark of child.marks ?? []) {
+          if (mark === 'strong') node = <strong key={`${blockIndex}-${childIndex}-${mark}`}>{node}</strong>;
+          else if (mark === 'em') node = <em key={`${blockIndex}-${childIndex}-${mark}`}>{node}</em>;
+          else if (mark === 'code') node = <code key={`${blockIndex}-${childIndex}-${mark}`}>{node}</code>;
+          else {
+            const def = markDefs.find((d) => d._key === mark && d._type === 'link' && typeof d.href === 'string');
+            if (def?.href) {
+              node = (
+                <Link key={`${blockIndex}-${childIndex}-${mark}`} href={def.href} style={contentLink}>
+                  {node}
+                </Link>
+              );
+            }
+          }
+        }
+
+        return <React.Fragment key={`${blockIndex}-${childIndex}`}>{node}</React.Fragment>;
+      });
+
+      if (block.listItem === 'bullet') {
+        return <Text key={blockIndex} style={listItemStyle}>- {content}</Text>;
+      }
+      if (block.listItem === 'number') {
+        const current = numberIndex++;
+        return <Text key={blockIndex} style={listItemStyle}>{current}. {content}</Text>;
+      }
+
+      numberIndex = 1;
+
+      if (block.style?.startsWith('h1')) return <Heading key={blockIndex} style={contentH1}>{content}</Heading>;
+      if (block.style?.startsWith('h2')) return <Heading key={blockIndex} style={contentH2}>{content}</Heading>;
+      if (block.style?.startsWith('h3')) return <Heading key={blockIndex} style={contentH3}>{content}</Heading>;
+      if (block.style?.startsWith('h4')) return <Heading key={blockIndex} style={contentH4}>{content}</Heading>;
+      if (block.style === 'blockquote') return <Text key={blockIndex} style={blockquoteStyle}>{content}</Text>;
+
+      return <Text key={blockIndex} style={excerpt_style}>{content}</Text>;
+    });
+  };
+
   const renderEventDays = () => {
     const normalized = normalizeEventDays(eventDays);
     if (normalized.length === 0) return null;
@@ -132,14 +197,13 @@ export const NewsletterTemplate = ({
 
             <Heading style={contentTitle}>{title}</Heading>
 
-            {excerptHtml ? (
-              <Section
-                style={excerptHtmlSection}
-                dangerouslySetInnerHTML={{ __html: excerptHtml }}
-              />
-            ) : excerpt && (
-              <Text style={excerpt_style}>{excerpt}</Text>
-            )}
+            {type === 'event' && Array.isArray(eventContent) && eventContent.length > 0 ? (
+              <Section style={contentRichSection}>
+                {renderEventContent()}
+              </Section>
+            ) : excerpt ? (
+              <Text style={excerpt_style}>{normalizeTypography(excerpt)}</Text>
+            ) : null}
 
             {type === 'event' && eventDays && eventDays.length > 0 && (
               <Section style={eventSection}>
@@ -251,11 +315,57 @@ const excerpt_style = {
   marginBottom: '20px',
 };
 
-const excerptHtmlSection = {
+const contentRichSection = { marginBottom: '20px' };
+
+const contentH1 = {
+  color: '#1f2937',
+  fontSize: '28px',
+  fontWeight: 'bold',
+  margin: '0 0 12px 0',
+  lineHeight: '1.3',
+};
+
+const contentH2 = {
+  color: '#1f2937',
+  fontSize: '24px',
+  fontWeight: 'bold',
+  margin: '0 0 10px 0',
+  lineHeight: '1.35',
+};
+
+const contentH3 = {
+  color: '#1f2937',
+  fontSize: '20px',
+  fontWeight: 'bold',
+  margin: '0 0 10px 0',
+  lineHeight: '1.4',
+};
+
+const contentH4 = {
+  color: '#1f2937',
+  fontSize: '18px',
+  fontWeight: 'bold',
+  margin: '0 0 8px 0',
+  lineHeight: '1.4',
+};
+
+const listItemStyle = {
   color: '#4b5563',
   fontSize: '16px',
   lineHeight: '1.6',
-  marginBottom: '20px',
+  margin: '0 0 8px 0',
+};
+
+const blockquoteStyle = {
+  color: '#374151',
+  fontSize: '16px',
+  lineHeight: '1.6',
+  margin: '0 0 14px 0',
+};
+
+const contentLink = {
+  color: '#1A6576',
+  textDecoration: 'underline',
 };
 
 const eventSection = {
