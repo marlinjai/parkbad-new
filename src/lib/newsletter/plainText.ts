@@ -4,7 +4,7 @@ type PortableTextBlock = {
   children?: PortableTextChild[];
 };
 
-export function portableTextToPlainText(value: unknown, maxLength = 400): string {
+export function portableTextToPlainText(value: unknown): string {
   if (!Array.isArray(value)) return '';
 
   const text = value
@@ -20,6 +20,5 @@ export function portableTextToPlainText(value: unknown, maxLength = 400): string
     .join('\n\n')
     .trim();
 
-  if (!text) return '';
-  return text.length > maxLength ? `${text.slice(0, maxLength - 1).trim()}...` : text;
+  return text;
 }
