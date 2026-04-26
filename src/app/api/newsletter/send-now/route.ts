@@ -97,7 +97,12 @@ export async function POST(request: NextRequest) {
       : (document.eventImage ? urlForImage(document.eventImage).url() : undefined);
 
     const htmlBody = await render(React.createElement(NewsletterTemplate, {
-      type: newsletterType, title, excerpt: description, eventContent: document.eventContent, imageUrl, slug,
+      type: newsletterType,
+      title,
+      excerpt: description,
+      eventContent: document.eventContent,
+      imageUrl,
+      slug,
       eventDays: document.eventDays,
     }));
 
