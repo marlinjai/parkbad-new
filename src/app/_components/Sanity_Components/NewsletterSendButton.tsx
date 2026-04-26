@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { Button, Stack, Card, Text, Box, Dialog } from '@sanity/ui';
-import { useFormValue, useClient } from 'sanity';
+import { useFormValue } from 'sanity';
 import { computeContentHash, extractHashableFields } from '@/lib/newsletter/contentHash';
 
 interface NewsletterStatus {
@@ -25,8 +25,6 @@ export default function NewsletterSendButton() {
   const eventImage = useFormValue(['eventImage']);
   const eventContent = useFormValue(['eventContent']);
   const eventDays = useFormValue(['eventDays']);
-
-  const sanityClient = useClient({ apiVersion: '2024-01-01' });
 
   const [currentHash, setCurrentHash] = useState<string>('');
   const [recipientCount, setRecipientCount] = useState<number | null>(null);
@@ -69,17 +67,10 @@ export default function NewsletterSendButton() {
     setLoading(true);
     setMessage(null);
     try {
-      const token = (sanityClient.config() as any).token;
-      if (!token) {
-        setMessage({ tone: 'critical', text: 'Sanity-Token nicht verfügbar. Bitte neu in Studio anmelden.' });
-        setLoading(false);
-        return;
-      }
       const res = await fetch('/api/newsletter/send-now', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           documentId: cleanDocId,

@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from 'next-sanity';
 import { render } from '@react-email/render';
 import React from 'react';
 import { NewsletterTemplate } from '../../../_components/email_templates/newsletter-template';
 import { writeClient } from '../../../../sanity/lib/sanity.write';
 import { sanityFetch } from '../../../../sanity/lib/sanity.fetch';
 import { urlForImage } from '../../../../sanity/lib/sanity.image';
-import { apiVersion, dataset, projectId } from '../../../../sanity/env';
 import { computeContentHash, extractHashableFields } from '@/lib/newsletter/contentHash';
 import { sendBroadcast } from '@/lib/newsletter/sendBroadcast';
 import { portableTextToPlainText } from '@/lib/newsletter/portableText';
@@ -27,28 +25,8 @@ interface SendNowRequest {
   force?: boolean;
 }
 
-async function validateSanityToken(token: string): Promise<{ ok: boolean; userName?: string }> {
-  try {
-    const userClient = createClient({ apiVersion, dataset, projectId, token, useCdn: false });
-    const me = await userClient.users.getById('me') as { name?: string; displayName?: string };
-    return { ok: true, userName: me.displayName ?? me.name };
-  } catch {
-    return { ok: false };
-  }
-}
-
 export async function POST(request: NextRequest) {
   try {
-    const auth = request.headers.get('authorization') ?? '';
-    const token = auth.startsWith('Bearer ') ? auth.slice(7) : '';
-    if (!token) {
-      return NextResponse.json({ error: 'Missing Authorization' }, { status: 401 });
-    }
-    const { ok } = await validateSanityToken(token);
-    if (!ok) {
-      return NextResponse.json({ error: 'Invalid Sanity token' }, { status: 401 });
-    }
-
     const { documentId, documentType, expectedHash, force } = await request.json() as SendNowRequest;
     if (!documentId || !documentType || !expectedHash) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
