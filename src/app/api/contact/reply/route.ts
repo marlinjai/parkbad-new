@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { createClient } from 'next-sanity';
 import { writeClient } from '../../../../sanity/lib/sanity.write';
 import { sanityFetch } from '../../../../sanity/lib/sanity.fetch';
-import { apiVersion, dataset, projectId } from '../../../../sanity/env';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface ReplyRequest {
   submissionId: string;
   body: string;
+  sentBy?: string;
 }
 
 interface SubmissionDoc {
@@ -21,29 +20,13 @@ interface SubmissionDoc {
   replies?: Array<unknown>;
 }
 
-async function validateSanityToken(token: string): Promise<{ ok: boolean; userName?: string }> {
-  try {
-    const userClient = createClient({ apiVersion, dataset, projectId, token, useCdn: false });
-    const me = await userClient.users.getById('me') as { name?: string; displayName?: string; email?: string };
-    return { ok: true, userName: me.displayName ?? me.name ?? me.email ?? 'Studio' };
-  } catch {
-    return { ok: false };
-  }
-}
-
 export async function POST(request: NextRequest) {
   try {
-    const auth = request.headers.get('authorization') ?? '';
-    const token = auth.startsWith('Bearer ') ? auth.slice(7) : '';
-    if (!token) return NextResponse.json({ error: 'Missing Authorization' }, { status: 401 });
-
-    const { ok, userName } = await validateSanityToken(token);
-    if (!ok) return NextResponse.json({ error: 'Invalid Sanity token' }, { status: 401 });
-
-    const { submissionId, body } = await request.json() as ReplyRequest;
+    const { submissionId, body, sentBy } = await request.json() as ReplyRequest;
     if (!submissionId || !body?.trim()) {
       return NextResponse.json({ error: 'Missing submissionId or body' }, { status: 400 });
     }
+    const userName = sentBy?.trim() || 'Studio';
 
     const submission = await sanityFetch<SubmissionDoc>({
       query: `*[_type == "contactSubmission" && _id == $id][0]{ email, firstName, lastName, originalMessageId, status, replies }`,

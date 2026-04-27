@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Button, Card, Stack, Text, TextArea, Box, Badge } from '@sanity/ui';
-import { useFormValue, useClient } from 'sanity';
+import { useFormValue, useCurrentUser } from 'sanity';
 
 interface Reply {
   sentAt?: string;
@@ -18,7 +18,7 @@ export default function ContactReplyPanel() {
   const message = useFormValue(['message']) as string | undefined;
   const replies = (useFormValue(['replies']) as Reply[] | undefined) ?? [];
 
-  const sanityClient = useClient({ apiVersion: '2024-01-01' });
+  const currentUser = useCurrentUser();
 
   const [body, setBody] = useState('');
   const [loading, setLoading] = useState(false);
@@ -31,16 +31,11 @@ export default function ContactReplyPanel() {
     setLoading(true);
     setFeedback(null);
     try {
-      const token = (sanityClient.config() as any).token;
-      if (!token) {
-        setFeedback({ tone: 'critical', text: 'Sanity-Token nicht verfügbar.' });
-        setLoading(false);
-        return;
-      }
+      const sentBy = currentUser?.name ?? currentUser?.email ?? 'Studio';
       const res = await fetch('/api/contact/reply', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ submissionId: cleanDocId, body }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ submissionId: cleanDocId, body, sentBy }),
       });
       const data = await res.json();
       if (res.ok) {
