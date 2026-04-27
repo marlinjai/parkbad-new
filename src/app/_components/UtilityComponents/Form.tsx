@@ -16,9 +16,12 @@ export default function Form(myFormProps: FormProps) {
   const [state, setState] = useState<{ message: string | null }>({
     message: null,
   });
+  const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
     const form = event.currentTarget;
     const formData = new FormData(form);
     const formProps = Object.fromEntries(formData);
@@ -51,6 +54,8 @@ export default function Form(myFormProps: FormProps) {
                 "Leider kann die Anfrage aufgrund technischer Schwierigkeiten nicht abgesendet werden.",
             }
       );
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -176,7 +181,7 @@ export default function Form(myFormProps: FormProps) {
 
           {/* Submit Button */}
           <div className="mt-10 flex justify-center sm:col-span-2">
-            <SubmitButton></SubmitButton>
+            <SubmitButton disabled={submitting}></SubmitButton>
           </div>
           <p className=" text-brand-accent-1" aria-live="polite" role="status">
             {state?.message}

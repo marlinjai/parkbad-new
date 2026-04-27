@@ -7,7 +7,7 @@ import { sanityFetch } from "../../../sanity/lib/sanity.fetch";
 import { contactSettingsQuery } from "../../../sanity/lib/sanity.queries";
 import { ContactSettings } from "../../../types/sanityTypes";
 import { writeClient } from "../../../sanity/lib/sanity.write";
-import { randomUUID } from "crypto";
+import { createHash, randomUUID } from "crypto";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -120,7 +120,25 @@ ${settings.contactPhone} | ${settings.contactEmail}
     }
 
     try {
-      await writeClient.create({
+      // Deterministic _id from immutable content + day bucket so double-clicks
+      // and Vercel retries collapse to a single document. Same exact submission
+      // on a different day is treated as a new entry.
+      const dayBucket = new Date().toISOString().slice(0, 10);
+      const idHash = createHash('sha256')
+        .update([
+          requestBody.email,
+          requestBody.firstName,
+          requestBody.lastName,
+          requestBody.phone,
+          requestBody.message,
+          dayBucket,
+        ].join('|'))
+        .digest('hex')
+        .slice(0, 32);
+      const docId = `cs-${idHash}`;
+
+      await writeClient.createIfNotExists({
+        _id: docId,
         _type: 'contactSubmission',
         firstName: requestBody.firstName,
         lastName: requestBody.lastName,
