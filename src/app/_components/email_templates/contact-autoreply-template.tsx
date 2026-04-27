@@ -50,6 +50,13 @@ export const ContactAutoReplyTemplate = ({
         <Container style={container}>
           {/* Header */}
           <Section style={header}>
+            <Img
+              style={logo}
+              src={`${baseUrl}/Logo_redo_origclolours.png`}
+              alt="Parkbad Gütersloh"
+              width="80"
+              height="80"
+            />
             <Heading style={headerTitle}>Parkbad Gütersloh</Heading>
             <Text style={headerSubtitle}>
               Vielen Dank für Ihre Nachricht
@@ -138,10 +145,22 @@ const container = {
 };
 
 const header = {
+  backgroundColor: '#1A6576',
   background: 'linear-gradient(to bottom right, #202A39, #1A6576, #187D8C)',
   borderRadius: '8px 8px 0 0',
+  marginLeft: 'auto',
+  marginRight: 'auto',
   padding: '20px',
   textAlign: 'center' as const,
+};
+
+const logo = {
+  display: 'block',
+  margin: '0 auto 15px auto',
+  width: '80px',
+  height: '80px',
+  borderRadius: '8px',
+  border: '0',
 };
 
 const headerTitle = {
@@ -257,6 +276,7 @@ const buttonSection = {
 };
 
 const button = {
+  backgroundColor: '#1A6576',
   background: 'linear-gradient(to bottom right, #1A5E6F, #1A6576, #187D8C)',
   borderRadius: '6px',
   color: '#ffffff',
@@ -266,6 +286,8 @@ const button = {
   textAlign: 'center' as const,
   display: 'inline-block',
   padding: '12px 24px',
+  border: 'none',
+  lineHeight: '1.4',
 };
 
 const hr = {

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { render } from '@react-email/render';
+import React from 'react';
 import { writeClient } from '../../../../sanity/lib/sanity.write';
-import { sanityFetch } from '../../../../sanity/lib/sanity.fetch';
+import { ContactReplyTemplate } from '../../../_components/email_templates/contact-reply-template';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -12,6 +14,7 @@ interface ReplyRequest {
 }
 
 interface SubmissionDoc {
+  _id?: string;
   email?: string;
   firstName?: string;
   lastName?: string;
@@ -28,30 +31,43 @@ export async function POST(request: NextRequest) {
     }
     const userName = sentBy?.trim() || 'Studio';
 
-    const submission = await sanityFetch<SubmissionDoc>({
-      query: `*[_type == "contactSubmission" && _id == $id][0]{ email, firstName, lastName, originalMessageId, status, replies }`,
-      params: { id: submissionId },
-    });
+    // Fetch both the published doc and any draft so we can patch both
+    // and use the draft state (what the editor sees) as the source of truth
+    // for the existing replies array.
+    const draftId = `drafts.${submissionId}`;
+    const [publishedDoc, draftDoc] = await Promise.all([
+      writeClient.getDocument<SubmissionDoc>(submissionId),
+      writeClient.getDocument<SubmissionDoc>(draftId),
+    ]);
 
-    if (!submission?.email) {
+    const sourceDoc = draftDoc ?? publishedDoc;
+    if (!sourceDoc?.email) {
       return NextResponse.json({ error: 'Submission not found or missing email' }, { status: 404 });
     }
 
     const headers: Record<string, string> = {
       'X-Mailer': 'Parkbad Gütersloh Contact Reply',
     };
-    if (submission.originalMessageId) {
-      headers['In-Reply-To'] = submission.originalMessageId;
-      headers['References'] = submission.originalMessageId;
+    if (sourceDoc.originalMessageId) {
+      headers['In-Reply-To'] = sourceDoc.originalMessageId;
+      headers['References'] = sourceDoc.originalMessageId;
     }
+
+    const html = await render(
+      React.createElement(ContactReplyTemplate, {
+        firstName: sourceDoc.firstName,
+        body,
+      })
+    );
 
     const send = await resend.emails.send({
       from: 'Parkbad Gütersloh <verwaltung@parkbad-gt.de>',
-      to: [submission.email],
+      to: [sourceDoc.email],
       replyTo: 'verwaltung@parkbad-gt.de',
       subject: 'Re: Ihre Anfrage an Parkbad Gütersloh',
       headers,
-      text: `Hallo ${submission.firstName ?? ''},\n\n${body}\n\nMit freundlichen Grüßen\nIhr Team vom Parkbad Gütersloh`,
+      html,
+      text: `Hallo ${sourceDoc.firstName ?? ''},\n\n${body}\n\nMit freundlichen Grüßen\nIhr Team vom Parkbad Gütersloh`,
     });
 
     if (send.error) {
@@ -59,19 +75,25 @@ export async function POST(request: NextRequest) {
     }
 
     const replyEntry = {
+      _key: (send.data?.id ?? Date.now().toString()).replace(/[^a-zA-Z0-9]/g, '').slice(0, 32),
       sentAt: new Date().toISOString(),
-      sentBy: userName ?? 'Studio',
+      sentBy: userName,
       body,
       resendEmailId: send.data?.id ?? '',
     };
 
-    const newReplies = (submission.replies ?? []).concat([replyEntry]);
-    const newStatus = submission.status === 'offen' ? 'inBearbeitung' : submission.status;
+    const newReplies = (sourceDoc.replies ?? []).concat([replyEntry]);
+    const newStatus = sourceDoc.status === 'offen' ? 'inBearbeitung' : sourceDoc.status;
 
-    await writeClient.patch(submissionId).set({
-      replies: newReplies,
-      status: newStatus,
-    }).commit();
+    // Patch both versions so the reply shows up regardless of whether the
+    // editor is viewing the draft or the published doc, and persists when
+    // the draft is published or discarded.
+    const tx = writeClient.transaction()
+      .patch(submissionId, p => p.set({ replies: newReplies, status: newStatus }));
+    if (draftDoc) {
+      tx.patch(draftId, p => p.set({ replies: newReplies, status: newStatus }));
+    }
+    await tx.commit();
 
     return NextResponse.json({ success: true, emailId: send.data?.id });
   } catch (err) {
