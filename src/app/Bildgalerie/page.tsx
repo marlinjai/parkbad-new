@@ -22,7 +22,9 @@ async function optimizeGalleryData(galleryData: Gallery[]) {
 
   const firstGallery = galleryData[0];
   
-  // Pre-calculate image dimensions and optimize data
+  // Pre-calculate image dimensions and optimize data.
+  // .reverse(): newest images first — Sanity appends new images to the end of
+  // the array, so reversing surfaces the most recently added ones on top.
   const optimizedImages = firstGallery.images.map(image => ({
     ...image,
     // Ensure we have dimensions for all images
@@ -37,7 +39,7 @@ async function optimizeGalleryData(galleryData: Gallery[]) {
         }
       }
     }
-  }));
+  })).reverse();
 
   return {
     ...firstGallery,
