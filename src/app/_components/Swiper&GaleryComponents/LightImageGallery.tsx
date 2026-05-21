@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import LightGallery from "lightgallery/react";
 
@@ -23,59 +23,76 @@ interface LightImageGalleryProps {
   images: GalleryImage[];
 }
 
+// Single grid cell: shows the LQIP blur preview instantly, then crossfades
+// the full image in once it has decoded — no empty cells, no scroll-triggered
+// pop-in.
+function GalleryGridImage({
+  src,
+  alt,
+  lqip,
+  x,
+  y,
+  priority,
+  caption,
+  takenAt,
+}: {
+  src: string;
+  alt: string;
+  lqip?: string;
+  x: number;
+  y: number;
+  priority: boolean;
+  caption?: string;
+  takenAt?: string;
+}) {
+  const [loaded, setLoaded] = useState(false);
+  const objectPosition = `${x * 100}% ${y * 100}%`;
+
+  return (
+    <div
+      className="relative w-full h-full overflow-hidden bg-cover bg-no-repeat"
+      style={
+        lqip
+          ? { backgroundImage: `url("${lqip}")`, backgroundPosition: objectPosition }
+          : undefined
+      }
+    >
+      <Image
+        alt={alt}
+        src={src}
+        fill={true}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        priority={priority}
+        onLoad={() => setLoaded(true)}
+        className={`object-cover transition-opacity duration-500 ease-out ${
+          loaded ? "opacity-100" : "opacity-0"
+        }`}
+        style={{ objectPosition }}
+      />
+
+      {/* Caption overlay that appears on hover */}
+      {(caption || takenAt) && (
+        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-1 sm:p-2 text-xs sm:text-sm opacity-0 hover:opacity-100 transition-opacity duration-300">
+          {caption && <p className="line-clamp-1">{caption}</p>}
+          {takenAt && (
+            <p className="text-[10px] sm:text-xs opacity-75">
+              {new Date(takenAt).toLocaleDateString("de-DE")}
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // Create a simple, clean masonry grid using CSS grid
 export default function LightImageGallery({ images }: LightImageGalleryProps) {
   const galleryImages = images;
-  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Initialize lightgallery
   const onInit = () => {
     console.log("LightGallery has been initialized");
   };
-
-  // Set up intersection observer for scroll animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = parseInt(entry.target.getAttribute('data-index') || '0', 10);
-            // Calculate delay based on the image's position in the viewport
-            const rect = entry.boundingClientRect;
-            const viewportHeight = window.innerHeight;
-            const distanceFromTop = rect.top;
-            const delay = Math.min((distanceFromTop / viewportHeight) * 500, 400); // Max 400ms delay
-            
-            // Only animate if the image hasn't been animated before
-            if (!entry.target.classList.contains('has-animated')) {
-              setTimeout(() => {
-                entry.target.classList.add('animate-fade-in');
-                entry.target.classList.add('has-animated');
-              }, delay);
-            } else {
-              // If already animated, just make it visible immediately
-              const element = entry.target as HTMLElement;
-              element.style.opacity = '1';
-              element.style.transform = 'translateY(0)';
-            }
-            
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        root: null,
-        rootMargin: '-20% 0px',
-        threshold: 0.3
-      }
-    );
-
-    imageRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-
-    return () => observer.disconnect();
-  }, []);
 
   // Fix: Process images without circular reference
   const processImages = () => {
@@ -245,11 +262,7 @@ export default function LightImageGallery({ images }: LightImageGalleryProps) {
             return (
               <div
                 key={index}
-                ref={el => { imageRefs.current[index] = el; }}
-                className={`${spanClasses} overflow-hidden rounded-lg shadow-lg transform transition-all duration-500 hover:scale-[1.02] opacity-0`}
-                style={{
-                  transform: 'translateY(20px)'
-                }}
+                className={`${spanClasses} overflow-hidden rounded-lg shadow-lg transition-transform duration-500 hover:scale-[1.02]`}
               >
                 <a
                   className="gallery-item block w-full h-full overflow-hidden"
@@ -258,53 +271,22 @@ export default function LightImageGallery({ images }: LightImageGalleryProps) {
                   data-sub-html={`<h4>${image.alt || ''}</h4><p>${image.caption || ''}</p>`}
                   data-lg-size={`${width}-${height}`}
                 >
-                  <div className="relative w-full h-full overflow-hidden">
-                    <Image
-                      alt={image.alt || `Gallery image ${index + 1}`}
-                      src={imageUrl}
-                      fill={true}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover"
-                      style={{
-                        objectPosition: `${x * 100}% ${y * 100}%`
-                      }}
-                    />
-
-                    {/* Caption overlay that appears on hover */}
-                    {(image.caption || image.takenAt) && (
-                      <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-1 sm:p-2 text-xs sm:text-sm opacity-0 hover:opacity-100 transition-opacity duration-300">
-                        {image.caption && <p className="line-clamp-1">{image.caption}</p>}
-                        {image.takenAt && (
-                          <p className="text-[10px] sm:text-xs opacity-75">
-                            {new Date(image.takenAt).toLocaleDateString('de-DE')}
-                          </p>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                  <GalleryGridImage
+                    src={imageUrl}
+                    alt={image.alt || `Gallery image ${index + 1}`}
+                    lqip={image.asset?.metadata?.lqip}
+                    x={x}
+                    y={y}
+                    priority={index < 10}
+                    caption={image.caption}
+                    takenAt={image.takenAt}
+                  />
                 </a>
               </div>
             );
           })}
         </div>
       </LightGallery>
-
-      <style jsx global>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-fade-in {
-          animation: fadeIn 0.8s ease-out forwards;
-        }
-      `}</style>
     </div>
   );
 }
