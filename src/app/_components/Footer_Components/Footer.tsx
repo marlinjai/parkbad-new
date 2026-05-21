@@ -12,6 +12,7 @@ import { FooterProps } from "@/types/componentTypes";
 
 import Newsletter from "./Newsletter";
 import BusinessHours from "./BusinessHours";
+import { getCurrentYear } from "@/lib/parkbad";
 
 export default function Footer({ openingHours }: FooterProps) {
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -156,7 +157,7 @@ export default function Footer({ openingHours }: FooterProps) {
             ))}
           </div>
           <p className="mt-8 text-xs sm:text-sm leading-5 text-gray-400 md:order-1 md:mt-0">
-            &copy; 2023 Parkbad Gütersloh All rights reserved.
+            &copy; {getCurrentYear()} Parkbad Gütersloh All rights reserved.
           </p>
         </div>
       </div>

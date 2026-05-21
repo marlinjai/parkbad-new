@@ -11,14 +11,8 @@ import { client } from "@/sanity/lib/sanity.client";
 import Kontakt from "../_components/UtilityComponents/Kontakt";
 import HistorySwiper from "../_components/Swiper&GaleryComponents/HistorySwiper";
 import SectionBackground from "../_components/UtilityComponents/SectionBackground";
+import { getParkbadYears } from "@/lib/parkbad";
 
-const stats = [
-  { label: "Parkbad ist Tradition", value: "seit 95 Jahren" },
-  {
-    label: "Ein Ort um die Seele baumeln zu lassen",
-    value: "Naherholung in Gütersloh",
-  },
-];
 const values = [
   {
     name: "Jeder ist willkommen",
@@ -57,6 +51,16 @@ export default async function Historie() {
     src: urlForImage(image).url(),
     alt: image.alt || "Historic image",
   }));
+
+  // Years since the Parkbad opened — rolls over automatically each 1 January.
+  const years = getParkbadYears();
+  const stats = [
+    { label: "Parkbad ist Tradition", value: `seit ${years} Jahren` },
+    {
+      label: "Ein Ort um die Seele baumeln zu lassen",
+      value: "Naherholung in Gütersloh",
+    },
+  ];
 
   return (
     <SiteLayout>
@@ -113,10 +117,10 @@ export default async function Historie() {
             <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
               <div className="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
                 <h1 className="text-4xl font-bold tracking-tight text-brand-colour-light sm:text-6xl">
-                  Historie und Geschichte sind uns wichtig, und das schon seit 95 Jahren!
+                  Historie und Geschichte sind uns wichtig, und das schon seit {years} Jahren!
                 </h1>
                 <p className="relative mt-6 text-lg leading-8 text-brand-colour-light sm:max-w-md lg:max-w-none">
-                  Mit 95 Jahren Geschichte sind wir fest in der Gemeinschaft von Gütersloh verwurzelt und stolz darauf, Generationen von Gästen begleitet zu haben. Wir vereinen Tradition mit Innovation, um ein vielseitiges Angebot zu schaffen, das von Gastronomie über Sport bis hin zu Veranstaltungen und Kultur reicht.
+                  Mit {years} Jahren Geschichte sind wir fest in der Gemeinschaft von Gütersloh verwurzelt und stolz darauf, Generationen von Gästen begleitet zu haben. Wir vereinen Tradition mit Innovation, um ein vielseitiges Angebot zu schaffen, das von Gastronomie über Sport bis hin zu Veranstaltungen und Kultur reicht.
                 </p>
               </div>
               <div className="mt-14 flex justify-end gap-4 sm:-mt-44 sm:justify-start sm:gap-8 sm:pl-20 lg:mt-0 lg:pl-0">
