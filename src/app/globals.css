@@ -223,6 +223,39 @@ body::-webkit-scrollbar {
 
 .swiper-controls button {
   pointer-events: all;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Navigation arrow — base styles apply at every breakpoint */
+.slider-arrow {
+  display: flex;
+  width: 60px;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.4);
+  transition: color 200ms ease, background-color 200ms ease;
+  position: relative;
+  z-index: 99;
+}
+
+.my-swiper-button-next svg,
+.my-swiper-button-prev svg {
+  display: block;
+  width: 40px;
+  height: auto;
+}
+
+.left svg {
+  margin-left: -5px;
+}
+
+.right svg {
+  margin-right: -5px;
 }
 
 /* Responsive adjustments for swiper controls */
@@ -230,10 +263,15 @@ body::-webkit-scrollbar {
   .swiper-controls {
     padding: 0 1rem;
   }
-  
+
   .slider-arrow {
-    width: 45px !important;
-    height: 45px !important;
+    width: 45px;
+    height: 45px;
+  }
+
+  .my-swiper-button-next svg,
+  .my-swiper-button-prev svg {
+    width: 28px;
   }
 }
 
@@ -281,46 +319,6 @@ swiper-container {
   );
 }
 
-@media only screen and (min-width: 768px) {
-  .my-swiper-button-next svg,
-  .my-swiper-button-prev svg {
-    width: 40px;
-    height: auto;
-    display: none;
-  }
-
-  .left svg {
-    margin-left: -5px;
-  }
-
-  .right svg {
-    margin-right: -5px;
-  }
-
-  .my-swiper-button-next svg,
-  .my-swiper-button-prev svg {
-    display: block;
-  }
-  .slider-arrow {
-    display: flex;
-    width: 60px;
-    height: 60px;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    border-radius: 50%;
-    box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.4);
-    -webkit-transition: color 200ms ease, background-color 200ms ease;
-    transition: color 200ms ease, background-color 200ms ease;
-    z-index: 99;
-    position: relative;
-  }
-}
 
 .lg-thumb-item.active,
 .lg-thumb-item:hover {

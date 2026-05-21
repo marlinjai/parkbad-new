@@ -38,7 +38,14 @@ export function CardSwiper(props: CardSwiperProps) {
           el: ".swiper-pagination",
           clickable: true,
         }}
-        loop={true}
+        // `rewind` instead of `loop`: the cards effect makes Swiper require
+        // >= 9 slides for loop mode (loopAdditionalSlides: 3 + centeredSlides).
+        // Below that it silently disables loop, so the arrows get stuck at the
+        // ends. `rewind` wraps first <-> last at any slide count and always
+        // starts on slide 0 — so navigation works regardless of how many
+        // posts/events the CMS has. Do not change back to `loop`.
+        rewind={true}
+        initialSlide={0}
         keyboard={{
           enabled: true,
           onlyInViewport: false,
