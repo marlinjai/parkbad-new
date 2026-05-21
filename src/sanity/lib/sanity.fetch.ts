@@ -29,11 +29,13 @@ export async function sanityFetch<QueryResponse>({
     );
   }
 
-  // Smart caching strategy
-  const cacheConfig = isDraftMode 
-    ? { cache: "no-store" as const } 
+  // Smart caching strategy.
+  // `revalidate: 0` is treated as an explicit opt-out of the Data Cache
+  // (no-store), so callers that need always-fresh data are unambiguous.
+  const cacheConfig = isDraftMode || revalidate === 0
+    ? { cache: "no-store" as const }
     : {
-        next: { 
+        next: {
           revalidate: revalidate ?? 3600, // Default 1 hour cache
           tags: tags.length > 0 ? tags : ['sanity']
         }

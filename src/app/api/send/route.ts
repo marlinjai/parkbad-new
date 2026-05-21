@@ -60,6 +60,10 @@ export async function POST(request: Request) {
     try {
       const contactSettings: ContactSettings = await sanityFetch({
         query: contactSettingsQuery,
+        // Always read live: a Winterpause toggle in Sanity must take effect on
+        // the very next submission, with no 1h cache lag if the revalidate
+        // webhook is misconfigured or down.
+        revalidate: 0,
       });
 
       // Use default values if no settings found
