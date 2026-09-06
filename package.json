@@ -6,7 +6,7 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "dev": "infisical run --token=$INFISICAL_LUMITRA_TOKEN --env=dev --projectId=$INFISICAL_PID_PARKBAD -- next dev",
+    "dev": "INFISICAL_TOKEN=$INFISICAL_LUMITRA_TOKEN infisical run --env=dev --projectId=$INFISICAL_PID_PARKBAD -- next dev",
     "dev:local": "next dev",
     "build": "next build",
     "start": "next start",
