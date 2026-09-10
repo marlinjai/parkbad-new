@@ -1,12 +1,24 @@
 ---
 type: plan
-status: draft
+status: completed
 title: Newsletter & Contact Admin Improvements
 date: 2026-04-25
 summary: Replace auto-on-publish newsletter with explicit manual send, add visible send-status, and persist contact form submissions as a Sanity inbox with reply-from-Studio.
 tags: [sanity, newsletter, resend, admin]
 projects: [parkbad-new]
 ---
+
+## Reality update (2026-09-10)
+
+Shipped: `NewsletterSendButton.tsx`, `newsletterStatus` field (`post.ts`,
+`customevent.ts`), the test and send-now API routes
+(`api/newsletter/test`, `api/newsletter/send-now`), the
+`contactSubmission` Sanity schema plus its Studio inbox, and
+`scripts/backfill-contact-submissions.ts`. Verified by grep against the
+2026-09-10 checkout, not re-tested live (repo dormant since
+2026-05-21; see `parkbad-live-verify-swiper-gallery-winterpause` for
+the separate open item about verifying unrelated fixes on the live
+site).
 
 # Newsletter & Contact Admin Improvements
 

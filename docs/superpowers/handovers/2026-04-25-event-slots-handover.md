@@ -1,3 +1,7 @@
+---
+type: handover
+---
+
 # Handover: Multi-Slot Event Days
 
 **Date:** 2026-04-25

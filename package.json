@@ -11,6 +11,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "check:roadmap": "npx --yes github:marlinjai/actions-shared#roadmap-check-v1 --root .",
     "test": "vitest run",
     "dev:network": "cross-env HOST=0.0.0.0 PORT=3000 next dev",
     "email:dev": "email dev --dir emails --port 3001",
