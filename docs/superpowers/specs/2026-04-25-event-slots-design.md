@@ -1,12 +1,20 @@
 ---
 type: plan
-status: draft
+status: completed
 title: Multi-Slot Event Days
 date: 2026-04-25
 summary: Allow a single event day to contain multiple time slots with labels (e.g. "Saisoneröffnung 12-22" plus "Nasty Habbits live 19-22"), rendered stacked on the card, detail page, and newsletter.
 tags: [sanity, events, schema, ux]
 projects: [parkbad-new]
 ---
+
+## Reality update (2026-09-10)
+
+Shipped: `normalizeEventDays` in `src/lib/events/eventDays.ts` (with
+`eventDays.test.ts`), the `slots[]` schema on `customevent.ts`, and the
+newsletter template rendering multi-slot days. Verified by grep against
+the 2026-09-10 checkout, not re-run live (repo dormant since
+2026-05-21).
 
 # Multi-Slot Event Days
 
