@@ -11,4 +11,4 @@ This repository has been dormant since 2026-05-21 (no commits since). Its two no
       auto-reply fix) but were shipped on type-check alone: the Sanity test dataset used
       locally has no events and no gallery images, so none of the three could be seen
       working. No one has confirmed any of them on the live site since. Verify all three
-      against production (2026-09-10)
+      against production (2026-10-24)
