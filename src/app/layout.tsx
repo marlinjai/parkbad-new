@@ -24,7 +24,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" data-scroll-behavior="smooth">
       <head>
         {/* Preload critical assets for faster LCP */}
         <link rel="preload" as="image" href="/video-bg.png" fetchPriority="high" />

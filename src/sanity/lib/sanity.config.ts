@@ -12,7 +12,7 @@ import CustomToolMenu from "@/app/_components/Sanity_Components/CustomToolMenu";
 import { media } from "sanity-plugin-media";
 import { BiSolidDrink } from "react-icons/bi";
 import { PiPizzaDuotone } from "react-icons/pi";
-import { EnvelopeIcon } from "@sanity/icons";
+import { EnvelopeIcon } from "@sanity/icons/Envelope";
 
 import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 

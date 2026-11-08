@@ -1,6 +1,6 @@
 // src/sanity/schemas/contactSettings.ts
 import { defineField, defineType } from 'sanity';
-import { CogIcon } from '@sanity/icons';
+import { CogIcon } from '@sanity/icons/Cog';
 
 export default defineType({
   name: 'contactSettings',

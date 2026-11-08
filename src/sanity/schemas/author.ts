@@ -1,5 +1,5 @@
 // @ts-nocheck - Sanity schema TypeScript type checking disabled for this file
-import { UserIcon } from "@sanity/icons";
+import { UserIcon } from "@sanity/icons/User";
 import { defineField, defineType } from "sanity";
 
 export default defineType({

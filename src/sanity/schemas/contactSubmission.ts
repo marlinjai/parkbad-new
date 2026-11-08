@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { defineField, defineType } from 'sanity';
-import { EnvelopeIcon } from '@sanity/icons';
+import { EnvelopeIcon } from '@sanity/icons/Envelope';
 import ContactReplyPanel from '@/app/_components/Sanity_Components/ContactReplyPanel';
 
 export default defineType({

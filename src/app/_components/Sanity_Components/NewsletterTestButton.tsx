@@ -1,7 +1,7 @@
 // src/app/_components/Sanity_Components/NewsletterTestButton.tsx
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo, useSyncExternalStore } from 'react';
 import { Button, Stack, TextInput, Text, Card, Box } from '@sanity/ui';
 
 interface NewsletterTestButtonProps {
@@ -10,24 +10,25 @@ interface NewsletterTestButtonProps {
   onChange?: (value: any) => void;
 }
 
+// The pathname is read on every render; nothing needs to trigger a re-render on its own.
+const subscribeToNothing = () => () => {};
+const readPathname = () => window.location.pathname;
+const readNoPathname = (): string | null => null;
+
 export default function NewsletterTestButton(props: NewsletterTestButtonProps) {
-  const [documentId, setDocumentId] = useState<string | null>(null);
-  const [documentType, setDocumentType] = useState<string | null>(null);
+  // Document ID and type come from the Studio URL (/admin/structure/{type};{id}).
+  // Read through useSyncExternalStore so the server render (no window) and the
+  // first client render agree, and no state is set inside an effect.
+  const pathname = useSyncExternalStore(subscribeToNothing, readPathname, readNoPathname);
+  const { documentId, documentType } = useMemo(() => {
+    const match = pathname?.match(/\/structure\/(\w+);([^;]+)/);
+    return match
+      ? { documentId: match[2], documentType: match[1] }
+      : { documentId: null, documentType: null };
+  }, [pathname]);
   const [testEmail, setTestEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-
-  // Extract document ID and type from URL (Sanity Studio URL pattern: /admin/structure/{type};{id})
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const urlPath = window.location.pathname;
-      const match = urlPath.match(/\/structure\/(\w+);([^;]+)/);
-      if (match) {
-        setDocumentType(match[1]);
-        setDocumentId(match[2]);
-      }
-    }
-  }, []);
 
   const handleSendTest = async () => {
     if (!testEmail || !testEmail.includes('@')) {
@@ -94,7 +95,7 @@ export default function NewsletterTestButton(props: NewsletterTestButtonProps) {
 
   return (
     <Card padding={4} radius={2} shadow={1} tone="default">
-      <Stack space={4}>
+      <Stack gap={4}>
         <Text size={1} weight="bold">
           Newsletter Test-E-Mail senden
         </Text>
@@ -102,7 +103,7 @@ export default function NewsletterTestButton(props: NewsletterTestButtonProps) {
           Testen Sie die Newsletter-E-Mail für diesen {type} bevor Sie sie an alle Abonnenten versenden.
         </Text>
         
-        <Stack space={3}>
+        <Stack gap={3}>
           <TextInput
             type="email"
             placeholder="test@example.com"

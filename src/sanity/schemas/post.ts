@@ -1,5 +1,5 @@
 // @ts-nocheck - Sanity schema TypeScript type checking disabled for this file
-import { BookIcon } from "@sanity/icons";
+import { BookIcon } from "@sanity/icons/Book";
 import { format, parseISO } from "date-fns";
 import { defineField, defineType } from "sanity";
 

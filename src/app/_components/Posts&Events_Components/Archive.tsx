@@ -109,23 +109,6 @@ export default function Archive({
     };
   }, []);
 
-  // Handle search input debouncing
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      handleSearch(searchQuery);
-    }, 300); // Debounce search for 300ms
-    
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
-
-  // Function to handle search
-  const handleSearch = (query: string) => {
-    // Don't filter if search is empty
-    if (!query.trim()) return;
-    
-    // Otherwise, this will be handled in the main filter effect
-  };
-
   // Handle filter and sort changes
   useEffect(() => {
     let filteredData = [...combinedData]; // Create a new array
@@ -197,6 +180,10 @@ export default function Archive({
       }
     });
 
+    // Deferred refactor (ROADMAP.md, Leftovers, 2026-11-08): this effect also resets the
+    // staggered reveal animation, so moving it out of an effect needs a visual check on
+    // the live archive page first.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setData(filteredData);
     
     // Reset visibility when data changes
