@@ -20,9 +20,7 @@ export default function SiteLayout({
   const [openingHours, setOpeningHours] = useState<OpeningHour[]>([]);
 
   useEffect(() => {
-    // Start loading when pathname or searchParams change
-    setLoading(true);
-
+    // `loading` starts as true; show the spinner for a fixed period on mount.
     // Simulate a loading period (you can adjust the timeout as needed)
     const timer = setTimeout(() => {
       setLoading(false);

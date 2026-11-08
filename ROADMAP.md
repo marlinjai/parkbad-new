@@ -12,3 +12,9 @@ This repository has been dormant since 2026-05-21 (no commits since). Its two no
       locally has no events and no gallery images, so none of the three could be seen
       working. No one has confirmed any of them on the live site since. Verify all three
       against production (2026-10-24)
+- [ ] Refactor the effects that eslint-plugin-react-hooks 7 flags as warnings
+      (`set-state-in-effect` in InfiniteImageSlider and NewsletterTestButton,
+      `set-state-in-effect` and `immutability` in the posts and events Archive), then
+      raise both rules back to errors in `eslint.config.mjs`. Surfaced by the Next 16
+      upgrade in the dependency security pull request; each needs a visual check on the
+      live pages, so it was kept out of that pull request (2026-11-08)

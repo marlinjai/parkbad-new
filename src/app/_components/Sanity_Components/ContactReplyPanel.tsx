@@ -52,20 +52,20 @@ export default function ContactReplyPanel() {
   };
 
   return (
-    <Stack space={4}>
+    <Stack gap={4}>
       <Card padding={4} radius={2} tone="transparent" border>
-        <Stack space={2}>
+        <Stack gap={2}>
           <Text size={1} weight="bold">Ursprüngliche Nachricht</Text>
           <Text size={2} style={{ whiteSpace: 'pre-wrap' }}>{message ?? ''}</Text>
         </Stack>
       </Card>
 
       {replies.length > 0 && (
-        <Stack space={2}>
+        <Stack gap={2}>
           <Text size={1} weight="bold">Bisherige Antworten</Text>
           {replies.map((r, i) => (
             <Card key={i} padding={3} radius={2} tone="primary" border>
-              <Stack space={2}>
+              <Stack gap={2}>
                 <Box>
                   <Badge tone="primary">{r.sentBy ?? 'Studio'}</Badge>
                   <Text size={0} muted style={{ marginLeft: 8 }}>
@@ -80,7 +80,7 @@ export default function ContactReplyPanel() {
       )}
 
       <Card padding={4} radius={2} shadow={1}>
-        <Stack space={3}>
+        <Stack gap={3}>
           <Text size={1} weight="bold">Antworten an {firstName ?? email}</Text>
           <Text size={1} muted>
             Antworten Sie hier, damit das Gespräch dokumentiert ist. Die E-Mail wird von verwaltung@parkbad-gt.de gesendet und im Postfach des Empfängers korrekt im Thread angezeigt.

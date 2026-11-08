@@ -37,11 +37,11 @@ export default function NewsletterStatusPanel(props: ObjectInputProps<Newsletter
 
   return (
     <Card padding={4} radius={2} shadow={1} tone={hasBeenSent ? 'positive' : 'transparent'}>
-      <Stack space={3}>
+      <Stack gap={3}>
         <Text size={1} weight="bold">Newsletter Status</Text>
 
         {hasBeenSent ? (
-          <Stack space={2}>
+          <Stack gap={2}>
             <Text size={2}>
               Versendet am <strong>{formatDateTime(value.lastSentAt)}</strong> an{' '}
               <strong>{value.lastSentRecipientCount ?? '?'}</strong> Abonnenten
@@ -70,7 +70,7 @@ export default function NewsletterStatusPanel(props: ObjectInputProps<Newsletter
             <summary style={{ cursor: 'pointer', fontSize: 12, color: '#666' }}>
               Verlauf anzeigen ({value.sendHistory.length} Einträge)
             </summary>
-            <Stack space={2} marginTop={2}>
+            <Stack gap={2} marginTop={2}>
               {value.sendHistory.map((entry, i) => (
                 <Card key={i} padding={2} radius={1} tone="transparent" border>
                   <Text size={1}>

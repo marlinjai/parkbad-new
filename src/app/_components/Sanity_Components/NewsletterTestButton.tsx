@@ -94,7 +94,7 @@ export default function NewsletterTestButton(props: NewsletterTestButtonProps) {
 
   return (
     <Card padding={4} radius={2} shadow={1} tone="default">
-      <Stack space={4}>
+      <Stack gap={4}>
         <Text size={1} weight="bold">
           Newsletter Test-E-Mail senden
         </Text>
@@ -102,7 +102,7 @@ export default function NewsletterTestButton(props: NewsletterTestButtonProps) {
           Testen Sie die Newsletter-E-Mail für diesen {type} bevor Sie sie an alle Abonnenten versenden.
         </Text>
         
-        <Stack space={3}>
+        <Stack gap={3}>
           <TextInput
             type="email"
             placeholder="test@example.com"

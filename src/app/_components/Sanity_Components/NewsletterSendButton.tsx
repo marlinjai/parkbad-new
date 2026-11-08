@@ -111,7 +111,7 @@ export default function NewsletterSendButton() {
 
   return (
     <Card padding={4} radius={2} shadow={1}>
-      <Stack space={3}>
+      <Stack gap={3}>
         <Text size={1} weight="bold">Newsletter an Abonnenten senden</Text>
         <Text size={1} muted>
           Sendet den Newsletter an alle Newsletter-Abonnenten. Vorgang ist nicht widerrufbar.
@@ -142,7 +142,7 @@ export default function NewsletterSendButton() {
             onClose={() => setConfirming(false)}
             footer={
               <Box padding={3}>
-                <Stack space={2}>
+                <Stack gap={2}>
                   <Button
                     text={`Ja, jetzt an ${recipientCount ?? '?'} Empfänger senden`}
                     tone="critical"

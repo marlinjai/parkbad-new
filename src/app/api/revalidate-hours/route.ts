@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Revalidate the opening hours cache
-    revalidateTag('opening-hours');
+    revalidateTag('opening-hours', { expire: 0 });
     
     console.log('Opening hours cache manually revalidated');
     
