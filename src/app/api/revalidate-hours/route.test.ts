@@ -50,6 +50,18 @@ describe('POST /api/revalidate-hours', () => {
     expect(revalidateTag).not.toHaveBeenCalled();
   });
 
+  it('a wrong token of exactly the right byte length is refused by the constant-time comparison itself', async () => {
+    vi.stubEnv('REVALIDATION_TOKEN', 'tok');
+    const { POST } = await import('./route');
+    // 'tox' and 'toK' have the length of 'tok'; 'é' (2 bytes) vs 'ab' (2 bytes) covers a multi-byte mismatch.
+    for (const header of ['Bearer tox', 'Bearer toK', 'Bearer TOK']) {
+      expect((await POST(req({ authorization: header }))).status).toBe(401);
+    }
+    vi.stubEnv('REVALIDATION_TOKEN', 'ab');
+    expect((await POST(req({ authorization: 'Bearer \u00e9' }))).status).toBe(401);
+    expect(revalidateTag).not.toHaveBeenCalled();
+  });
+
   it('missing header: 401 and nothing is revalidated', async () => {
     vi.stubEnv('REVALIDATION_TOKEN', 'tok');
     const { POST } = await import('./route');
