@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { Gallery, GalleryImage } from "@/types/sanityTypes";
 import { urlForImage } from "@/sanity/lib/sanity.image";
@@ -17,16 +17,15 @@ import lgZoom from "lightgallery/plugins/zoom";
 import Image from "next/image";
 
 const InfiniteImageSlider = ({ images }: { images: Gallery[] }) => {
-  const [duplicatedImages, setDuplicatedImages] = useState<GalleryImage[]>([]);
   const sliderRef = useRef<HTMLDivElement>(null);
   const [sliderWidth, setSliderWidth] = useState(0);
 
-  useEffect(() => {
-    // Create two sets of images with consistent positions (up/down)
-    const firstGroup = [...images[0].images];
-    const secondGroup = [...images[0].images];
-    setDuplicatedImages([...firstGroup, ...secondGroup]);
-  }, [images]);
+  // Two copies of the same images back to back, so the slide animation can loop
+  // seamlessly. Derived from props, so it is computed during render, not in an effect.
+  const duplicatedImages = useMemo<GalleryImage[]>(
+    () => [...images[0].images, ...images[0].images],
+    [images]
+  );
   // Let's say you want a fixed animation duration of 20 seconds
 
   const calculateTotalWidth = () => {

@@ -15,7 +15,8 @@ interface NewsletterStatus {
 export default function NewsletterSendButton() {
   const documentId = useFormValue(['_id']) as string | undefined;
   const documentType = useFormValue(['_type']) as string | undefined;
-  const status = (useFormValue(['newsletterStatus']) as NewsletterStatus | undefined) ?? {};
+  const storedStatus = useFormValue(['newsletterStatus']) as NewsletterStatus | undefined;
+  const status = useMemo(() => storedStatus ?? {}, [storedStatus]);
 
   const eventTitle = useFormValue(['eventTitle']);
   const title = useFormValue(['title']);
