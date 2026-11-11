@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { getResend } from "@/lib/resend";
 import { WelcomeTemplate } from '../../_components/email_templates/welcome-template';
 import { render } from '@react-email/render';
 import React from 'react';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface NewsletterRequestBody {
   email: string;
@@ -64,7 +63,7 @@ export async function POST(request: NextRequest) {
     try {
       const { data, error: listError } = await retryWithBackoff(
         async () => {
-          return await resend.contacts.list({
+          return await getResend().contacts.list({
             audienceId: audienceId,
           });
         },
@@ -112,7 +111,7 @@ export async function POST(request: NextRequest) {
 
     const { data: emailData, error: emailError } = await retryWithBackoff(
       async () => {
-        return await resend.emails.send({
+        return await getResend().emails.send({
           from: 'Parkbad Gütersloh <newsletter@parkbad-gt.de>',
           to: [email],
           subject: 'Bestätigung erforderlich - Parkbad Gütersloh',

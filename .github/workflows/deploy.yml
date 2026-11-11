@@ -1,0 +1,110 @@
+# Production deploy path for the move off Vercel
+# (infra plans/2026-11-10-vercel-sites-to-coolify.md): build the image, push it
+# to GitHub Container Registry, tell Coolify to pull it, then prove that the
+# commit just built is the one answering.
+#
+# Switched off until the cutover. Every job is gated on the repository variable
+# COOLIFY_DEPLOY_ENABLED, so merging this file changes nothing: no image push
+# and no call to a Coolify app that does not
+# exist yet. Set the variable to "true" at cutover, together with the
+# COOLIFY_WEBHOOK and COOLIFY_TOKEN secrets.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Queue, never cancel: cancelling a run does not cancel the Coolify deployment
+# it already triggered, and overlapping deploys left two containers serving at
+# once on 2026-09-11 (opuntia-website).
+concurrency:
+  group: publish-image-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Build and push to GHCR
+    if: vars.COOLIFY_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Compute the image name
+        id: img
+        run: echo "name=ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+      - uses: docker/build-push-action@v7
+        with:
+          context: .
+          platforms: linux/arm64
+          push: true
+          tags: |
+            ${{ steps.img.outputs.name }}:latest
+            ${{ steps.img.outputs.name }}:${{ github.sha }}
+          build-args: |
+            NEXT_PUBLIC_SANITY_PROJECT_ID=qyrn8cjm
+            GIT_COMMIT=${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy-verify:
+    needs: publish
+    if: vars.COOLIFY_DEPLOY_ENABLED == 'true'
+    permissions:
+      contents: read
+      deployments: write
+    uses: marlinjai/actions-shared/.github/workflows/coolify-deploy-verify.yml@v1
+    with:
+      health_url: https://www.parkbad-gt.de/api/health
+      environment: production
+    secrets:
+      coolify_webhook: ${{ secrets.COOLIFY_WEBHOOK }}
+      coolify_token: ${{ secrets.COOLIFY_TOKEN }}
+
+  # deploy-verify proves the site answers; this proves WHICH build answers.
+  # Keep sampling until one block of twenty replies is entirely the new commit
+  # (the shape opuntia-website settled on after two wrong attempts).
+  confirm-served-build:
+    name: The deployed commit is the one serving
+    needs: deploy-verify
+    if: vars.COOLIFY_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for a clean block of replies from ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          expected='${{ github.sha }}'
+          url=https://www.parkbad-gt.de/api/health
+          block=20
+          last=none
+          appear_deadline=$((SECONDS + 900))
+          until [ "$last" = "$expected" ]; do
+            if [ "$SECONDS" -ge "$appear_deadline" ]; then
+              echo "::error::After 900s the site never served $expected (last reply: $last). Check the Coolify deployment log." >&2
+              exit 1
+            fi
+            got="$(curl -fsS --max-time 10 "$url" | sed -n 's/.*"commit":"\([^"]*\)".*/\1/p' || true)"
+            last="${got:-none}"
+            [ "$last" = "$expected" ] || { echo "Still serving $last after ${SECONDS}s."; sleep 15; }
+          done
+          deadline=$((SECONDS + 300))
+          while [ "$SECONDS" -lt "$deadline" ]; do
+            stale=0
+            for _ in $(seq 1 "$block"); do
+              got="$(curl -fsS --max-time 10 "$url" | sed -n 's/.*"commit":"\([^"]*\)".*/\1/p' || true)"
+              [ "$got" = "$expected" ] || stale=$((stale + 1))
+            done
+            [ "$stale" -eq 0 ] && { echo "All $block replies served $expected."; exit 0; }
+            echo "$stale of $block replies were not $expected. Waiting."
+            sleep 10
+          done
+          echo "::error::Two builds still serving 300s after $expected first answered: a stale container was left running." >&2
+          exit 1

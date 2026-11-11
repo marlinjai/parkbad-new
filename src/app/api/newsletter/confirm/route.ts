@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import  { Resend }  from 'resend';
+import { getResend } from "@/lib/resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Retry utility function with exponential backoff
 async function retryWithBackoff<T>(
@@ -161,7 +160,7 @@ export async function GET(request: NextRequest) {
     
     const { data: contactData, error: contactError } = await retryWithBackoff(
       async () => {
-        return await resend.contacts.create({
+        return await getResend().contacts.create({
           email: decodeURIComponent(email),
           audienceId: audienceId,
           unsubscribed: false,

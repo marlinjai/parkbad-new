@@ -14,8 +14,13 @@ export const projectId = assertValue(
 
 // CDN usage based on environment
 // Use CDN for production, disable for development and staging for real-time updates
-export const useCdn = process.env.NODE_ENV === 'production' && 
-  process.env.VERCEL_ENV === 'production';
+// VERCEL_ENV marks production on Vercel; APP_ENV=production marks it on the
+// Coolify server, where VERCEL_ENV does not exist. Both are honoured while
+// Vercel stays the rollback.
+export const useCdn =
+  process.env.NODE_ENV === "production" &&
+  (process.env.VERCEL_ENV === "production" ||
+    process.env.APP_ENV === "production");
 
 export const perspective = "published";
 

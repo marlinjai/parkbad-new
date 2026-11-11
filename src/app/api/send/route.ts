@@ -1,5 +1,5 @@
 // src/app/api/send/route.ts
-import { Resend } from "resend";
+import { getResend } from "@/lib/resend";
 import { render } from '@react-email/render';
 import React from "react";
 import { ContactAutoReplyTemplate } from "../../_components/email_templates/contact-autoreply-template";
@@ -9,7 +9,6 @@ import { ContactSettings } from "../../../types/sanityTypes";
 import { writeClient } from "../../../sanity/lib/sanity.write";
 import { createHash, randomUUID } from "crypto";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Define an interface for your expected request body
 interface EmailRequestBody {
@@ -26,7 +25,7 @@ export async function POST(request: Request) {
 
     // Send notification email to Parkbad team
     const messageId = `<${randomUUID()}@parkbad-gt.de>`;
-    const teamNotification = await resend.emails.send({
+    const teamNotification = await getResend().emails.send({
       from: "kontakt@parkbad-gt.de",
       to: ["verwaltung@parkbad-gt.de"],
       subject: `Neue Nachricht von ${requestBody.firstName} ${requestBody.lastName}`,
@@ -89,7 +88,7 @@ export async function POST(request: Request) {
       );
 
       // Send auto-reply to customer
-      autoReply = await resend.emails.send({
+      autoReply = await getResend().emails.send({
         from: "kontakt@parkbad-gt.de",
         to: [requestBody.email],
         subject: settings.isWinterBreak 

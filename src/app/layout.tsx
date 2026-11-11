@@ -37,8 +37,15 @@ export default async function RootLayout({
         ) : (
           <>
             {children}
-            <Analytics />
-            <SpeedInsights />
+            {/* Vercel's analytics only work on Vercel. While Vercel stays the
+                rollback for the move to Coolify, the same build renders them
+                there and nowhere else (VERCEL is set by Vercel itself). */}
+            {process.env.VERCEL ? (
+              <>
+                <Analytics />
+                <SpeedInsights />
+              </>
+            ) : null}
           </>
         )}
       </body>

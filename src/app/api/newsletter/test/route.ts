@@ -1,6 +1,6 @@
 // src/app/api/newsletter/test/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { getResend } from "@/lib/resend";
 import { NewsletterTemplate } from '../../../_components/email_templates/newsletter-template';
 import { render } from '@react-email/render';
 import React from 'react';
@@ -10,7 +10,6 @@ import { urlForImage } from '../../../../sanity/lib/sanity.image';
 import { computeContentHash, extractHashableFields } from '@/lib/newsletter/contentHash';
 import { portableTextToPlainText } from '@/lib/newsletter/portableText';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface TestNewsletterRequest {
   documentId: string;
@@ -61,7 +60,7 @@ export async function POST(request: NextRequest) {
       ? `[TEST] Parkbad Gütersloh: ${title}`
       : `[TEST] Neue Veranstaltung im Parkbad Gütersloh: ${title}`;
 
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await getResend().emails.send({
       from: 'Parkbad Gütersloh <newsletter@parkbad-gt.de>',
       to: [testEmail],
       subject,
