@@ -13,8 +13,19 @@ export function proxy(request: NextRequest) {
   return NextResponse.rewrite(url);
 }
 
+// Only the four ampersand routes, in both spellings, so every other request
+// (on Vercel, too) never invokes the proxy at all. Both spellings are listed so
+// the match does not depend on whether a host compares the decoded or the raw
+// path; this list was verified in the standalone container on 2026-11-11.
 export const config = {
-  // Only page paths; static assets, the image optimiser, API routes and the
-  // Studio never carry an encoded ampersand.
-  matcher: ["/((?!_next/|api/|admin|favicon|.*\\.[a-z0-9]+$).*)"],
+  matcher: [
+    "/Neuigkeiten&Events/:path*",
+    "/Essen&Trinken/:path*",
+    "/Feiern&Tagen/:path*",
+    "/Historie&Kontakt/:path*",
+    "/Neuigkeiten%26Events/:path*",
+    "/Essen%26Trinken/:path*",
+    "/Feiern%26Tagen/:path*",
+    "/Historie%26Kontakt/:path*",
+  ],
 };

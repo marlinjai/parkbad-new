@@ -158,9 +158,12 @@ export async function GET(request: NextRequest) {
       unsubscribed: false,
     });
     
+    // Created before the retries, so a missing API key fails once with a clear
+    // error instead of being retried as if it were a network fault.
+    const resend = getResend();
     const { data: contactData, error: contactError } = await retryWithBackoff(
       async () => {
-        return await getResend().contacts.create({
+        return await resend.contacts.create({
           email: decodeURIComponent(email),
           audienceId: audienceId,
           unsubscribed: false,

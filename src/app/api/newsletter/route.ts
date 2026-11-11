@@ -59,11 +59,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Created before the retries, so a missing API key fails once with a clear
+    // error instead of being retried as if it were a network fault.
+    const resend = getResend();
+
     // Check if already subscribed using list contacts with retry logic
     try {
       const { data, error: listError } = await retryWithBackoff(
         async () => {
-          return await getResend().contacts.list({
+          return await resend.contacts.list({
             audienceId: audienceId,
           });
         },
@@ -111,7 +115,7 @@ export async function POST(request: NextRequest) {
 
     const { data: emailData, error: emailError } = await retryWithBackoff(
       async () => {
-        return await getResend().emails.send({
+        return await resend.emails.send({
           from: 'Parkbad Gütersloh <newsletter@parkbad-gt.de>',
           to: [email],
           subject: 'Bestätigung erforderlich - Parkbad Gütersloh',

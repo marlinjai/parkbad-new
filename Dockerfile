@@ -17,7 +17,8 @@ RUN npm ci
 COPY . .
 
 # Public build-time values only. Next inlines NEXT_PUBLIC_* into the client
-# bundle, so these come from GitHub Actions *variables*, never secrets. The
+# bundle, so they are never secrets: the defaults below and the literal project
+# id in the workflows are the same values the live site already ships. The
 # Sanity dataset is publicly readable, so the build needs no token.
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
 ARG NEXT_PUBLIC_SANITY_DATASET=production
@@ -55,7 +56,9 @@ ENV GIT_COMMIT=$GIT_COMMIT
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
-# Image optimiser and ISR cache; Coolify mounts a volume here.
+# Image optimiser and ISR cache. Mount a NAMED volume here in Coolify: it
+# inherits this directory's owner (uid 1001); a host bind mount would be
+# root-owned and unwritable for the runner user.
 RUN mkdir -p .next/cache && chown nextjs:nodejs .next/cache
 
 COPY --chown=nextjs:nodejs entrypoint.sh ./entrypoint.sh

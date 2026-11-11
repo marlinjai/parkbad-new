@@ -46,10 +46,15 @@ jobs:
           set -euo pipefail
           docker run -d --name parkbad --memory 512m -p 3000:3000 -e APP_ENV=production \
             --entrypoint sh parkbad:ci -c 'export HOSTNAME=0.0.0.0 PORT=3000; exec node server.js'
+          trap 'echo "--- container log"; docker logs parkbad' ERR
           for _ in $(seq 1 30); do curl -fsS http://127.0.0.1:3000/api/health >/dev/null 2>&1 && break; sleep 1; done
-          curl -fsS http://127.0.0.1:3000/api/health | grep -q '"commit":"${{ github.sha }}"'
+          health="$(curl -fsS http://127.0.0.1:3000/api/health)"
+          case "$health" in
+            *'"commit":"${{ github.sha }}"'*) echo "health: $health" ;;
+            *) echo "::error::/api/health did not report ${{ github.sha }}: $health"; false ;;
+          esac
           for path in / /Bildgalerie /Essen%26Trinken '/Essen&Trinken' /sitemap.xml /robots.txt; do
             code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:3000$path")
             echo "$path $code"
-            [ "$code" = "200" ] || { docker logs parkbad; exit 1; }
+            [ "$code" = "200" ] || false
           done
