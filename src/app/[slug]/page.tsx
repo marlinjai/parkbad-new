@@ -10,6 +10,8 @@ import { client } from "@/sanity/lib/sanity.client";
 import PreviewProvider from "../_components/UtilityComponents/PreviewProvider";
 import PreviewPost from "../_components/Posts&Events_Components/PreviewPost";
 import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
+import { isUnknownSlug, slugParams } from "@/lib/slugPage";
 import { CustomEvent, PostType } from "@/types/sanityTypes";
 
 // Prepare Next.js to know which routes already exist
@@ -18,7 +20,7 @@ export async function generateStaticParams() {
   const posts = await client.fetch(postPathsQuery);
   const events = await client.fetch(eventPathsQuery);
 
-  return posts && events;
+  return slugParams(posts, events);
 }
 
 export default async function Page({ params }: { params: Promise<any> }) {
@@ -35,6 +37,12 @@ export default async function Page({ params }: { params: Promise<any> }) {
   });
   const draft = await draftMode();
   const isDraftMode = draft.isEnabled;
+
+  // Unknown single-segment paths land here; answer a real 404 instead of an
+  // empty page with status 200.
+  if (isUnknownSlug({ post, event, isDraftMode })) {
+    notFound();
+  }
 
   if (isDraftMode && token) {
     return (
