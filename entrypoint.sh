@@ -31,6 +31,10 @@ done
 # Next binds to $HOSTNAME, which the container runtime sets to the container
 # id; without this the loopback healthcheck can never pass.
 export HOSTNAME=0.0.0.0
+# This image only ever runs as the live site (or its staging twin, which reads
+# the same published content), so the Sanity CDN is on unless a container sets
+# APP_ENV explicitly. Vercel never runs this file; it keeps using VERCEL_ENV.
+export APP_ENV="${APP_ENV:-production}"
 
 INFISICAL_TOKEN=$(infisical login \
   --method=universal-auth \
