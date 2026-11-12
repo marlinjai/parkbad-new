@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <SiteLayout>
+    <SiteLayout skipLoading>
       <SectionBackground className="min-h-[60svh] flex items-center">
         <div className="mx-auto max-w-2xl px-6 py-24 text-center">
           <p className="font-carlson text-2sc text-brand-accent-4">404</p>

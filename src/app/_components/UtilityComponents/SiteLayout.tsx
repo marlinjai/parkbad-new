@@ -10,16 +10,22 @@ import Loading from "./LoadingSpinner";
 export default function SiteLayout({
   children,
   preview,
+  skipLoading = false,
 }: {
   children: React.ReactNode;
   preview?: boolean;
+  // Render the page at once, without the intro spinner. The 404 page uses it:
+  // its message and links must be in the server HTML, also when JavaScript
+  // does not run, and a visitor who mistyped a link should not wait 2.7 s.
+  skipLoading?: boolean;
 }) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!skipLoading);
 
   // Use the OpeningHour[] type for your state
   const [openingHours, setOpeningHours] = useState<OpeningHour[]>([]);
 
   useEffect(() => {
+    if (skipLoading) return;
     // `loading` starts as true; show the spinner for a fixed period on mount.
     // Simulate a loading period (you can adjust the timeout as needed)
     const timer = setTimeout(() => {
@@ -28,7 +34,7 @@ export default function SiteLayout({
 
     // Cleanup the timer if the component unmounts
     return () => clearTimeout(timer);
-  }, []); // React to changes in path or search parameters
+  }, [skipLoading]);
 
   useEffect(() => {
     const fetchData = async () => {
