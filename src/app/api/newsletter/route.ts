@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { getResend } from "@/lib/resend";
 import { WelcomeTemplate } from '../../_components/email_templates/welcome-template';
 import { render } from '@react-email/render';
 import React from 'react';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface NewsletterRequestBody {
   email: string;
@@ -59,6 +58,10 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
+
+    // Created before the retries, so a missing API key fails once with a clear
+    // error instead of being retried as if it were a network fault.
+    const resend = getResend();
 
     // Check if already subscribed using list contacts with retry logic
     try {

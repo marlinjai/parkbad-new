@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import  { Resend }  from 'resend';
+import { getResend } from "@/lib/resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Retry utility function with exponential backoff
 async function retryWithBackoff<T>(
@@ -159,6 +158,9 @@ export async function GET(request: NextRequest) {
       unsubscribed: false,
     });
     
+    // Created before the retries, so a missing API key fails once with a clear
+    // error instead of being retried as if it were a network fault.
+    const resend = getResend();
     const { data: contactData, error: contactError } = await retryWithBackoff(
       async () => {
         return await resend.contacts.create({

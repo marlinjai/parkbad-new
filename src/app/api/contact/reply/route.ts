@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { getResend } from "@/lib/resend";
 import { render } from '@react-email/render';
 import React from 'react';
 import { writeClient } from '../../../../sanity/lib/sanity.write';
 import { ContactReplyTemplate } from '../../../_components/email_templates/contact-reply-template';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface ReplyRequest {
   submissionId: string;
@@ -60,7 +59,7 @@ export async function POST(request: NextRequest) {
       })
     );
 
-    const send = await resend.emails.send({
+    const send = await getResend().emails.send({
       from: 'Parkbad Gütersloh <verwaltung@parkbad-gt.de>',
       to: [sourceDoc.email],
       replyTo: 'verwaltung@parkbad-gt.de',

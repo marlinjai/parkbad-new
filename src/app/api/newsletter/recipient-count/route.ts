@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { getResend } from "@/lib/resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function GET() {
   const audienceId = process.env.RESEND_AUDIENCE_ID;
@@ -9,7 +8,7 @@ export async function GET() {
     return NextResponse.json({ error: 'Audience not configured' }, { status: 500 });
   }
   try {
-    const contacts = await resend.contacts.list({ audienceId });
+    const contacts = await getResend().contacts.list({ audienceId });
     // @ts-ignore - Resend SDK types are loose
     const list = contacts.data?.data ?? [];
     const count = list.filter((c: { unsubscribed?: boolean }) => !c.unsubscribed).length;

@@ -1,8 +1,7 @@
 // src/app/api/newsletter/unsubscribe/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { getResend } from "@/lib/resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function GET(request: NextRequest) {
   try {
@@ -26,7 +25,7 @@ export async function GET(request: NextRequest) {
 
     // Find and remove the contact from the audience
     try {
-      const { data: contacts } = await resend.contacts.list({
+      const { data: contacts } = await getResend().contacts.list({
         audienceId: audienceId,
       });
 
@@ -35,7 +34,7 @@ export async function GET(request: NextRequest) {
       const contact = contactsList.find((c: any) => c.email === email);
 
       if (contact) {
-        await resend.contacts.remove({
+        await getResend().contacts.remove({
           audienceId: audienceId,
           id: contact.id,
         });
