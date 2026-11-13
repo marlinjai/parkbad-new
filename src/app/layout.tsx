@@ -4,8 +4,6 @@ import { Inter } from "next/font/google";
 import dynamic from "next/dynamic";
 import { draftMode } from "next/headers";
 import { token } from "@/sanity/lib/sanity.fetch";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,15 +35,6 @@ export default async function RootLayout({
         ) : (
           <>
             {children}
-            {/* Vercel's analytics only work on Vercel. While Vercel stays the
-                rollback for the move to Coolify, the same build renders them
-                there and nowhere else (VERCEL is set by Vercel itself). */}
-            {process.env.VERCEL ? (
-              <>
-                <Analytics />
-                <SpeedInsights />
-              </>
-            ) : null}
           </>
         )}
       </body>
