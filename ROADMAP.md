@@ -6,6 +6,9 @@ This repository has been dormant since 2026-05-21 (no commits since). Its two no
 
 ## Leftovers (clear, do not carry)
 
+- [ ] The Bildgalerie page (/Bildgalerie) loads slowly on the live site (works, but
+      not fast). Reported by Marlin during the move to Coolify, separate from it.
+      Measure image sizes and loading, then fix (2026-11-13)
 - [ ] Three customer-reported fixes are committed and pushed to main (the swiper loop
       fix, the gallery face-visibility hotspot crop, and the Winterpause contact-form
       auto-reply fix) but were shipped on type-check alone: the Sanity test dataset used
